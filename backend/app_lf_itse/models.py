@@ -628,8 +628,8 @@ class Inspector(models.Model):
         db_column='usuario_id',
         related_name='inspectores_digitados',
     )
-    fecha_creacion       = models.DateTimeField()
-    fecha_actualizacion  = models.DateTimeField()
+    fecha_creacion      = models.DateTimeField(auto_now_add=True)
+    fecha_actualizacion = models.DateTimeField(auto_now=True, null=True)
 
     class Meta:
         db_table = 'inspectores'
@@ -657,8 +657,8 @@ class ItseInspector(models.Model):
         db_column='usuario_id',
         related_name='itse_inspectores_digitados',
     )
-    fecha_creacion      = models.DateTimeField()
-    fecha_actualizacion = models.DateTimeField()
+    fecha_creacion      = models.DateTimeField(auto_now_add=True)
+    fecha_actualizacion = models.DateTimeField(auto_now=True, null=True)
 
     class Meta:
         db_table = 'itse_inspectores'
