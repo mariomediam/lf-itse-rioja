@@ -205,10 +205,10 @@ _SQL_FILTRO_NOMBRE = """
     SELECT p.id AS persona_id
     FROM personas p
     WHERE TRIM(
-        COALESCE(p.apellido_paterno, '') || ' ' ||
-        COALESCE(p.apellido_materno, '') || ' ' ||
-        COALESCE(p.nombres, '')
-    ) ILIKE %s
+        CONCAT(COALESCE(p.apellido_paterno, ''), ' ',
+        COALESCE(p.apellido_materno, ''), ' ',
+        COALESCE(p.nombres, ''))
+    ) LIKE %s
 """
 
 # Bloque DOCUMENTO: filtra por número de documento de identidad exacto.
@@ -220,7 +220,7 @@ _SQL_FILTRO_DOCUMENTO = """
 
 # Bloque ID: filtra por clave primaria de la persona.
 _SQL_FILTRO_ID = """
-    SELECT %s::INTEGER AS persona_id
+    SELECT %s AS persona_id
 """
 
 # Consulta principal: recibe el bloque de filtro como subquery y
@@ -232,10 +232,10 @@ WITH personas_filtradas AS (
 documentos_concatenados AS (
     SELECT
         pf.persona_id,
-        STRING_AGG(
-            tdi.nombre || ' ' || pd.numero_documento,
-            ', '
-            ORDER BY tdi.nombre || ' ' || pd.numero_documento
+        GROUP_CONCAT(
+            CONCAT(tdi.nombre, ' ', pd.numero_documento)
+            ORDER BY CONCAT(tdi.nombre, ' ', pd.numero_documento)
+            SEPARATOR ', '
         ) AS documento_concatenado
     FROM personas_filtradas pf
     LEFT JOIN personas_documentos pd
@@ -251,9 +251,9 @@ SELECT
     p.apellido_materno,
     p.nombres,
     TRIM(
-        COALESCE(p.apellido_paterno, '') || ' ' ||
-        COALESCE(p.apellido_materno, '') || ' ' ||
-        COALESCE(p.nombres, '')
+        CONCAT(COALESCE(p.apellido_paterno, ''), ' ',
+        COALESCE(p.apellido_materno, ''), ' ',
+        COALESCE(p.nombres, ''))
     )                       AS persona_nombre,
     p.direccion,
     p.distrito,
@@ -268,9 +268,9 @@ SELECT
 FROM documentos_concatenados dc
 INNER JOIN personas p ON dc.persona_id = p.id
 ORDER BY TRIM(
-    COALESCE(p.apellido_paterno, '') || ' ' ||
-    COALESCE(p.apellido_materno, '') || ' ' ||
-    COALESCE(p.nombres, '')
+    CONCAT(COALESCE(p.apellido_paterno, ''), ' ',
+    COALESCE(p.apellido_materno, ''), ' ',
+    COALESCE(p.nombres, ''))
 )
 """
 
@@ -370,5 +370,5 @@ def buscar_personas(filtro: str, valor: str) -> list[dict]:
 
     with connection.cursor() as cursor:
         cursor.execute(sql, [valor_param])
-        columnas = [col.name for col in cursor.description]
+        columnas = [col[0] for col in cursor.description]
         return [dict(zip(columnas, fila)) for fila in cursor.fetchall()]

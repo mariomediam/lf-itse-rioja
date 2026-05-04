@@ -52,15 +52,15 @@ SELECT
     e.numero_expediente,
     e.fecha_recepcion,
     TRIM(
-        COALESCE(ttitular.apellido_paterno, '') || ' ' ||
-        COALESCE(ttitular.apellido_materno, '') || ' ' ||
-        COALESCE(ttitular.nombres, '')
+        CONCAT(COALESCE(ttitular.apellido_paterno, ''), ' ',
+        COALESCE(ttitular.apellido_materno, ''), ' ',
+        COALESCE(ttitular.nombres, ''))
     ) AS titular_nombre,
     truc.numero_documento AS titular_ruc,
     TRIM(
-        COALESCE(tconductor.apellido_paterno, '') || ' ' ||
-        COALESCE(tconductor.apellido_materno, '') || ' ' ||
-        COALESCE(tconductor.nombres, '')
+        CONCAT(COALESCE(tconductor.apellido_paterno, ''), ' ',
+        COALESCE(tconductor.apellido_materno, ''), ' ',
+        COALESCE(tconductor.nombres, ''))
     ) AS conductor_nombre,
     CASE
         WHEN titse_inactivos.itse_id IS NULL THEN TRUE
@@ -127,7 +127,7 @@ _FILTROS_BUSQUEDA_ITSE: dict[str, tuple[str, callable]] = {
         int,
     ),
     'NOMBRE_COMERCIAL': (
-        'WHERE i.nombre_comercial ILIKE %s',
+        'WHERE i.nombre_comercial LIKE %s',
         lambda v: '%' + v.replace(' ', '%') + '%',
     ),
     'FECHA_EXPEDICION': _WHERE_FECHA_EXPEDICION,
@@ -135,10 +135,10 @@ _FILTROS_BUSQUEDA_ITSE: dict[str, tuple[str, callable]] = {
     'FECHA_EMISION': _WHERE_FECHA_EXPEDICION,
     'NOMBRES_TITULAR': (
         "WHERE TRIM("
-        "    COALESCE(ttitular.apellido_paterno, '') || ' ' ||"
-        "    COALESCE(ttitular.apellido_materno, '') || ' ' ||"
-        "    COALESCE(ttitular.nombres, '')"
-        ") ILIKE %s",
+        "    CONCAT(COALESCE(ttitular.apellido_paterno, ''), ' ',"
+        "    COALESCE(ttitular.apellido_materno, ''), ' ',"
+        "    COALESCE(ttitular.nombres, ''))"
+        ") LIKE %s",
         lambda v: '%' + v.replace(' ', '%') + '%',
     ),
     'RUC_TITULAR': (
@@ -147,22 +147,22 @@ _FILTROS_BUSQUEDA_ITSE: dict[str, tuple[str, callable]] = {
     ),
     'NOMBRES_CONDUCTOR': (
         "WHERE TRIM("
-        "    COALESCE(tconductor.apellido_paterno, '') || ' ' ||"
-        "    COALESCE(tconductor.apellido_materno, '') || ' ' ||"
-        "    COALESCE(tconductor.nombres, '')"
-        ") ILIKE %s",
+        "    CONCAT(COALESCE(tconductor.apellido_paterno, ''), ' ',"
+        "    COALESCE(tconductor.apellido_materno, ''), ' ',"
+        "    COALESCE(tconductor.nombres, ''))"
+        ") LIKE %s",
         lambda v: '%' + v.replace(' ', '%') + '%',
     ),
     'DIRECCION': (
-        'WHERE TRIM(i.direccion) ILIKE %s',
+        'WHERE TRIM(i.direccion) LIKE %s',
         lambda v: '%' + v.replace(' ', '%') + '%',
     ),
     'RECIBO_PAGO': (
-        'WHERE TRIM(i.numero_recibo_pago) ILIKE %s',
+        'WHERE TRIM(i.numero_recibo_pago) LIKE %s',
         lambda v: '%' + v.replace(' ', '%') + '%',
     ),
     'RESOLUCION_NUMERO': (
-        'WHERE TRIM(i.resolucion_numero) ILIKE %s',
+        'WHERE TRIM(i.resolucion_numero) LIKE %s',
         lambda v: '%' + v.replace(' ', '%') + '%',
     ),
 }
@@ -192,7 +192,7 @@ def buscar_itse(filtro: str, valor: str) -> list[dict]:
 
     with connection.cursor() as cursor:
         cursor.execute(sql, [valor_param])
-        columnas = [col.name for col in cursor.description]
+        columnas = [col[0] for col in cursor.description]
         return [dict(zip(columnas, fila)) for fila in cursor.fetchall()]
 
 
@@ -239,7 +239,7 @@ def listar_estados_itse(itse_id: int) -> list[dict]:
     """
     with connection.cursor() as cursor:
         cursor.execute(_SQL_LISTAR_ESTADOS_ITSE, [itse_id])
-        columnas = [col.name for col in cursor.description]
+        columnas = [col[0] for col in cursor.description]
         return [dict(zip(columnas, fila)) for fila in cursor.fetchall()]
 
 
@@ -667,10 +667,10 @@ WITH itse_filtradas AS (
 titular_docs AS (
     SELECT
         i.id AS itse_id,
-        STRING_AGG(
-            tdi.nombre || ' ' || pd.numero_documento,
-            ', '
-            ORDER BY tdi.nombre || ' ' || pd.numero_documento
+        GROUP_CONCAT(
+            CONCAT(tdi.nombre, ' ', pd.numero_documento)
+            ORDER BY CONCAT(tdi.nombre, ' ', pd.numero_documento)
+            SEPARATOR ', '
         ) AS titular_documentos
     FROM itse i
     JOIN itse_filtradas i_f ON i.id = i_f.id
@@ -683,10 +683,10 @@ titular_docs AS (
 conductor_docs AS (
     SELECT
         i.id AS itse_id,
-        STRING_AGG(
-            tdi.nombre || ' ' || pd.numero_documento,
-            ', '
-            ORDER BY tdi.nombre || ' ' || pd.numero_documento
+        GROUP_CONCAT(
+            CONCAT(tdi.nombre, ' ', pd.numero_documento)
+            ORDER BY CONCAT(tdi.nombre, ' ', pd.numero_documento)
+            SEPARATOR ', '
         ) AS conductor_documentos
     FROM itse i
     JOIN itse_filtradas i_f ON i.id = i_f.id
@@ -700,10 +700,10 @@ giros_concat AS (
     SELECT
         i.id AS itse_id,
         COALESCE(
-            STRING_AGG(
-                TRIM(g.nombre),
-                ', '
+            GROUP_CONCAT(
+                TRIM(g.nombre)
                 ORDER BY TRIM(g.nombre)
+                SEPARATOR ', '
             ),
             ''
         ) AS giros
@@ -719,15 +719,15 @@ SELECT
     i.numero_itse,
     e.numero_expediente,
     TRIM(
-        COALESCE(ttitular.apellido_paterno, '') || ' ' ||
-        COALESCE(ttitular.apellido_materno, '') || ' ' ||
-        COALESCE(ttitular.nombres, '')
+        CONCAT(COALESCE(ttitular.apellido_paterno, ''), ' ',
+        COALESCE(ttitular.apellido_materno, ''), ' ',
+        COALESCE(ttitular.nombres, ''))
     ) AS titular_nombre,
     COALESCE(td.titular_documentos, '')   AS titular_documentos,
     TRIM(
-        COALESCE(tconductor.apellido_paterno, '') || ' ' ||
-        COALESCE(tconductor.apellido_materno, '') || ' ' ||
-        COALESCE(tconductor.nombres, '')
+        CONCAT(COALESCE(tconductor.apellido_paterno, ''), ' ',
+        COALESCE(tconductor.apellido_materno, ''), ' ',
+        COALESCE(tconductor.nombres, ''))
     ) AS conductor_nombre,
     COALESCE(cd.conductor_documentos, '') AS conductor_documentos,
     i.nombre_comercial,
@@ -792,10 +792,10 @@ def consultar_itse(filtros: dict) -> list[dict]:
     if titular_nombre:
         conditions.append(
             "TRIM("
-            "    COALESCE(ttitular.apellido_paterno, '') || ' ' ||"
-            "    COALESCE(ttitular.apellido_materno, '') || ' ' ||"
-            "    COALESCE(ttitular.nombres, '')"
-            ") ILIKE %s"
+            "    CONCAT(COALESCE(ttitular.apellido_paterno, ''), ' ',"
+            "    COALESCE(ttitular.apellido_materno, ''), ' ',"
+            "    COALESCE(ttitular.nombres, ''))"
+            ") LIKE %s"
         )
         params.append('%' + titular_nombre.replace(' ', '%') + '%')
 
@@ -825,5 +825,5 @@ def consultar_itse(filtros: dict) -> list[dict]:
 
     with connection.cursor() as cursor:
         cursor.execute(sql, params)
-        columnas = [col.name for col in cursor.description]
+        columnas = [col[0] for col in cursor.description]
         return [dict(zip(columnas, fila)) for fila in cursor.fetchall()]

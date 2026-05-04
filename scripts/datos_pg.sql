@@ -1,0 +1,653 @@
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET transaction_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+--
+-- Data for Name: estados; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public.estados (id, nombre, es_para_lf, es_para_itse, esta_activo) VALUES (1, 'Vigente', true, true, true);
+INSERT INTO public.estados (id, nombre, es_para_lf, es_para_itse, esta_activo) VALUES (2, 'Transferida', true, false, true);
+INSERT INTO public.estados (id, nombre, es_para_lf, es_para_itse, esta_activo) VALUES (3, 'Anulada', true, true, false);
+INSERT INTO public.estados (id, nombre, es_para_lf, es_para_itse, esta_activo) VALUES (4, 'Revocada', true, true, false);
+
+
+--
+-- Data for Name: feriados_anuales; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public.feriados_anuales (id, feriado, fecha_digitacion, user_id) VALUES (1, '2026-04-03', '2026-04-14 00:00:00+00', 1);
+INSERT INTO public.feriados_anuales (id, feriado, fecha_digitacion, user_id) VALUES (2, '2026-04-02', '2026-04-14 00:00:00+00', 1);
+
+
+--
+-- Data for Name: feriados_recurrentes; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public.feriados_recurrentes (id, dia, mes) VALUES (1, 29, 7);
+INSERT INTO public.feriados_recurrentes (id, dia, mes) VALUES (2, 28, 7);
+INSERT INTO public.feriados_recurrentes (id, dia, mes) VALUES (3, 23, 7);
+INSERT INTO public.feriados_recurrentes (id, dia, mes) VALUES (4, 29, 6);
+INSERT INTO public.feriados_recurrentes (id, dia, mes) VALUES (5, 7, 6);
+INSERT INTO public.feriados_recurrentes (id, dia, mes) VALUES (6, 1, 5);
+INSERT INTO public.feriados_recurrentes (id, dia, mes) VALUES (7, 1, 1);
+INSERT INTO public.feriados_recurrentes (id, dia, mes) VALUES (8, 1, 11);
+INSERT INTO public.feriados_recurrentes (id, dia, mes) VALUES (9, 8, 10);
+INSERT INTO public.feriados_recurrentes (id, dia, mes) VALUES (10, 30, 8);
+INSERT INTO public.feriados_recurrentes (id, dia, mes) VALUES (11, 6, 8);
+INSERT INTO public.feriados_recurrentes (id, dia, mes) VALUES (12, 25, 12);
+INSERT INTO public.feriados_recurrentes (id, dia, mes) VALUES (13, 8, 12);
+INSERT INTO public.feriados_recurrentes (id, dia, mes) VALUES (14, 9, 12);
+
+
+--
+-- Data for Name: giros; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (1, 111, 'CULTIVO DE CEREALES (EXCEPTO ARROZ), LEGUMBRES Y SEMILLAS OLEAGINOSAS', true, '2026-04-14 16:30:16.151858+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (2, 112, 'CULTIVO DE ARROZ', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (3, 113, 'CULTIVO DE HORTALIZAS Y MELONES, RAÍCES Y TUBÉRCULOS.', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (4, 114, 'CULTIVO DE CAÑA DE AZÚCAR', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (5, 115, 'CULTIVO DE TABACO', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (6, 116, 'CULTIVO DE PLANTAS DE FIBRA', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (7, 119, 'CULTIVO DE OTRAS PLANTAS NO PERENNES', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (8, 121, 'CULTIVO DE UVA', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (9, 122, 'CULTIVO DE FRUTAS TROPICALES Y SUBTROPICALES', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (10, 123, 'CULTIVO DE  CÍTRICOS', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (11, 124, 'CULTIVO DE FRUTAS DE PEPITA Y DE HUESO', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (12, 125, 'CULTIVO DE OTROS FRUTOS Y NUECES DE ÁRBOLES Y ARBUSTOS ', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (13, 126, 'CULTIVO DE FRUTOS OLEAGINOSOS', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (14, 127, 'CULTIVO DE PLANTAS CON LAS QUE SE PREPARAN BEBIDAS', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (15, 128, 'CULTIVO DE ESPECIAS Y DE PLANTAS AROMÁTICAS, MEDICINALES Y FARMACEUTICAS', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (16, 129, 'CULTIVO DE OTRAS PLANTAS NO PERENNES', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (17, 130, 'PROPAGACIÓN DE PLANTAS', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (18, 141, 'CRÍA DE GANADO BOVINO Y BÚFALOS', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (19, 142, 'CRÍA DE CABALLOS Y OTROS EQUINOS', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (20, 143, 'CRÍA DE CAMELLOS Y OTROS CAMÉLIDOS', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (21, 144, 'CRÍA DE OVEJAS Y CABRAS', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (22, 145, 'CRÍA DE CERDOS', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (23, 146, 'CRÍA DE AVES DE CORRAL', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (24, 149, 'CRÍA DE OTROS ANIMALES', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (25, 150, 'CULTIVO DE PRODUCTOS AGRÌCOLAS EN COMBINACIÒN CON LA CRÌA DE ANIMALES', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (26, 161, 'ACTIVIDADES DE APOYO A LA AGRICULTURA', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (27, 162, 'ACTIVIDADES DE APOYO A LA GANADERÍA', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (28, 163, 'ACTIVIDADES POSCOSECHA', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (29, 164, 'TRATAMIENTO DE SEMILLAS PARA PROPAGACIÓN', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (30, 170, 'CAZA ORDINARIA Y MEDIANTE TRAMPAS Y ACTIVIDADES DE SERVICIOS CONEXAS', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (31, 210, 'SILVICULTURA Y OTRAS ACTIVIDADES FORESTALES', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (32, 220, 'EXTRACCIÓN DE MADERA', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (33, 230, 'RECOLECCIÓN DE PRODUCTOS FORESTALES DISTINTOS DE LA MADERA', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (34, 240, 'SERVICIOS DE APOYO A LA SILVICULTURA', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (35, 311, 'PESCA MARÍTIMA', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (36, 312, 'PESCA DE AGUA DULCE', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (37, 321, 'ACUICULTURA MARÍTIMA', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (38, 322, 'ACUICULTURA DE AGUA DULCE', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (39, 510, 'EXTRACCIÓN DE CARBÓN DE PIEDRA', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (40, 520, 'EXTRACCIÓN DE LIGNITO', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (41, 610, 'EXTRACCIÓN DE PETRÓLEO CRUDO', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (42, 620, 'EXTRACCIÓN DE GAS NATURAL', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (43, 710, 'EXTRACCIÓN DE MINERALES DE HIERRO', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (44, 721, 'EXTRACCIÓN DE MINERALES DE URANIO Y TORIO', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (45, 729, 'EXTRACCIÓN DE OTROS MINERALES METALÍFEROS NO FERROSOS', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (46, 810, 'EXTRACCIÓN DE PIEDRA, ARENA Y ARCILLA', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (47, 891, 'EXTRACCIÓN DE MINERALES PARA LA FABRICACIÓN DE ABONOS Y PRODUCTOS QUÍMICOS', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (48, 892, 'EXTRACCIÓN DE TURBA', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (49, 893, 'EXTRACCIÓN DE SAL', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (50, 899, 'EXPLOTACIÓN DE OTRAS MINAS Y CANTERAS N.C.P.', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (51, 910, 'ACTIVIDADES DE APOYO PARA LA EXTRACCIÓN DE PETRÓLEO Y GAS NATURAL', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (52, 990, 'ACTIVIDADES DE APOYO PARA OTRAS ACTIVIDADES DE EXPLOTACIÓN DE MINAS Y CANTERAS', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (53, 1010, 'ELABORACIÒN Y CONSERVACIÓN DE CARNE', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (54, 1020, 'ELABORACIÒN Y CONSERVACIÓN DE PESCADOS, CRUSTÁCEOS Y MOLUSCOS', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (55, 1030, 'ELABORACIÒN Y CONSERVACIÓN DE FRUTAS,LEGUMBRES Y HORTALIZAS', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (56, 1040, 'ELABORACIÓN DE ACEITES Y GRASAS DE ORIGEN VEGETAL Y ANIMAL', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (57, 1050, 'ELABORACIÓN DE PRODUCTOS LÁCTEOS', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (58, 1061, 'ELABORACIÓN DE PRODUCTOS DE MOLINERÍA.', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (59, 1062, 'ELABORACIÓN DE ALMIDONES Y PRODUCTOS DERIVADOS DEL ALMIDÓN.', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (60, 1071, 'ELABORACIÓN DE PRODUCTOS DE PANADERÍA', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (61, 1072, 'ELABORACIÓN DE AZÚCAR', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (62, 1073, 'ELABORACIÓN DE CACAO Y CHOCOLATE Y DE PRODUCTOS DE CONFITERÍA', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (63, 1074, 'ELABORACIÓN DE MACARRONES, FIDEOS, ALCUZCUS Y PRODUCTOS FARINÁCEOS SIMILARES', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (64, 1075, 'ELABORACIÓN DE COMIDAS Y PLATOS PREPARADOS', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (65, 1079, 'ELABORACIÓN DE OTROS PRODUCTOS ALIMENTICIOS N.C.P.', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (66, 1080, 'ELABORACIÓN DE PIENSOS PREPARADOS PARA ANIMALES', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (67, 1101, 'DESTILACIÓN, RECTIFICACIÓN Y MEZCLA DE BEBIDAS ALCOHÓLICAS', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (68, 1102, 'ELABORACIÓN DE VINOS', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (69, 1103, 'ELABORACIÓN DE BEBIDAS MALTEADAS Y DE MALTA', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (70, 1104, 'ELABORACIÓN DE BEBIDAS NO ALCOHÓLICAS; PRODUCCIÓN DE AGUAS MINERALES Y OTRAS AGUAS EMBOTELLADAS', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (71, 1200, 'ELABORACIÓN DE PRODUCTOS DE TABACO', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (72, 1311, 'PREPARACIÓN E HILATURA DE FIBRAS TEXTILES', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (73, 1312, 'TEJEDURA DE PRODUCTOS TEXTILES', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (74, 1313, 'ACABADO DE PRODUCTOS TEXTILES', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (75, 1391, 'FABRICACIÓN DE TEJIDOS DE PUNTO Y GANCHILLO', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (76, 1392, 'FABRICACIÓN DE ARTÍCULOS CONFECCIONADOS DE MATERIALES TEXTILES, EXCEPTO PRENDAS DE VESTIR', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (77, 1393, 'FABRICACIÓN DE TAPICES Y ALFOMBRAS', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (78, 1394, 'FABRICACIÓN DE CUERDAS, CORDELES, BRAMANTES Y REDES', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (79, 1399, 'FABRICACIÓN DE OTROS PRODUCTOS TEXTILES N.C.P.', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (80, 1410, 'FABRICACIÓN DE PRENDAS DE VESTIR, EXCEPTO PRENDAS DE PIEL', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (81, 1420, 'FABRICACIÓN DE ARTÍCULOS DE PIEL', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (82, 1430, 'FABRICACIÓN DE ARTICULOS DE PUNTO Y GANCHILLO', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (83, 1511, 'CURTIDO Y ADOBO DE CUEROS; ADOBO Y TEÑIDO DE PIELES', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (84, 1512, 'FABRICACIÓN DE MALETAS, BOLSOS DE MANO, Y ARTÍCULOS SIMILARES,Y DE ARTICULOS DE TALABARTERÍA Y GUARNICIONERÍA', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (85, 1520, 'FABRICACIÓN DE CALZADO', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (86, 1610, 'ASERRADOS Y ACEPILLADURA DE MADERA', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (87, 1621, 'FABRICACIÓN DE HOJAS DE MADERA PARA ENCHAPADO Y TABLEROS A BASE DE MADERA', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (88, 1622, 'FABRICACIÓN DE PARTES Y PIEZAS DE CARPINTERÍA PARA EDIFICIOS Y CONSTRUCCIONES', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (89, 1623, 'FABRICACIÓN DE RECIPIENTES DE MADERA', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (90, 1629, 'FABRICACIÓN DE OTROS PRODUCTOS DE MADERA; FABRICACIÓN DE ARTÍCULOS DE CORCHO, PAJA Y MATERIALES TRENZABLES.', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (91, 1701, 'FABRICACIÓN DE PASTA DE MADERA, PAPEL Y CARTÓN', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (92, 1702, 'FABRICACIÓN DEL PAPEL Y CARTÓN ONDULADO Y DE ENVASES DE PAPEL Y CARTÓN', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (93, 1709, 'FABRICACIÓN DE OTROS ARTÍCULOS DEL PAPEL Y CARTÓN', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (94, 1811, 'IMPRESIÓN', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (95, 1812, 'ACTIVIDADES DE SERVICIOS RELACIONADAS CON LA IMPRESIÓN', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (96, 1820, 'REPRODUCCIÓN DE GRABACIONES', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (97, 1910, 'FABRICACIÓN DE PRODUCTOS DE HORNOS DE COQUE', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (98, 1920, 'FABRICACIÓN DE PRODUCTOS DE LA REFINACIÓN DEL PETRÓLEO', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (99, 2011, 'FABRICACIÓN DE SUSTANCIAS QUÍMICAS BÁSICAS', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (100, 2012, 'FABRICACIÓN ABONOS Y COMPUESTOS DE NITRÓGENO', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (101, 2013, 'FABRICACIÓN DE PLÁSTICOS Y DE CAUCHO SINTÉTICO EN FORMAS PRIMARIAS', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (102, 2021, 'FABRICACIÓN DE PLAGUICIDAS Y OTROS PRODUCTOS QUÍMICOS DE USO AGROPECUARIO', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (103, 2022, 'FABRICACIÓN DE PINTURAS, BARNICES Y PRODUCTOS DE REVESTIMIENTO SIMILARES, TINTAS DE IMPRENTA Y MASILLAS', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (104, 2023, 'FABRICACIÓN DE JABONES Y DETERGENTES, PREPARADOS PARA LIMPIAR Y PULIR, PERFUMES Y PREPARADOS DE TOCADOR.', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (105, 2029, 'FABRICACIÓN DE OTROS PRODUCTOS QUÍMICOS N.C.P.', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (106, 2030, 'FABRICACIÓN DE FIBRAS ARTIFICIALES', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (107, 2100, 'FABRICACIÓN DE PRODUCTOS FARMACÉUTICOS, SUSTANCIAS QUÍMICAS MEDICINALES Y PRODUCTOS BOTÁNICOS DE USO FARMACÉUTICO', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (108, 2211, 'FABRICACIÓN DE CUBIERTAS Y CÁMARAS DE CAUCHO; RECAUCHUTADO Y RENOVACIÓN DE CUBIERTAS DE CAUCHO', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (109, 2219, 'FABRICACIÓN DE OTROS PRODUCTOS DE CAUCHO', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (110, 2220, 'FABRICACIÓN DE PRODUCTOS DE PLÁSTICO', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (111, 2310, 'FABRICACIÓN DE VIDRIO Y DE PRODUCTOS DE VIDRIO', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (112, 2391, 'FABRICACIÓN DE PRODUCTOS REFRACTARIOS', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (113, 2392, 'FABRICACIÓN DE MATERIALES DE CONSTRUCCIÓN DE ARCILLA', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (114, 2393, 'FABRICACIÓN DE OTROS PRODUCTOS DE PORCELANA Y DE CERÁMICA', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (115, 2394, 'FABRICACIÓN DE CEMENTO, CAL Y YESO', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (116, 2395, 'FABRICACIÓN DE ARTÍCULOS DE HORMIGÓN, DE CEMENTO Y DE YESO', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (117, 2396, 'CORTE, TALLA Y ACABADO DE LA PIEDRA', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (118, 2399, 'FABRICACIÓN DE OTROS PRODUCTOS MINERALES NO METÁLICOS N.C.P.', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (119, 2410, 'INDUSTRIAS BÁSICAS DE HIERRO Y ACERO ', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (120, 2420, 'FABRICACIÓN DE PRODUCTOS PRIMARIOS DE METALES PRECIOSOS Y OTROS METALES NO FERROSOS', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (121, 2431, 'FUNDICIÓN DE HIERRO Y ACERO', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (122, 2432, 'FUNDICIÓN DE METALES NO FERROSOS', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (123, 2511, 'FABRICACIÓN DE PRODUCTOS METÁLICOS PARA USO ESTRUCTURAL', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (124, 2512, 'FABRICACIÓN DE TANQUES, DEPÓSITOS Y RECIPIENTES DE METAL', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (125, 2513, 'FABRICACIÓN DE LOS GENERADORES DEL VAPOR, EXCEPTO CALDERAS DE AGUA CALIENTE PARA CALEFACCIÓN CENTRAL', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (126, 2520, 'FABRICACIÓN DE ARMAS Y MUNICIONES', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (127, 2591, 'FORJA, PRENSADO, ESTAMPADO Y LAMINADO DE METALES; PULVIMETALURGIA', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (128, 2592, 'TRATAMIENTO Y REVESTIMIENTO DE METALES; MAQUINADO', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (129, 2593, 'FABRICACIÓN DE ARTÍCULOS DE CUCHILLERÍA, HERRAMIENTAS DE MANO Y ARTÍCULOS DE FERRETERÍA', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (130, 2599, 'FABRICACIÓN DE OTROS PRODUCTOS ELABORADOS DE METAL N.C.P.', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (131, 2610, 'FABRICACIÓN DE COMPONENTES Y TABLEROS ELECTRÓNICOS', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (132, 2620, 'FABRICACIÓN DE ORDENADORES Y EQUIPO PERIFÉRICO', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (133, 2630, 'FABRICACIÓN DE EQUIPOS DE COMUNICACIONES', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (134, 2640, 'FABRICACIÓN DE APARATOS ELECTRÓNICOS DE CONSUMO', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (135, 2651, 'FABRICACIÓN DE EQUIPO DE MEDICIÓN, PRUEBA, NAVEGACIÓN Y CONTROL', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (136, 2652, 'FABRICACIÓN DE RELOJES', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (137, 2660, 'FABRICACIÓN DE EQUIPO DE IRRADIACIÓN Y EQUIPO ELECTRÓNICO DE USO MÉDICO Y TERAPÉUTICO', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (138, 2670, 'FABRICACIÓN DE INSTRUMENTOS ÓPTICOS Y EQUIPO FOTOGRÁFICO', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (139, 2680, 'FABRICACIÓN DE SOPORTES MAGNÉTICOS Y ÓPTICOS', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (140, 2710, 'FABRICACIÓN DE MOTORES, GENERADORES Y TRANSFORMADORES ELÉCTRICOS Y APARATOS DE DISTRIBUCIÓN Y CONTROL DE LA ENERGÍA ELÉCTRICA', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (141, 2720, 'FABRICACIÓN DE PILAS, BATERÍAS Y ACUMULADORES', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (142, 2731, 'FABRICACIÓN DE CABLES DE FIBRA ÓPTICA', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (143, 2732, 'FABRICACIÓN DE OTROS HILOS Y CABLES ELÉCTRICOS', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (144, 2733, 'FABRICACIÓN DE DISPOSITIVOS DE CABLEADO', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (145, 2740, 'FABRICACIÓN DE EQUIPO ELÉCTRICO DE ILUMINACIÓN', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (146, 2750, 'FABRICACIÓN DE APARATOS DE USO DOMÉSTICO', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (147, 2790, 'FABRICACIÓN DE OTROS TIPOS DE EQUIPO ELÉCTRICO', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (220, 4649, 'VENTA AL POR MAYOR DE OTROS ENSERES DOMÉSTICOS', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (148, 2811, 'FABRICACIÓN DE MOTORES Y TURBINAS, EXCEPTO MOTORES PARA AERONAVES, VEHÍCULOS AUTOMOTORES Y MOTOCICLETAS', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (149, 2812, 'FABRICACIÓN DE EQUIPO DE PROPULSIÓN DE FLUIDOS', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (150, 2813, 'FABRICACIÓN DE BOMBAS, COMPRESORES, GRIFOS Y VÁLVULAS', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (151, 2814, 'FABRICACIÓN DE COJINETES, ENGRANAJES, TRENES DE ENGRANAJES Y PIEZAS DE TRANSMISIÓN', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (152, 2815, 'FABRICACIÓN DE HORNOS, HOGARES Y QUEMADORES', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (153, 2816, 'FABRICACIÓN DE EQUIPO DE ELEVACIÓN Y MANIPULACIÓN', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (154, 2817, 'FABRICACIÓN DE MAQUINARIA Y EQUIPO DE OFICINA (EXCEPTO ORDENADORES Y EQUIPO PERIFÉRICO)', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (155, 2818, 'FABRICACIÓN DE HERRAMIENTAS DE MANO MOTORIZADAS', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (156, 2819, 'FABRICACIÓN DE OTROS TIPOS DE MAQUINARIA DE USO GENERAL', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (157, 2821, 'FABRICACIÓN DE MAQUINARIA AGROPECUARIA Y FORESTAL', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (158, 2822, 'FABRICACIÓN DE MAQUINARIA PARA LA CONFORMACIÓN DE METALES Y DE MÁQUINAS HERRAMIENTA', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (159, 2823, 'FABRICACIÓN DE MAQUINARIA METALÚRGICA', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (160, 2824, 'FABRICACIÓN DE MAQUINARIA PARA EXPLOTACIÓN DE MINAS Y CANTERAS Y PARA OBRAS DE CONSTRUCCIÓN', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (161, 2825, 'FABRICACIÓN DE MAQUINARIA PARA LA ELABORACIÓN DE ALIMENTOS, BEBIDAS Y TABACO', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (162, 2826, 'FABRICACIÓN DE MAQUINARIA PARA LA ELABORACIÓN DE PRODUCTOS TEXTILES, PRENDAS DE VESTIR Y CUEROS', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (163, 2829, 'FABRICACIÓN DE OTROS TIPOS DE MAQUINARIA DE USO ESPECIAL', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (164, 2910, 'FABRICACIÓN DE VEHÍCULOS AUTOMOTORES', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (165, 2920, 'FABRICACIÓN DE CARROCERÍAS PARA VEHÍCULOS AUTOMOTORES; FABRICACIÓN DE REMOLQUES Y SEMIRREMOLQUES', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (166, 2930, 'FABRICACIÓN DE PARTES, PIEZAS Y ACCESORIOS PARA VEHÍCULOS DE AUTOMOTORES', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (167, 3011, 'CONSTRUCCIÓN DE BUQUES Y ESTRUCTURAS FLOTANTES', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (168, 3012, 'CONSTRUCCIÓN DE EMBARCACIONES DE RECREO Y DEPORTE', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (169, 3020, 'FABRICACIÓN DE LOCOMOTORAS Y DE MATERIAL RODANTE', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (170, 3030, 'FABRICACIÓN DE AERONAVES Y  NAVES ESPACIALES Y MAQUINARIA CONEXA', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (171, 3040, 'FABRICACIÓN DE VEHÍCULOS MILITARES DE COMBATE', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (172, 3091, 'FABRICACIÓN DE MOTOCICLETAS', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (173, 3092, 'FABRICACIÓN DE BICICLETAS Y DE SILLONES DE RUEDAS PARA INVÁLIDOS', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (174, 3099, 'FABRICACIÓN DE OTROS TIPOS DE EQUIPO DE TRANSPORTE N.C.P.', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (175, 3100, 'FABRICACIÓN DE MUEBLES', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (176, 3211, 'FABRICACIÓN DE JOYAS Y ARTÍCULOS CONEXOS', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (177, 3212, 'FABRICACIÓN DE BISUTERÍA Y ARTÍCULOS CONEXOS', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (178, 3220, 'FABRICACIÓN DE INSTRUMENTOS DE MÚSICA', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (179, 3230, 'FABRICACIÓN DE ARTÍCULOS DE DEPORTE', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (180, 3240, 'FABRICACIÓN DE JUEGOS Y JUGUETES', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (181, 3250, 'FABRICACIÓN DE INSTRUMENTOS Y MATERIALES MÉDICOS Y ODONTOLÓGICOS', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (182, 3290, 'OTRAS INDUSTRIAS MANUFACTURERAS N.C.P.', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (183, 3311, 'REPARACIÓN DE PRODUCTOS ELABORADOS DE METAL', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (184, 3312, 'REPARACIÓN DE MAQUINARIA', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (185, 3313, 'REPARACIÓN DE EQUIPO ELECTRÓNICO Y ÓPTICO', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (186, 3314, 'REPARACIÓN DE EQUIPO ELÉCTRICO', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (187, 3315, 'REPARACIÓN DE EQUIPO DE TRANSPORTE, EXCEPTO VEHÍCULOS AUTOMOTORES', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (188, 3319, 'REPARACIÓN DE OTROS TIPOS DE EQUIPO', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (189, 3320, 'INSTALACIÓN DE MAQUINARIA Y EQUIPO INDUSTRIALES', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (190, 3510, 'GENERACIÓN, TRANSMISIÓN Y DISTRIBUCIÓN DE ENERGÍA ELÉCTRICA', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (191, 3520, 'FABRICACIÓN DEL GAS; DISTRIBUCIÓN DE COMBUSTIBLES GASEOSOS POR TUBERÍAS', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (192, 3530, 'SUMINISTRO DE VAPOR Y AIRE ACONDICIONADO', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (193, 3600, 'CAPTACIÓN, TRATAMIENTO Y DISTRIBUCIÓN DE AGUA', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (194, 3700, 'EVACUACIÓN DE AGUAS RESIDUALES', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (195, 3811, 'RECOGIDA DE DESECHOS NO PELIGROSOS', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (196, 3812, 'RECOGIDA DE DESECHOS PELIGROSOS', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (197, 3821, 'TRATAMIENTO Y ELIMINACIÓN DE DESECHOS NO PELIGROSOS', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (198, 3822, 'TRATAMIENTO Y ELIMINACIÓN DE DESECHOS PELIGROSOS', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (199, 3830, 'RECUPERACIÓN DE MATERIALES', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (200, 3900, 'ACTIVIDADES DE DESCONTAMINACIÓN Y OTROS SERVICIOS DE GESTIÓN DE DESECHOS', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (201, 4100, 'CONSTRUCCIÓN DE EDIFICIOS', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (202, 4210, 'CONSTRUCCIÓN DE CARRETERAS Y LÍNEAS DE FERROCARRIL', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (203, 4220, 'CONSTRUCCIÓN DE PROYECTOS DE SERVICIO PÚBLICO', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (204, 4290, 'CONSTRUCCIÓN DE OTRAS OBRAS DE INGENIERÍA CIVIL', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (205, 4311, 'DEMOLICIÓN', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (206, 4312, 'PREPARACIÓN DEL TERRENO', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (207, 4321, 'INSTALACIONES ELÉCTRICAS', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (208, 4322, 'INSTALACIONES DE FONTANERÍA, CALEFACCIÓN Y AIRE ACONDICIONADO', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (209, 4329, 'OTRAS INSTALACIONES PARA OBRAS DE CONSTRUCCIÓN', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (210, 4330, 'TERMINACIÓN Y ACABADO DE EDIFICIOS', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (211, 4390, 'OTRAS ACTIVIDADES ESPECIALIZADAS DE LA CONSTRUCCIÓN', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (212, 4510, 'VENTA DE VEHÍCULOS AUTOMOTORES', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (213, 4520, 'MANTENIMIENTO Y REPARACIÓN DE VEHÍCULOS AUTOMOTORES', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (214, 4530, 'VENTAS DE PARTES, PIEZAS Y ACCESORIOS PARA VEHÍCULOS AUTOMOTORES', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (215, 4540, 'VENTA, MANTENIMIENTO Y REPARACIÓN DE MOTOCICLETAS Y DE SUS PARTES, PIEZAS Y ACCESORIOS.', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (216, 4610, 'VENTA AL POR MAYOR A CAMBIO DE UNA RETRIBUCIÓN O POR CONTRATA', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (217, 4620, 'VENTA AL POR MAYOR DE MATERIAS PRIMAS AGROPECUARIAS Y ANIMALES VIVOS.', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (218, 4630, 'VENTA AL POR MAYOR DE ALIMENTOS, BEBIDAS Y TABACO.', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (219, 4641, 'VENTA AL POR MAYOR DE PRODUCTOS TEXTILES, PRENDAS DE VESTIR Y CALZADO', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (221, 4651, 'VENTA AL POR MAYOR DE ORDENADORES, EQUIPO PERIFÉRICO Y PROGRAMAS DE INFORMÁTICA', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (222, 4652, 'VENTA AL POR MAYOR DE EQUIPO, PARTES Y PIEZAS ELECTRÓNICOS Y DE TELECOMUNICACIONES', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (223, 4653, 'VENTA AL POR MAYOR DE MAQUINARIA, EQUIPO Y MATERIALES AGROPECUARIOS ', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (224, 4659, 'VENTA AL POR MAYOR DE OTROS TIPOS DE MAQUINARIA Y EQUIPO', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (225, 4661, 'VENTA AL POR MAYOR DE COMBUSTIBLES SÓLIDOS, LÍQUIDOS Y GASEOSOS Y  PRODUCTOS CONEXOS', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (226, 4662, 'VENTA AL POR MAYOR DE METALES Y MINERALES METALÍFEROS', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (227, 4663, 'VENTA AL POR MAYOR DE MATERIALES DE CONSTRUCCIÓN, ARTÍCULOS DE FERRETERÍA Y EQUIPO Y MATERIALES DE FONTANERÍA Y CALEFACCIÓN.', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (228, 4669, 'VENTA AL POR MAYOR DE DESPERDICIOS, DESECHOS, CHATARRA Y OTROS PRODUCTOS N.C.P ', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (229, 4690, 'VENTA AL POR MAYOR NO ESPECIALIZADA ', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (230, 4711, 'VENTA AL POR MENOR EN COMERCIOS NO ESPECIALIZADOS CON PREDOMINIO DE LA VENTA DE ALIMENTOS, BEBIDAS O TABACO', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (231, 4719, 'OTRAS ACTIVIDADES DE VENTA AL POR MENOR EN COMERCIOS NO ESPECIALIZADOS', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (232, 4721, 'VENTA AL POR MENOR DE ALIMENTOS EN COMERCIOS ESPECIALIZADOS', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (233, 4722, 'VENTA AL POR MENOR DE BEBIDAS EN COMERCIOS ESPECIALIZADOS', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (234, 4723, 'VENTA AL POR MENOR DE PRODUCTOS DE TABACO EN COMERCIOS ESPECIALIZADOS', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (235, 4730, 'VENTA AL POR MENOR DE COMBUSTIBLES PARA VEHÍCULOS AUTOMOTORES EN COMERCIOS ESPECIALIZADOS', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (236, 4741, 'VENTA AL POR MENOR DE ORDENADORES, EQUIPO PERIFÉRICO, PROGRAMAS INFORMÁTICOS Y EQUIPO DE TELECOMUNICACIONES EN COMERCIOS ESPECIALIZADOS', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (237, 4742, 'VENTA AL POR MENOR DE EQUIPO DE SONIDO Y DE VÍDEO EN COMERCIOS ESPECIALIZADOS', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (238, 4751, 'VENTA AL POR MENOR DE PRODUCTOS TEXTILES EN COMERCIOS ESPECIALIZADOS', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (239, 4752, 'VENTA AL POR MENOR DE ARTÍCULOS DE FERRETERÍA, PINTURAS Y PRODUCTOS DE VIDRIO EN COMERCIOS ESPECIALIZADOS', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (240, 4753, 'VENTA AL POR MENOR DE TAPICES, ALFOMBRAS Y CUBRIMIENTOS PARA PAREDES Y PISOS EN COMERCIOS ESPECIALIZADOS', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (241, 4759, 'VENTA AL POR MENOR DE APARATOS ELÉCTRICOS DE USO DOMÉSTICO,  MUEBLES, EQUIPO DE ILUMINACIÓN Y OTROS ENSERES DOMÉSTICOS EN COMERCIOS ESPECIALIZADOS', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (242, 4761, 'VENTA AL POR MENOR DE LIBROS, PERIÓDICOS Y ARTÍCULOS DE PAPELERÍA EN COMERCIOS ESPECIALIZADOS', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (243, 4762, 'VENTA AL POR MENOR DE GRABACIONES DE MÚSICA Y DE VÍDEO EN COMERCIOS ESPECIALIZADOS', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (244, 4763, 'VENTA AL POR MENOR DE EQUIPO DE DEPORTE EN COMERCIOS ESPECIALIZADOS', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (245, 4764, 'VENTA AL POR MENOR DE JUEGOS Y  JUGUETES EN COMERCIOS ESPECIALIZADOS', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (246, 4771, 'VENTA AL POR MENOR DE PRENDAS DE VESTIR, CALZADO Y ARTÍCULOS DE CUERO EN COMERCIOS ESPECIALIZADOS', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (247, 4772, 'VENTA AL POR MENOR DE PRODUCTOS FARMACÉUTICOS Y MEDICINALES, COSMÉTICOS Y ARTÍCULOS DE TOCADOR EN COMERCIOS ESPECIALIZADOS   ', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (248, 4773, 'VENTA AL POR MENOR DE OTROS PRODUCTOS NUEVOS EN COMERCIOS ESPECIALIZADOS', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (249, 4774, 'VENTA AL POR MENOR DE ARTÍCULOS DE SEGUNDA MANO', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (250, 4781, 'VENTA AL POR MENOR DE ALIMENTOS, BEBIDAS Y TABACO EN PUESTOS DE VENTA Y MERCADOS ', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (251, 4782, 'VENTA AL POR MENOR DE PRODUCTOS TEXTILES, PRENDAS DE VESTIR Y CALZADO EN PUESTOS DE VENTA Y MERCADOS', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (252, 4789, 'VENTA AL POR MENOR DE OTROS PRODUCTOS EN PUESTOS DE VENTA Y MERCADOS', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (253, 4791, 'VENTA AL POR MENOR POR CORREO Y POR INTERNET', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (254, 4799, 'OTRAS ACTIVIDADES DE VENTA AL POR MENOR NO REALIZADAS EN COMERCIOS, PUESTOS DE VENTA O MERCADOS', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (255, 4911, 'TRANSPORTE INTERURBANO DE PASAJEROS POR FERROCARRIL', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (256, 4912, 'TRANSPORTE DE CARGA POR FERROCARRIL', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (257, 4921, 'TRANSPORTE URBANO Y SUBURBANO DE PASAJEROS POR VÍA TERRESTRE ', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (258, 4922, 'OTRAS ACTIVIDADES DE TRANSPORTE POR VÍA TERRESTRE', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (259, 4923, 'TRANSPORTE DE CARGA POR CARRETERA', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (260, 4930, 'TRANSPORTE POR TUBERÍAS', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (261, 5011, 'TRANSPORTE DE PASAJEROS MARÍTIMO Y DE CABOTAJE', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (262, 5012, 'TRANSPORTE DE CARGA MARÍTIMO Y DE CABOTAJE', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (263, 5021, 'TRANSPORTE DE PASAJEROS POR VÍAS DE NAVEGACIÓN INTERIORES', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (264, 5022, 'TRANSPORTE DE CARGA, POR VÍAS DE NAVEGACIÓN INTERIORES', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (265, 5110, 'TRANSPORTE DE PASAJEROS POR VÍA AÉREA', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (266, 5120, 'TRANSPORTE DE CARGA POR VÍA AÉREA', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (267, 5210, 'ALMACENAMIENTO Y DEPÓSITO', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (268, 5221, 'ACTIVIDADES DE SERVICIOS VINCULADAS AL TRANSPORTE TERRESTRE', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (269, 5222, 'ACTIVIDADES DE SERVICIOS VINCULADAS AL TRANSPORTE ACUÁTICO', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (270, 5223, 'ACTIVIDADES DE SERVICIOS VINCULADAS AL TRANSPORTE AÉREO', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (271, 5224, 'MANIPULACIÓN DE CARGA', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (272, 5229, 'OTRAS ACTIVIDADES DE APOYO AL TRANSPORTE', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (273, 5310, 'ACTIVIDADES POSTALES', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (274, 5320, 'ACTIVIDADES DE MENSAJERÍA', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (275, 5510, 'ACTIVIDADES DE ALOJAMIENTO PARA ESTANCIAS CORTAS', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (276, 5520, 'ACTIVIDADES DE CAMPAMENTOS, PARQUES DE VEHÍCULOS RECREATIVOS Y PARQUES DE CARAVANAS', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (277, 5590, 'OTRAS ACTIVIDADES DE ALOJAMIENTO', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (278, 5610, 'ACTIVIDADES DE RESTAURANTES Y DE SERVICIO MÓVIL DE COMIDAS', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (279, 5621, 'SUMINISTRO DE COMIDAS POR ENCARGO', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (280, 5629, 'OTRAS ACTIVIDADES DE SERVICIO DE COMIDAS', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (281, 5630, 'ACTIVIDADES DE SERVICIO DE BEBIDAS', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (282, 5811, 'EDICIÓN DE LIBROS', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (283, 5812, 'EDICIÓN DE DIRECTORIOS Y LISTAS DE CORREO', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (284, 5813, 'EDICIÓN DE PERIÓDICOS, REVISTAS Y OTRAS PUBLICACIONES PERIÓDICAS', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (285, 5819, 'OTRAS ACTIVIDADES DE EDICIÓN', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (286, 5820, 'EDICIÓN DE PROGRAMAS DE INFORMÁTICOS', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (287, 5911, 'ACTIVIDADES DE PRODUCCIÓN DE PELÍCULAS CINEMATOGRÁFICAS, VÍDEOS Y PROGRAMAS DE TELEVISIÓN', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (288, 5912, 'ACTIVIDADES DE POSTPRODUCCIÓN DE PELÍCULAS CINEMATOGRÁFICAS, VÍDEOS Y PROGRAMAS DE TELEVISIÓN', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (289, 5913, 'ACTIVIDADES DE DISTRIBUCIÓN DE PELÍCULAS CINEMATOGRÁFICAS, VÍDEOS Y PROGRAMAS DE TELEVISIÓN', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (290, 5914, 'ACTIVIDADES DE EXHIBICIÓN DE PELÍCULAS CINEMATOGRÁFICAS Y CINTAS DE VÍDEO ', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (291, 5920, 'ACTIVIDADES DE GRABACIÓN DE SONIDO Y EDICIÓN DE MÚSICA', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (292, 6010, 'TRANSMISIONES DE RADIO', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (293, 6020, 'PROGRAMACIÓN Y TRANSMISIONES DE TELEVISIÓN', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (294, 6110, 'ACTIVIDADES DE TELECOMUNICACIONES ALÁMBRICAS', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (295, 6120, 'ACTIVIDADES DE TELECOMUNICACIONES INALÁMBRICAS', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (296, 6130, 'ACTIVIDADES DE TELECOMUNICACIONES POR SATÉLITE.', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (297, 6190, 'OTRAS ACTIVIDADES DE TELECOMUNICACIÓN.', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (298, 6201, 'PROGRAMACIÓN INFORMÁTICA', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (299, 6202, 'CONSULTORÍA DE INFORMÁTICA Y DE GESTIÓN DE INSTALACIONES INFORMÁTICAS', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (300, 6209, 'OTRAS ACTIVIDADES DE TECNOLOGÍA DE LA INFORMACIÓN Y DE SERVICIOS INFORMÁTICOS', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (301, 6311, 'PROCESAMIENTO DE DATOS, HOSPEDAJE Y ACTIVIDADES CONEXAS', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (302, 6312, 'PORTALES WEB', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (303, 6391, 'ACTIVIDADES DE AGENCIAS DE NOTICIAS', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (304, 6399, 'OTRAS ACTIVIDADES DE SERVICIOS DE INFORMACIÓN N.C.P.', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (305, 6411, 'BANCA CENTRAL', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (306, 6419, 'OTROS TIPOS DE INTERMEDIACIÓN MONETARIA.', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (307, 6420, 'ACTIVIDADES DE SOCIEDADES DE CARTERA', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (308, 6430, 'FONDOS Y SOCIEDADES DE INVERSIÓN Y ENTIDADES FINANCIERAS SIMILARES', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (309, 6491, 'ARRENDAMIENTO FINANCIERO', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (310, 6492, 'OTRAS ACTIVIDADES DE CONCESIÓN DE CRÉDITO', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (311, 6499, 'OTRAS ACTIVIDADES DE SERVICIOS FINANCIEROS, EXCEPTO LAS DE SEGUROS Y FONDOS DE PENSIONES, N.C.P.', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (312, 6511, 'SEGUROS DE VIDA', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (313, 6512, 'SEGUROS GENERALES', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (314, 6520, 'REASEGUROS', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (315, 6530, 'FONDOS DE PENSIONES', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (316, 6611, 'ADMINISTRACIÓN DE MERCADOS FINANCIEROS', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (317, 6612, 'CORRETAJE DE VALORES Y DE CONTRATOS DE PRODUCTOS BÁSICOS', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (318, 6619, 'OTRAS ACTIVIDADES AUXILIARES DE LAS ACTIVIDADES DE SERVICIOS FINANCIEROS', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (319, 6621, 'EVALUACIÓN DE RIESGOS Y DAÑOS', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (320, 6622, 'ACTIVIDADES DE AGENTES Y CORREDORES DE SEGUROS', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (321, 6629, 'OTRAS ACTIVIDADES AUXILIARES DE LAS ACTIVIDADES DE SEGUROS Y FONDOS DE PENSIONES', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (322, 6630, 'ACTIVIDADES DE GESTIÓN DE FONDOS', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (323, 6810, 'ACTIVIDADES INMOBILIARIAS REALIZADAS CON BIENES PROPIOS O ARRENDADOS', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (324, 6820, 'ACTIVIDADES INMOBILIARIAS REALIZADAS A CAMBIO DE UNA RETRIBUCIÓN O POR CONTRATA', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (325, 6910, 'ACTIVIDADES JURÍDICAS', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (326, 6920, 'ACTIVIDADES DE CONTABILIDAD, TENEDURÍA DE LIBROS Y AUDITORÍA; CONSULTORÍA FISCAL', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (327, 7010, 'ACTIVIDADES DE OFICINAS CENTRALES', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (328, 7020, 'ACTIVIDADES DE CONSULTORÍA DE GESTIÓN', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (329, 7110, 'ACTIVIDADES DE ARQUITECTURA E INGENIERÍA Y ACTIVIDADES CONEXAS DE CONSULTORÍA TÉCNICA', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (330, 7120, 'ENSAYOS Y ANÁLISIS TÉCNICOS', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (331, 7210, 'INVESTIGACIÓN Y DESARROLLO EXPERIMENTAL EN EL CAMPO DE LAS CIENCIAS NATURALES Y LA INGENIERÍA', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (332, 7220, 'INVESTIGACIÓN Y DESARROLLO EXPERIMENTAL EN EL CAMPO DE LAS CIENCIAS SOCIALES Y LAS HUMANIDADES', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (333, 7310, 'PUBLICIDAD', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (334, 7320, 'ESTUDIOS DE MERCADO Y ENCUESTAS DE OPINIÓN PÚBLICA', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (335, 7410, 'ACTIVIDADES ESPECIALIZADAS DE DISEÑO', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (336, 7420, 'ACTIVIDADES DE FOTOGRAFÍA', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (337, 7490, 'OTRAS ACTIVIDADES PROFESIONALES, CIENTÍFICAS Y TÉCNICAS N.C.P.', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (338, 7500, 'ACTIVIDADES VETERINARIAS', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (339, 7710, 'ALQUILER Y ARRENDAMIENTO DE VEHÍCULOS AUTOMOTORES', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (340, 7721, 'ALQUILER Y ARRENDAMIENTO DE EQUIPO RECREATIVO Y DEPORTIVO', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (341, 7722, 'ALQUILER DE CINTAS DE VÍDEO Y DISCOS', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (342, 7729, 'ALQUILER Y ARRENDAMIENTO DE OTROS EFECTOS PERSONALES Y ENSERES DOMÉSTICOS ', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (343, 7730, 'ALQUILER Y ARRENDAMIENTO DE OTROS TIPOS DE MAQUINARIA, EQUIPO Y BIENES TANGIBLES', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (344, 7740, 'ARRENDAMIENTO DE PROPIEDAD INTELECTUAL Y PRODUCTOS SIMILARES, EXCEPTO OBRAS PROTEGIDAS  POR DERECHOS DE AUTOR', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (345, 7810, 'ACTIVIDADES DE AGENCIAS DE EMPLEO', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (346, 7820, 'ACTIVIDADES DE AGENCIAS DE EMPLEO TEMPORAL', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (347, 7830, 'OTRAS ACTIVIDADES DE DOTACIÓN DE RECURSOS HUMANOS', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (348, 7911, 'ACTIVIDADES DE AGENCIAS DE VIAJES', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (349, 7912, 'ACTIVIDADES DE OPERADORES TURÍSTICOS', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (350, 7990, 'OTROS SERVICIOS DE RESERVAS Y ACTIVIDADES CONEXAS', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (351, 8010, 'ACTIVIDADES DE SEGURIDAD PRIVADA', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (352, 8020, 'ACTIVIDADES DE SERVICIO DE SISTEMAS DE SEGURIDAD', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (353, 8030, 'ACTIVIDADES DE INVESTIGACIÓN', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (354, 8110, 'ACTIVIDADES COMBINADAS DE APOYO A INSTALACIONES', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (355, 8121, 'LIMPIEZA GENERAL DE EDIFICIOS', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (356, 8129, 'OTRAS ACTIVIDADES DE LIMPIEZA DE EDIFICIOS E INSTALACIONES INDUSTRIALES', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (357, 8130, 'ACTIVIDADES DE PAISAJISMO Y SERVICIOS DE MANTENIMIENTO CONEXOS', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (358, 8211, 'ACTIVIDADES COMBINADAS DE SERVICIOS ADMINISTRATIVOS DE OFICINA', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (359, 8219, 'FOTOCOPIADO, PREPARACIÓN DE DOCUMENTOS Y OTRAS ACTIVIDADES ESPECIALIZADAS DE APOYO DE OFICINA', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (360, 8220, 'ACTIVIDADES DE CENTROS DE LLAMADAS', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (361, 8230, 'ORGANIZACIÓN DE CONVENCIONES Y EXPOSICIONES COMERCIALES', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (362, 8291, 'ACTIVIDADES DE AGENCIAS DE COBRO Y AGENCIAS DE CALIFICACIÓN CREDITICIA', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (363, 8292, 'ACTIVIDADES DE ENVASADO Y EMPAQUETADO', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (364, 8299, 'OTRAS ACTIVIDADES DE SERVICIOS DE APOYO A LAS EMPRESAS N.C.P', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (365, 8411, 'ACTIVIDADES DE LA ADMINISTRACIÓN PÚBLICA EN GENERAL', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (366, 8412, 'REGULACIÓN DE LAS ACTIVIDADES DE ORGANISMOS QUE PRESTAN SERVICIOS SANITARIOS, EDUCATIVOS, CULTURALES Y OTROS SERVICIOS SOCIALES, EXCEPTO SERVICIOS DE SEGURIDAD SOCIAL', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (367, 8413, 'REGULACIÓN Y FACILITACIÓN DE LA ACTIVIDAD ECONÓMICA', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (368, 8421, 'RELACIONES EXTERIORES', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (369, 8422, 'ACTIVIDADES DE DEFENSA', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (370, 8423, 'ACTIVIDADES DE MANTENIMIENTO DEL ORDEN PÚBLICO Y DE SEGURIDAD', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (371, 8430, 'ACTIVIDADES DE PLANES DE SEGURIDAD SOCIAL DE AFILIACIÓN OBLIGATORIA', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (372, 8510, 'ENSEÑANZA PREESCOLAR Y PRIMARIA', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (373, 8521, 'ENSEÑANZA SECUNDARIA DE FORMACIÓN GENERAL', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (374, 8522, 'ENSEÑANZA SECUNDARIA DE FORMACIÓN TÉCNICA Y PROFESIONAL', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (375, 8530, 'ENSEÑANZA SUPERIOR', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (376, 8541, 'EDUCACIÓN DEPORTIVA Y RECREATIVA', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (377, 8542, 'ENSEÑANZA CULTURAL', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (378, 8549, 'OTROS TIPOS DE ENSEÑANZA N.C.P.', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (379, 8550, 'ACTIVIDADES DE APOYO A LA ENSEÑANZA', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (380, 8610, 'ACTIVIDADES DE HOSPITALES', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (381, 8620, 'ACTIVIDADES DE MÉDICOS Y ODONTÓLOGOS', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (382, 8690, 'OTRAS ACTIVIDADES DE ATENCIÓN DE LA SALUD HUMANA', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (383, 8710, 'ACTIVIDADES DE ATENCIÓN DE ENFERMERÍA EN INSTITUCIONES', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (384, 8720, 'ACTIVIDADES DE ATENCIÓN EN INSTITUCIONES PARA PERSONAS CON RETRASO MENTAL, ENFERMOS MENTALES Y TOXICÓMANOS', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (385, 8730, 'ACTIVIDADES DE ATENCIÓN EN INSTITUCIONES PARA PERSONAS DE EDAD PERSONAS CON DISCAPACIDAD', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (386, 8790, 'OTRAS ACTIVIDADES DE ATENCIÓN EN INSTITUCIONES', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (387, 8810, 'ACTIVIDADES DE ASISTENCIA SOCIAL SIN ALOJAMIENTO PARA PERSONAS DE EDAD Y PERSONAS CON DISCAPACIDAD', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (388, 8890, 'OTRAS ACTIVIDADES DE ASISTENCIA SOCIAL SIN ALOJAMIENTO', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (389, 9000, 'ACTIVIDADES CREATIVAS, ARTÍSTICAS Y DE ENTRETENIMIENTO', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (390, 9101, 'ACTIVIDADES DE BIBLIOTECAS Y ARCHIVOS', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (391, 9102, 'ACTIVIDADES DE MUSEOS Y GESTIÓN DE LUGARES Y EDIFICIOS HISTÓRICOS', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (392, 9103, 'ACTIVIDADES DE JARDINES BOTÁNICOS Y ZOOLÓGICOS Y RESERVAS NATURALES', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (393, 9200, 'ACTIVIDADES DE JUEGOS DE AZAR Y APUESTAS', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (394, 9311, 'GESTIÓN DE INSTALACIONES DEPORTIVAS', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (395, 9312, 'ACTIVIDADES DE CLUBES DEPORTIVOS', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (396, 9319, 'OTRAS ACTIVIDADES DEPORTIVAS', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (397, 9321, 'ACTIVIDADES DE PARQUES DE ATRACCIONES Y PARQUES TEMÁTICOS', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (398, 9329, 'OTRAS ACTIVIDADES DE ESPARCIMIENTO Y RECREATIVAS N.C.P.', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (399, 9411, 'ACTIVIDADES DE ASOCIACIONES EMPRESARIALES Y DE EMPLEADORES', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (400, 9412, 'ACTIVIDADES DE ASOCIACIONES PROFESIONALES', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (401, 9420, 'ACTIVIDADES DE SINDICATOS', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (402, 9491, 'ACTIVIDADES DE ORGANIZACIONES RELIGIOSAS', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (403, 9492, 'ACTIVIDADES DE ORGANIZACIONES POLÍTICAS', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (404, 9499, 'ACTIVIDADES DE OTRAS ASOCIACIONES N.C.P.', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (405, 9511, 'REPARACIÓN DE ORDENADORES Y EQUIPO PERIFÉRICO', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (406, 9512, 'REPARACIÓN DE EQUIPOS COMUNICACIONALES', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (407, 9521, 'REPARACIÓN DE APARATOS ELECTRÓNICOS DE CONSUMO', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (408, 9522, 'REPARACIÓN DE APARATOS DE USO DOMÉSTICO Y EQUIPO DOMÉSTICO Y DE JARDINERÍA', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (409, 9523, 'REPARACIÓN DE CALZADO Y ARTÍCULOS DE CUERO', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (410, 9524, 'REPARACIÓN DE MUEBLES Y ACCESORIOS DOMÉSTICOS', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (411, 9529, 'REPARACIÓN DE OTROS EFECTOS PERSONALES Y ENSERES DOMÉSTICOS', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (412, 9601, 'LAVADO Y LIMPIEZA, INCLUIDA LA LIMPIEZA EN SECO, DE PRODUCTOS TEXTILES Y DE PIEL', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (413, 9602, 'PELUQUERÍA Y OTROS TRATAMIENTOS DE BELLEZA', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (414, 9603, 'POMPAS FÚNEBRES Y ACTIVIDADES CONEXAS', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (415, 9609, 'OTRAS ACTIVIDADES DE SERVICIOS PERSONALES N.C.P.', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (416, 9700, 'ACTIVIDADES DE LOS HOGARES COMO EMPLEADORES DE PERSONAL DOMÉSTICO', true, '2026-04-14 16:32:02.666702+00', 1);
+INSERT INTO public.giros (id, ciiu_id, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (417, 9900, 'ACTIVIDADES DE ORGANIZACIONES Y ÓRGANOS EXTRATERRITORIALES', true, '2026-04-14 16:32:02.666702+00', 1);
+
+
+--
+-- Data for Name: niveles_riesgo; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public.niveles_riesgo (id, codigo, nombre, esta_activo) VALUES (1, 'NRB', 'RIESGO BAJO', true);
+INSERT INTO public.niveles_riesgo (id, codigo, nombre, esta_activo) VALUES (2, 'NRM', 'RIESGO MEDIO', true);
+INSERT INTO public.niveles_riesgo (id, codigo, nombre, esta_activo) VALUES (3, 'NRA', 'RIESGO ALTO', true);
+INSERT INTO public.niveles_riesgo (id, codigo, nombre, esta_activo) VALUES (4, 'NRMA', 'RIESGO MUY ALTO', true);
+
+
+--
+-- Data for Name: tipos_documento_identidad; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public.tipos_documento_identidad (id, codigo, nombre, esta_activo, es_para_juridica, es_para_natural) VALUES (3, '06', 'RUC', true, true, true);
+INSERT INTO public.tipos_documento_identidad (id, codigo, nombre, esta_activo, es_para_juridica, es_para_natural) VALUES (1, '01', 'DNI', true, false, true);
+INSERT INTO public.tipos_documento_identidad (id, codigo, nombre, esta_activo, es_para_juridica, es_para_natural) VALUES (2, '04', 'CE', true, false, true);
+
+
+--
+-- Data for Name: tipos_licencia; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public.tipos_licencia (id, codigo, nombre, esta_activo) VALUES (1, 'EST', 'ESTANDAR', true);
+INSERT INTO public.tipos_licencia (id, codigo, nombre, esta_activo) VALUES (2, 'CES', 'CESIONARIO', true);
+INSERT INTO public.tipos_licencia (id, codigo, nombre, esta_activo) VALUES (3, 'COR', 'COPORATIVA', true);
+
+
+--
+-- Data for Name: unidades_organicas; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public.unidades_organicas (id, codigo, nombre, sigla, esta_activo) VALUES (1, 'SGDEL', 'Sub Gerencia de Desarrollo Económico Local', 'SGDEL', true);
+INSERT INTO public.unidades_organicas (id, codigo, nombre, sigla, esta_activo) VALUES (2, 'SGRD', 'Sub Gerencia de Gestión de Riesgos de Desastres', 'SGRD', true);
+
+
+--
+-- Data for Name: tipos_procedimiento_tupa; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public.tipos_procedimiento_tupa (id, codigo, nombre, plazo_atencion_dias, dias_alerta_vencimiento, esta_activo, unidad_organica_id, fecha_digitacion, requiere_itse, requiere_lf, usuario_id) VALUES (1, 'PE657857552', 'ITSE posterior riesgo bajo', 9, 3, true, 2, '2026-04-14 18:28:33.278126+00', true, true, 1);
+
+INSERT INTO public.tipos_procedimiento_tupa (id, codigo, nombre, plazo_atencion_dias, dias_alerta_vencimiento, esta_activo, unidad_organica_id, fecha_digitacion, requiere_itse, requiere_lf, usuario_id) VALUES (2, 'PE1027344C1', 'Licencia riesgo bajo con ITSE posterior', 2, 1, true, 1, '2026-04-14 18:28:33.278126+00', true, true, 1);
+
+INSERT INTO public.tipos_procedimiento_tupa (id, codigo, nombre, plazo_atencion_dias, dias_alerta_vencimiento, esta_activo, unidad_organica_id, fecha_digitacion, requiere_itse, requiere_lf, usuario_id) VALUES (3, 'PE657851169', 'ITSE posterior riesgo medio', 9, 3, true, 2, '2026-04-14 18:28:33.278126+00', true, true, 1);
+
+INSERT INTO public.tipos_procedimiento_tupa (id, codigo, nombre, plazo_atencion_dias, dias_alerta_vencimiento, esta_activo, unidad_organica_id, fecha_digitacion, requiere_itse, requiere_lf, usuario_id) VALUES (4, 'PE102730761', 'Licencia riesgo medio con ITSE posterior', 2, 1, true, 1, '2026-04-14 18:28:33.278126+00', true, true, 1);
+
+INSERT INTO public.tipos_procedimiento_tupa (id, codigo, nombre, plazo_atencion_dias, dias_alerta_vencimiento, esta_activo, unidad_organica_id, fecha_digitacion, requiere_itse, requiere_lf, usuario_id) VALUES (5, 'PE65785E631', 'ITSE previa riesgo alto', 7, 2, true, 2, '2026-04-14 18:28:33.278126+00', true, false, 1);
+
+INSERT INTO public.tipos_procedimiento_tupa (id, codigo, nombre, plazo_atencion_dias, dias_alerta_vencimiento, esta_activo, unidad_organica_id, fecha_digitacion, requiere_itse, requiere_lf, usuario_id) VALUES (6, 'PE102735B77', 'Licencia riesgo alto con ITSE previa', 8, 3, true, 1, '2026-04-14 18:28:33.278126+00', true, true, 1);
+
+INSERT INTO public.tipos_procedimiento_tupa (id, codigo, nombre, plazo_atencion_dias, dias_alerta_vencimiento, esta_activo, unidad_organica_id, fecha_digitacion, requiere_itse, requiere_lf, usuario_id) VALUES (7, 'PE657857F96', 'ITSE previa riesgo muy alto', 7, 2, true, 2, '2026-04-14 18:28:33.278126+00', true, true, 1);
+
+INSERT INTO public.tipos_procedimiento_tupa (id, codigo, nombre, plazo_atencion_dias, dias_alerta_vencimiento, esta_activo, unidad_organica_id, fecha_digitacion, requiere_itse, requiere_lf, usuario_id) VALUES (8, 'PE102735FC9', 'Licencia riesgo muy alto con ITSE previa', 8, 3, true, 1, '2026-04-14 18:28:33.278126+00', true, true, 1);
+
+INSERT INTO public.tipos_procedimiento_tupa (id, codigo, nombre, plazo_atencion_dias, dias_alerta_vencimiento, esta_activo, unidad_organica_id, fecha_digitacion, requiere_itse, requiere_lf, usuario_id) VALUES (9, 'PE6578505D5', 'Renovación ITSE riesgo bajo', 7, 2, true, 2, '2026-04-14 18:28:33.278126+00', true, false, 1);
+
+INSERT INTO public.tipos_procedimiento_tupa (id, codigo, nombre, plazo_atencion_dias, dias_alerta_vencimiento, esta_activo, unidad_organica_id, fecha_digitacion, requiere_itse, requiere_lf, usuario_id) VALUES (10, 'PE102738869', 'Licencia corporativa con ITSE previa', 8, 3, true, 1, '2026-04-14 18:28:33.278126+00', true, true, 1);
+
+INSERT INTO public.tipos_procedimiento_tupa (id, codigo, nombre, plazo_atencion_dias, dias_alerta_vencimiento, esta_activo, unidad_organica_id, fecha_digitacion, requiere_itse, requiere_lf, usuario_id) VALUES (11, 'PE657856F0E', 'Renovación ITSE riesgo medio', 7, 2, true, 2, '2026-04-14 18:28:33.278126+00', true, false, 1);
+
+INSERT INTO public.tipos_procedimiento_tupa (id, codigo, nombre, plazo_atencion_dias, dias_alerta_vencimiento, esta_activo, unidad_organica_id, fecha_digitacion, requiere_itse, requiere_lf, usuario_id) VALUES (12, 'PE102734ABB', 'Licencia cesionario riesgo medio', 2, 1, true, 1, '2026-04-14 18:28:33.278126+00', true, true, 1);
+
+INSERT INTO public.tipos_procedimiento_tupa (id, codigo, nombre, plazo_atencion_dias, dias_alerta_vencimiento, esta_activo, unidad_organica_id, fecha_digitacion, requiere_itse, requiere_lf, usuario_id) VALUES (13, 'PE65785351D', 'Renovación ITSE riesgo alto', 9, 3, true, 2, '2026-04-14 18:28:33.278126+00', true, false, 1);
+
+INSERT INTO public.tipos_procedimiento_tupa (id, codigo, nombre, plazo_atencion_dias, dias_alerta_vencimiento, esta_activo, unidad_organica_id, fecha_digitacion, requiere_itse, requiere_lf, usuario_id) VALUES (14, 'PE10273750E', 'Licencia cesionario riesgo alto', 8, 3, true, 1, '2026-04-14 18:28:33.278126+00', true, true, 1);
+
+INSERT INTO public.tipos_procedimiento_tupa (id, codigo, nombre, plazo_atencion_dias, dias_alerta_vencimiento, esta_activo, unidad_organica_id, fecha_digitacion, requiere_itse, requiere_lf, usuario_id) VALUES (15, 'PE65785997E', 'Renovación ITSE riesgo muy alto', 9, 3, true, 2, '2026-04-14 18:28:33.278126+00', true, false, 1);
+
+INSERT INTO public.tipos_procedimiento_tupa (id, codigo, nombre, plazo_atencion_dias, dias_alerta_vencimiento, esta_activo, unidad_organica_id, fecha_digitacion, requiere_itse, requiere_lf, usuario_id) VALUES (16, 'PE10273BF60', 'Licencia cesionario riesgo muy alto', 8, 3, true, 1, '2026-04-14 18:28:33.278126+00', true, true, 1);
+
+INSERT INTO public.tipos_procedimiento_tupa (id, codigo, nombre, plazo_atencion_dias, dias_alerta_vencimiento, esta_activo, unidad_organica_id, fecha_digitacion, requiere_itse, requiere_lf, usuario_id) VALUES (17, 'PE102739212', 'Licencia provisional para bodegas', 5, 2, true, 1, '2026-04-14 18:28:33.278126+00', false, true, 1);
+--
+-- Data for Name: zonificaciones; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public.zonificaciones (id, codigo, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (1, 'ZDA', 'ZONA URBANA DE DENSIDAD ALTA', true, '2026-04-14 18:41:31.067525+00', 1);
+INSERT INTO public.zonificaciones (id, codigo, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (2, 'ZDM', 'ZONA URBANA DE DENSIDAD MEDIA', true, '2026-04-14 18:41:31.067525+00', 1);
+INSERT INTO public.zonificaciones (id, codigo, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (3, 'ZDB', 'ZONA URBANA DE DENSIDAD BAJA', true, '2026-04-14 18:41:31.067525+00', 1);
+INSERT INTO public.zonificaciones (id, codigo, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (4, 'ZDMB', 'ZONA URBANA DE DENSIDAD MUY BAJA', true, '2026-04-14 18:41:31.067525+00', 1);
+INSERT INTO public.zonificaciones (id, codigo, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (5, 'I2', 'INDUSTRIA LIVIANA I-2', true, '2026-04-14 18:41:31.067525+00', 1);
+INSERT INTO public.zonificaciones (id, codigo, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (6, 'I1', 'INDUSTRIA ELEMENTAL Y COMPLEMENTARIA I-1', true, '2026-04-14 18:41:31.067525+00', 1);
+INSERT INTO public.zonificaciones (id, codigo, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (7, 'ZRP-P', 'RECREACIÓN PUBLICA PASIVA', true, '2026-04-14 18:41:31.067525+00', 1);
+INSERT INTO public.zonificaciones (id, codigo, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (8, 'ZRP-A', 'RECREACIÓN PUBLICA ACTIVA', true, '2026-04-14 18:41:31.067525+00', 1);
+INSERT INTO public.zonificaciones (id, codigo, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (9, 'OU', 'OTROS USOS', true, '2026-04-14 18:41:31.067525+00', 1);
+INSERT INTO public.zonificaciones (id, codigo, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (10, 'E3', 'EDUCACIÓN SUPERIOR UNIVERSITARIA', true, '2026-04-14 18:41:31.067525+00', 1);
+INSERT INTO public.zonificaciones (id, codigo, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (11, 'E2', 'EDUCACIÓN SUPERIOR TÉCNICA', true, '2026-04-14 18:41:31.067525+00', 1);
+INSERT INTO public.zonificaciones (id, codigo, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (12, 'E1', 'EDUCACIÓN BÁSICA', true, '2026-04-14 18:41:31.067525+00', 1);
+INSERT INTO public.zonificaciones (id, codigo, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (13, 'H4', 'HOSPITAL / INSTITUTO ESPECIALIZADO', true, '2026-04-14 18:41:31.067525+00', 1);
+INSERT INTO public.zonificaciones (id, codigo, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (14, 'H3', 'HOSPITAL GENERAL', true, '2026-04-14 18:41:31.067525+00', 1);
+INSERT INTO public.zonificaciones (id, codigo, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (15, 'H2', 'CENTRO DE SALUD', true, '2026-04-14 18:41:31.067525+00', 1);
+INSERT INTO public.zonificaciones (id, codigo, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (16, 'H1', 'PUESTO DE SALUD', true, '2026-04-14 18:41:31.067525+00', 1);
+INSERT INTO public.zonificaciones (id, codigo, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (17, 'ZRE-1', 'ZONA DE REGLAMENTACIÓN ESPECIAL 1', true, '2026-04-14 18:41:31.067525+00', 1);
+INSERT INTO public.zonificaciones (id, codigo, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (18, 'ZRE-2', 'ZONA DE REGLAMENTACIÓN ESPECIAL 2', true, '2026-04-14 18:41:31.067525+00', 1);
+INSERT INTO public.zonificaciones (id, codigo, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (19, 'ZRE-3', 'ZONA DE REGLAMENTACIÓN ESPECIAL 3', true, '2026-04-14 18:41:31.067525+00', 1);
+INSERT INTO public.zonificaciones (id, codigo, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (20, 'ZRE-4', 'ZONA DE REGLAMENTACIÓN ESPECIAL 4', true, '2026-04-14 18:41:31.067525+00', 1);
+INSERT INTO public.zonificaciones (id, codigo, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (21, 'ZRE-5', 'ZONA DE REGLAMENTACIÓN ESPECIAL 5', true, '2026-04-14 18:41:31.067525+00', 1);
+INSERT INTO public.zonificaciones (id, codigo, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (22, 'ZRE-6', 'ZONA DE REGLAMENTACIÓN ESPECIAL 6', true, '2026-04-14 18:41:31.067525+00', 1);
+INSERT INTO public.zonificaciones (id, codigo, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (23, 'ZRE-7', 'ZONA DE REGLAMENTACIÓN ESPECIAL 7', true, '2026-04-14 18:41:31.067525+00', 1);
+INSERT INTO public.zonificaciones (id, codigo, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (24, 'ZRE-8', 'ZONA DE REGLAMENTACIÓN ESPECIAL 8', true, '2026-04-14 18:41:31.067525+00', 1);
+INSERT INTO public.zonificaciones (id, codigo, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (25, 'ZRE-9', 'ZONA DE REGLAMENTACIÓN ESPECIAL 9', true, '2026-04-14 18:41:31.067525+00', 1);
+INSERT INTO public.zonificaciones (id, codigo, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (26, 'ZRE-10', 'ZONA DE REGLAMENTACIÓN ESPECIAL 10', true, '2026-04-14 18:41:31.067525+00', 1);
+INSERT INTO public.zonificaciones (id, codigo, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (27, 'ZRE-11', 'ZONA DE REGLAMENTACIÓN ESPECIAL 11', true, '2026-04-14 18:41:31.067525+00', 1);
+INSERT INTO public.zonificaciones (id, codigo, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (28, 'SLO', 'ZONA DE SUPERFICIES LIMITADORAS DE OBSTÁCULOS DEL AEROPUERTO DE TARAPOTO', true, '2026-04-14 18:41:31.067525+00', 1);
+INSERT INTO public.zonificaciones (id, codigo, nombre, esta_activo, fecha_digitacion, usuario_id) VALUES (29, 'ZA', 'ZONA AGRÍCOLA', true, '2026-04-14 18:41:31.067525+00', 1);
+
+
+--
+-- Name: estados_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.estados_id_seq', 4, true);
+
+
+--
+-- Name: feriados_anuales_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.feriados_anuales_id_seq', 2, true);
+
+
+--
+-- Name: feriados_recurrentes_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.feriados_recurrentes_id_seq', 14, true);
+
+
+--
+-- Name: giros_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.giros_id_seq', 417, true);
+
+
+--
+-- Name: niveles_riesgo_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.niveles_riesgo_id_seq', 4, true);
+
+
+--
+-- Name: tipos_documento_identidad_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.tipos_documento_identidad_id_seq', 3, true);
+
+
+--
+-- Name: tipos_licencia_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.tipos_licencia_id_seq', 3, true);
+
+
+--
+-- Name: tipos_procedimiento_tupa_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.tipos_procedimiento_tupa_id_seq', 17, true);
+
+
+--
+-- Name: unidades_organicas_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.unidades_organicas_id_seq', 2, true);
+
+
+--
+-- Name: zonificaciones_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.zonificaciones_id_seq', 29, true);
+
+
+
+

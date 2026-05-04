@@ -75,15 +75,15 @@ SELECT
     e.numero_expediente,
     e.fecha_recepcion,
     TRIM(
-        COALESCE(ttitular.apellido_paterno, '') || ' ' ||
-        COALESCE(ttitular.apellido_materno, '') || ' ' ||
-        COALESCE(ttitular.nombres, '')
+        CONCAT(COALESCE(ttitular.apellido_paterno, ''), ' ',
+        COALESCE(ttitular.apellido_materno, ''), ' ',
+        COALESCE(ttitular.nombres, ''))
     ) AS titular_nombre,
     truc.numero_documento AS titular_ruc,
     TRIM(
-        COALESCE(tconductor.apellido_paterno, '') || ' ' ||
-        COALESCE(tconductor.apellido_materno, '') || ' ' ||
-        COALESCE(tconductor.nombres, '')
+        CONCAT(COALESCE(tconductor.apellido_paterno, ''), ' ',
+        COALESCE(tconductor.apellido_materno, ''), ' ',
+        COALESCE(tconductor.nombres, ''))
     ) AS conductor_nombre,
     CASE
         WHEN tlicencias_inactivas.licencia_funcionamiento_id IS NULL THEN TRUE
@@ -147,7 +147,7 @@ _FILTROS_BUSQUEDA: dict[str, tuple[str, callable]] = {
         int,
     ),
     'NOMBRE_COMERCIAL': (
-        'WHERE lf.nombre_comercial ILIKE %s',
+        'WHERE lf.nombre_comercial LIKE %s',
         lambda v: '%' + v.replace(' ', '%') + '%',
     ),
     'FECHA_EMISION': (
@@ -156,10 +156,10 @@ _FILTROS_BUSQUEDA: dict[str, tuple[str, callable]] = {
     ),
     'NOMBRES_TITULAR': (
         "WHERE TRIM("
-        "    COALESCE(ttitular.apellido_paterno, '') || ' ' ||"
-        "    COALESCE(ttitular.apellido_materno, '') || ' ' ||"
-        "    COALESCE(ttitular.nombres, '')"
-        ") ILIKE %s",
+        "    CONCAT(COALESCE(ttitular.apellido_paterno, ''), ' ',"
+        "    COALESCE(ttitular.apellido_materno, ''), ' ',"
+        "    COALESCE(ttitular.nombres, ''))"
+        ") LIKE %s",
         lambda v: '%' + v.replace(' ', '%') + '%',
     ),
     'RUC_TITULAR': (
@@ -168,22 +168,22 @@ _FILTROS_BUSQUEDA: dict[str, tuple[str, callable]] = {
     ),
     'NOMBRES_CONDUCTOR': (
         "WHERE TRIM("
-        "    COALESCE(tconductor.apellido_paterno, '') || ' ' ||"
-        "    COALESCE(tconductor.apellido_materno, '') || ' ' ||"
-        "    COALESCE(tconductor.nombres, '')"
-        ") ILIKE %s",
+        "    CONCAT(COALESCE(tconductor.apellido_paterno, ''), ' ',"
+        "    COALESCE(tconductor.apellido_materno, ''), ' ',"
+        "    COALESCE(tconductor.nombres, ''))"
+        ") LIKE %s",
         lambda v: '%' + v.replace(' ', '%') + '%',
     ),
     'DIRECCION': (
-        'WHERE TRIM(lf.direccion) ILIKE %s',
+        'WHERE TRIM(lf.direccion) LIKE %s',
         lambda v: '%' + v.replace(' ', '%') + '%',
     ),
     'RECIBO_PAGO': (
-        'WHERE TRIM(lf.numero_recibo_pago) ILIKE %s',
+        'WHERE TRIM(lf.numero_recibo_pago) LIKE %s',
         lambda v: '%' + v.replace(' ', '%') + '%',
     ),
     'RESOLUCION_NUMERO': (
-        'WHERE TRIM(lf.resolucion_numero) ILIKE %s',
+        'WHERE TRIM(lf.resolucion_numero) LIKE %s',
         lambda v: '%' + v.replace(' ', '%') + '%',
     ),
 }
@@ -242,7 +242,7 @@ def buscar_licencias(filtro: str, valor: str) -> list[dict]:
 
     with connection.cursor() as cursor:
         cursor.execute(sql, [valor_param])
-        columnas = [col.name for col in cursor.description]
+        columnas = [col[0] for col in cursor.description]
         return [dict(zip(columnas, fila)) for fila in cursor.fetchall()]
 
 
@@ -289,7 +289,7 @@ def listar_estados_licencia(licencia_funcionamiento_id: int) -> list[dict]:
     """
     with connection.cursor() as cursor:
         cursor.execute(_SQL_LISTAR_ESTADOS_LF, [licencia_funcionamiento_id])
-        columnas = [col.name for col in cursor.description]
+        columnas = [col[0] for col in cursor.description]
         return [dict(zip(columnas, fila)) for fila in cursor.fetchall()]
 
 
@@ -789,10 +789,10 @@ WITH licencias_filtradas AS (
 titular_docs AS (
     SELECT
         lf.id AS licencia_id,
-        STRING_AGG(
-            tdi.nombre || ' ' || pd.numero_documento,
-            ', '
-            ORDER BY tdi.nombre || ' ' || pd.numero_documento
+        GROUP_CONCAT(
+            CONCAT(tdi.nombre, ' ', pd.numero_documento)
+            ORDER BY CONCAT(tdi.nombre, ' ', pd.numero_documento)
+            SEPARATOR ', '
         ) AS titular_documentos
     FROM licencias_funcionamiento lf
     JOIN licencias_filtradas lf_f ON lf.id = lf_f.id
@@ -805,10 +805,10 @@ titular_docs AS (
 conductor_docs AS (
     SELECT
         lf.id AS licencia_id,
-        STRING_AGG(
-            tdi.nombre || ' ' || pd.numero_documento,
-            ', '
-            ORDER BY tdi.nombre || ' ' || pd.numero_documento
+        GROUP_CONCAT(
+            CONCAT(tdi.nombre, ' ', pd.numero_documento)
+            ORDER BY CONCAT(tdi.nombre, ' ', pd.numero_documento)
+            SEPARATOR ', '
         ) AS conductor_documentos
     FROM licencias_funcionamiento lf
     JOIN licencias_filtradas lf_f ON lf.id = lf_f.id
@@ -822,10 +822,10 @@ giros_concat AS (
     SELECT
         lf.id AS licencia_id,
         COALESCE(
-            STRING_AGG(
-                TRIM(g.nombre),
-                ', '
+            GROUP_CONCAT(
+                TRIM(g.nombre)
                 ORDER BY TRIM(g.nombre)
+                SEPARATOR ', '
             ),
             ''
         ) AS giros
@@ -841,15 +841,15 @@ SELECT
     lf.numero_licencia,
     e.numero_expediente,
     TRIM(
-        COALESCE(ttitular.apellido_paterno, '') || ' ' ||
-        COALESCE(ttitular.apellido_materno, '') || ' ' ||
-        COALESCE(ttitular.nombres, '')
+        CONCAT(COALESCE(ttitular.apellido_paterno, ''), ' ',
+        COALESCE(ttitular.apellido_materno, ''), ' ',
+        COALESCE(ttitular.nombres, ''))
     ) AS titular_nombre,
     COALESCE(td.titular_documentos, '')   AS titular_documentos,
     TRIM(
-        COALESCE(tconductor.apellido_paterno, '') || ' ' ||
-        COALESCE(tconductor.apellido_materno, '') || ' ' ||
-        COALESCE(tconductor.nombres, '')
+        CONCAT(COALESCE(tconductor.apellido_paterno, ''), ' ',
+        COALESCE(tconductor.apellido_materno, ''), ' ',
+        COALESCE(tconductor.nombres, ''))
     ) AS conductor_nombre,
     COALESCE(cd.conductor_documentos, '') AS conductor_documentos,
     lf.nombre_comercial,
@@ -914,10 +914,10 @@ def consultar_licencias(filtros: dict) -> list[dict]:
     if titular_nombre:
         conditions.append(
             "TRIM("
-            "    COALESCE(ttitular.apellido_paterno, '') || ' ' ||"
-            "    COALESCE(ttitular.apellido_materno, '') || ' ' ||"
-            "    COALESCE(ttitular.nombres, '')"
-            ") ILIKE %s"
+            "    CONCAT(COALESCE(ttitular.apellido_paterno, ''), ' ',"
+            "    COALESCE(ttitular.apellido_materno, ''), ' ',"
+            "    COALESCE(ttitular.nombres, ''))"
+            ") LIKE %s"
         )
         params.append('%' + titular_nombre.replace(' ', '%') + '%')
 
@@ -947,7 +947,7 @@ def consultar_licencias(filtros: dict) -> list[dict]:
 
     with connection.cursor() as cursor:
         cursor.execute(sql, params)
-        columnas = [col.name for col in cursor.description]
+        columnas = [col[0] for col in cursor.description]
         return [dict(zip(columnas, fila)) for fila in cursor.fetchall()]
 
 
@@ -1057,10 +1057,10 @@ LEFT JOIN giros
 _SQL_REPORTE_LF_TITULAR_DOCS = """
 SELECT
     licencias_funcionamiento.id AS licencia_id,
-    STRING_AGG(
-        tipos_documento_identidad.nombre || ' ' || personas_documentos.numero_documento,
-        ', '
-        ORDER BY tipos_documento_identidad.nombre || ' ' || personas_documentos.numero_documento
+    GROUP_CONCAT(
+        CONCAT(tipos_documento_identidad.nombre, ' ', personas_documentos.numero_documento)
+        ORDER BY CONCAT(tipos_documento_identidad.nombre, ' ', personas_documentos.numero_documento)
+        SEPARATOR ', '
     ) AS titular_documentos_concatenados
 FROM licencias_funcionamiento
 LEFT JOIN personas_documentos
@@ -1078,10 +1078,10 @@ GROUP BY licencias_funcionamiento.id
 _SQL_REPORTE_LF_CONDUCTOR_DOCS = """
 SELECT
     licencias_funcionamiento.id AS licencia_id,
-    STRING_AGG(
-        tipos_documento_identidad.nombre || ' ' || personas_documentos.numero_documento,
-        ', '
-        ORDER BY tipos_documento_identidad.nombre || ' ' || personas_documentos.numero_documento
+    GROUP_CONCAT(
+        CONCAT(tipos_documento_identidad.nombre, ' ', personas_documentos.numero_documento)
+        ORDER BY CONCAT(tipos_documento_identidad.nombre, ' ', personas_documentos.numero_documento)
+        SEPARATOR ', '
     ) AS conductor_documentos_concatenados
 FROM licencias_funcionamiento
 LEFT JOIN personas_documentos
@@ -1099,10 +1099,10 @@ GROUP BY licencias_funcionamiento.id
 _SQL_REPORTE_LF_GIROS = """
 SELECT
     licencias_funcionamiento.id AS licencia_id,
-    COALESCE(STRING_AGG(
-        LPAD(COALESCE(CAST(giros.ciiu_id AS VARCHAR), ''), 4, '0') || ' ' || TRIM(giros.nombre),
-        ', '
-        ORDER BY LPAD(COALESCE(CAST(giros.ciiu_id AS VARCHAR), ''), 4, '0') || ' ' || TRIM(giros.nombre)
+    COALESCE(GROUP_CONCAT(
+        CONCAT(LPAD(COALESCE(CAST(giros.ciiu_id AS CHAR), ''), 4, '0'), ' ', TRIM(giros.nombre))
+        ORDER BY CONCAT(LPAD(COALESCE(CAST(giros.ciiu_id AS CHAR), ''), 4, '0'), ' ', TRIM(giros.nombre))
+        SEPARATOR ', '
     ), '') AS giro_concatenado
 FROM licencias_funcionamiento
 LEFT JOIN licencias_funcionamiento_giros
@@ -1151,9 +1151,9 @@ SELECT
     expedientes.fecha_recepcion,
     tipos_procedimiento_tupa.nombre AS tipos_procedimiento_tupa_nombre,
     TRIM(
-        COALESCE(TTitular.apellido_paterno, '') || ' ' ||
-        COALESCE(TTitular.apellido_materno, '') || ' ' ||
-        COALESCE(TTitular.nombres, '')
+        CONCAT(COALESCE(TTitular.apellido_paterno, ''), ' ',
+        COALESCE(TTitular.apellido_materno, ''), ' ',
+        COALESCE(TTitular.nombres, ''))
     ) AS titular_nombre,
     TTitular.direccion          AS titular_direccion,
     TTitular.distrito           AS titular_distrito,
@@ -1162,9 +1162,9 @@ SELECT
     TTitular.telefono           AS titular_telefono,
     TTitular.correo_electronico AS titular_correo_electronico,
     TRIM(
-        COALESCE(TConductor.apellido_paterno, '') || ' ' ||
-        COALESCE(TConductor.apellido_materno, '') || ' ' ||
-        COALESCE(TConductor.nombres, '')
+        CONCAT(COALESCE(TConductor.apellido_paterno, ''), ' ',
+        COALESCE(TConductor.apellido_materno, ''), ' ',
+        COALESCE(TConductor.nombres, ''))
     ) AS conductor_nombre,
     TConductor.direccion          AS conductor_direccion,
     TConductor.distrito           AS conductor_distrito,
@@ -1266,7 +1266,7 @@ def reporte_licencias(filtros: dict) -> list[dict]:
             ')',
             params,
         )
-        columnas  = [col.name for col in cursor.description]
+        columnas  = [col[0] for col in cursor.description]
         resultados = [dict(zip(columnas, fila)) for fila in cursor.fetchall()]
 
     return resultados
