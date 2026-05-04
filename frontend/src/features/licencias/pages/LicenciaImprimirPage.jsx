@@ -232,7 +232,7 @@ const LicenciaImprimirPage = () => {
               />
               <div className="flex-1 text-center">
                 <p className="font-bold uppercase text-sm leading-snug">
-                  Municipalidad Provincial de San Martín
+                  Municipalidad Provincial de Rioja
                 </p>
                 <p className="font-bold uppercase text-base mt-1 tracking-widest">
                   Licencia de Funcionamiento
