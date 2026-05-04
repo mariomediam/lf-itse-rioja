@@ -31,9 +31,9 @@ env = environ.Env(
     RENIEC_PASSWORD=(str, ''),
     RENIEC_TIMEOUT=(int, 10),
     CORS_ALLOWED_ORIGINS=(list, [
-        'http://localhost:5173',
-        'http://127.0.0.1:5173',
-        'http://192.168.10.6:5173',
+        'http://localhost:3000',
+        'http://127.0.0.1:3000',
+        'http://192.168.1.6:3000',
     ]),
 )
 
