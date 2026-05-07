@@ -210,13 +210,15 @@ const LicenciaImprimirPage = () => {
         {/* Hoja A4 */}
         <div style={{
           width: '210mm',
-          minHeight: '297mm',
+          height: '297mm',
           margin: '0 auto',
           backgroundColor: '#ffffff',
           padding: '14mm 18mm 12mm 18mm',
           boxSizing: 'border-box',
           fontFamily: 'Arial, sans-serif',
           color: '#000000',
+          display: 'flex',
+          flexDirection: 'column',
         }}>
 
           {/* ── ENCABEZADO ── */}
@@ -351,9 +353,12 @@ const LicenciaImprimirPage = () => {
           </FilaCertificado>
 
           {/* LUGAR Y FECHA */}
-          <div style={{ textAlign: 'right', margin: '22px 0 20px 0', fontSize: '12px', fontWeight: 'bold' }}>
+          <div style={{ textAlign: 'right', margin: '22px 0 0 0', fontSize: '12px', fontWeight: 'bold' }}>
             RIOJA, {formatFechaLarga(licencia.fecha_emision)}
           </div>
+
+          {/* Espaciador: empuja los párrafos al fondo */}
+          <div style={{ flex: 1 }} />
 
           {/* ── PÁRRAFOS LEGALES ── */}
           <div style={{ borderTop: '1px solid #000', paddingTop: '8px' }}>
