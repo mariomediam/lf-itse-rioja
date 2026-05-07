@@ -18,9 +18,10 @@ const formatVigencia = (licencia) => {
   return '-'
 }
 
-const formatHorario = (desde, hasta) => {
+const formatHorario = (desde, hasta, dias) => {
   if (desde == null && hasta == null) return '-'
-  return `${desde} - ${hasta} horas`
+  const horario = `${desde} - ${hasta} horas`
+  return dias ? `${dias}, ${horario}` : horario
 }
 
 // ── Iconos ────────────────────────────────────────────────────────────────────
@@ -115,8 +116,11 @@ function CardDatosPrincipales({ licencia }) {
 
       <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 mt-4">
         <Campo etiqueta="Nivel de riesgo"   valor={licencia.nivel_riesgo_nombre} />
-        <Campo etiqueta="Horario"           valor={formatHorario(licencia.hora_desde, licencia.hora_hasta)} />
+        <Campo etiqueta="Horario"           valor={formatHorario(licencia.hora_desde, licencia.hora_hasta, licencia.dias_atencion)} />
         <Campo etiqueta="Número de recibo"  valor={licencia.numero_recibo_pago} />
+        {licencia.numero_folios && (
+          <Campo etiqueta="N° de folios" valor={licencia.numero_folios} />
+        )}
       </div>
 
       {(licencia.observaciones || licencia.fecha_notificacion) && (
