@@ -572,6 +572,18 @@ class LicenciaFuncionamientoCreateSerializer(serializers.Serializer):
                                    allow_blank=True,
                                    allow_null=True,
                                )
+    dias_atencion            = serializers.CharField(
+                                   max_length=50,
+                                   required=False,
+                                   allow_blank=True,
+                                   allow_null=True,
+                               )
+    numero_folios            = serializers.CharField(
+                                   max_length=50,
+                                   required=False,
+                                   allow_blank=True,
+                                   allow_null=True,
+                               )
     se_puede_publicar        = serializers.BooleanField(default=False)
     giros                    = _GiroItemSerializer(many=True)
 
@@ -628,6 +640,18 @@ class LicenciaFuncionamientoUpdateSerializer(serializers.Serializer):
     area                     = serializers.DecimalField(max_digits=18, decimal_places=2)
     numero_recibo_pago       = serializers.CharField(max_length=20)
     observaciones            = serializers.CharField(
+                                   required=False,
+                                   allow_blank=True,
+                                   allow_null=True,
+                               )
+    dias_atencion            = serializers.CharField(
+                                   max_length=50,
+                                   required=False,
+                                   allow_blank=True,
+                                   allow_null=True,
+                               )
+    numero_folios            = serializers.CharField(
+                                   max_length=50,
                                    required=False,
                                    allow_blank=True,
                                    allow_null=True,

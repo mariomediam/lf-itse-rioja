@@ -9,9 +9,10 @@ services:
     ports:
       - "8000:8000"
     env_file:
-      - ./backend/.env.dev  # ← Usar variables de desarrollo
+      - ./backend/.env.dev
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     stdin_open: true
     tty: true
 
@@ -34,14 +35,25 @@ services:
     tty: true
 
   db:
-    image: postgres:17.9-alpine
+    image: mysql:8.0
     container_name: app_db_dev
     env_file:
-      - ./backend/.env.dev  # ← Usar variables de desarrollo
+      - ./backend/.env.dev
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD:-rioja_password}
+      MYSQL_DATABASE: ${MYSQL_DB:-rioja_db}
+      MYSQL_USER: ${MYSQL_USER:-rioja_user}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-rioja_password}
     volumes:
-      - postgres_data_dev:/var/lib/postgresql/data
+      - mysql_data_dev:/var/lib/mysql
     ports:
-      - "5432:5432"
+      - "3306:3306"
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${MYSQL_PASSWORD:-rioja_password}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
 
 volumes:
-  postgres_data_dev:
+  mysql_data_dev:

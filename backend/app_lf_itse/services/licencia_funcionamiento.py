@@ -68,6 +68,8 @@ SELECT
     lf.area,
     lf.numero_recibo_pago,
     lf.observaciones,
+    lf.dias_atencion,
+    lf.numero_folios,
     lf.se_puede_publicar,
     lf.fecha_notificacion,
     lf.usuario_id,
@@ -450,6 +452,8 @@ def crear_licencia(data: dict, usuario) -> LicenciaFuncionamiento:
             area                  = data['area'],
             numero_recibo_pago    = data['numero_recibo_pago'],
             observaciones         = data.get('observaciones'),
+            dias_atencion         = data.get('dias_atencion'),
+            numero_folios         = data.get('numero_folios'),
             se_puede_publicar     = data.get('se_puede_publicar', False),
             usuario               = usuario,
             fecha_digitacion      = timezone.now(),
@@ -546,6 +550,8 @@ def modificar_licencia(licencia_id: int, data: dict) -> LicenciaFuncionamiento:
         licencia.area                   = data['area']
         licencia.numero_recibo_pago     = data['numero_recibo_pago']
         licencia.observaciones          = data.get('observaciones')
+        licencia.dias_atencion          = data.get('dias_atencion')
+        licencia.numero_folios          = data.get('numero_folios')
         licencia.se_puede_publicar      = data.get('se_puede_publicar', False)
         licencia.save()
 
