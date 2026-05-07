@@ -213,10 +213,17 @@ const LicenciaImprimirPage = () => {
           height: '297mm',
           margin: '0 auto',
           backgroundColor: '#ffffff',
-          padding: '14mm 18mm 12mm 18mm',
+          padding: '6mm',
           boxSizing: 'border-box',
           fontFamily: 'Arial, sans-serif',
           color: '#000000',
+        }}>
+        {/* Contenido con borde interior */}
+        <div style={{
+          border: '3px solid #000000',
+          height: '100%',
+          padding: '10mm 14mm 8mm 14mm',
+          boxSizing: 'border-box',
           display: 'flex',
           flexDirection: 'column',
         }}>
@@ -370,6 +377,7 @@ const LicenciaImprimirPage = () => {
             ))}
           </div>
 
+        </div>
         </div>
       </div>
     </>
