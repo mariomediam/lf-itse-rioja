@@ -213,7 +213,7 @@ const LicenciaImprimirPage = () => {
           height: '297mm',
           margin: '0 auto',
           backgroundColor: '#ffffff',
-          padding: '6mm',
+          padding: '10mm',
           boxSizing: 'border-box',
           fontFamily: 'Arial, sans-serif',
           color: '#000000',
@@ -222,32 +222,35 @@ const LicenciaImprimirPage = () => {
         <div style={{
           border: '3px solid #000000',
           height: '100%',
-          padding: '10mm 14mm 8mm 14mm',
+          padding: '0 0 8mm 0',
           boxSizing: 'border-box',
           display: 'flex',
           flexDirection: 'column',
         }}>
 
-          {/* ── ENCABEZADO ── */}
+          {/* ── ENCABEZADO — ocupa el ancho completo del borde ── */}
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '10px' }}>
             <img
               src="/images/escudo-muni.png"
               alt="Escudo Municipal"
-              style={{ height: '80px', objectFit: 'contain' }}
+              style={{ height: '90px', width: 'auto', flexShrink: 0 }}
               onError={(e) => { e.target.style.display = 'none' }}
             />
-            <div style={{ textAlign: 'center', flex: 1, padding: '0 12px' }}>
-              <p style={{ fontWeight: 'bold', fontSize: '16px', textTransform: 'uppercase', letterSpacing: '1px', margin: 0, lineHeight: '1.3' }}>
+            <div style={{ textAlign: 'center', flex: 1 }}>
+              <p style={{ fontWeight: 'bold', fontSize: '24px', textTransform: 'uppercase', letterSpacing: '-0.5px', margin: 0, lineHeight: '1.2', color: '#4a9e4a', whiteSpace: 'nowrap' }}>
                 Municipalidad Provincial de Rioja
               </p>
             </div>
             <img
               src="/images/logo-lf.png"
               alt="Logo Licencias"
-              style={{ height: '80px', objectFit: 'contain' }}
+              style={{ height: '90px', width: 'auto', maxWidth: '140px', flexShrink: 0 }}
               onError={(e) => { e.target.style.display = 'none' }}
             />
           </div>
+
+          {/* Resto del contenido con padding horizontal */}
+          <div style={{ flex: 1, padding: '0 10mm', display: 'flex', flexDirection: 'column' }}>
 
           {/* ── TÍTULO ── */}
           <div style={{ textAlign: 'center', marginBottom: '6px' }}>
@@ -377,9 +380,10 @@ const LicenciaImprimirPage = () => {
             ))}
           </div>
 
-        </div>
-        </div>
-      </div>
+          </div>{/* fin contenido con padding */}
+        </div>{/* fin borde interior */}
+        </div>{/* fin hoja A4 */}
+      </div>{/* fin fondo gris */}
     </>
   )
 }
