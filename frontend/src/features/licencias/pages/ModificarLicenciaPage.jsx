@@ -111,9 +111,11 @@ export default function ModificarLicenciaPage() {
   const [tipoLicenciaId,       setTipoLicenciaId]       = useState('')
   const [resolucionNumero,     setResolucionNumero]     = useState('')
   const [nivelRiesgoId,        setNivelRiesgoId]        = useState('')
+  const [diasAtencion,         setDiasAtencion]         = useState('')
   const [horaDesde,            setHoraDesde]            = useState('')
   const [horaHasta,            setHoraHasta]            = useState('')
   const [numeroReciboPago,     setNumeroReciboPago]     = useState('')
+  const [numeroFolios,         setNumeroFolios]         = useState('')
 
   // Titular y representante legal
   const [titular,       setTitular]      = useState(null)
@@ -195,6 +197,8 @@ export default function ModificarLicenciaPage() {
         setHoraDesde(String(lf.hora_desde))
         setHoraHasta(String(lf.hora_hasta))
         setNumeroReciboPago(lf.numero_recibo_pago ?? '')
+        setDiasAtencion(lf.dias_atencion ?? '')
+        setNumeroFolios(lf.numero_folios ?? '')
 
         // Establecimiento
         setNombreComercial(lf.nombre_comercial ?? '')
@@ -297,6 +301,8 @@ export default function ModificarLicenciaPage() {
       area:                     area,
       numero_recibo_pago:       numeroReciboPago.trim(),
       observaciones:            observaciones.trim() || null,
+      dias_atencion:            diasAtencion.trim() || null,
+      numero_folios:            numeroFolios.trim() || null,
       se_puede_publicar:        false,
       giros:                    giros.map((g) => ({ giro_id: g.id })),
     }
@@ -493,7 +499,7 @@ export default function ModificarLicenciaPage() {
                   </div>
                 </div>
 
-                {/* Fila 3: Nivel riesgo, Horario, Recibo */}
+                {/* Fila 3: Nivel riesgo, Días atención, Horario */}
                 <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
                   <div>
                     <label className="block text-xs font-medium text-gray-600 mb-1.5">
@@ -512,6 +518,19 @@ export default function ModificarLicenciaPage() {
                         <option key={n.id} value={n.id}>{n.nombre}</option>
                       ))}
                     </select>
+                  </div>
+                  <div>
+                    <label className="block text-xs font-medium text-gray-600 mb-1.5">
+                      Días de atención
+                    </label>
+                    <input
+                      type="text"
+                      maxLength={50}
+                      value={diasAtencion}
+                      onChange={(e) => setDiasAtencion(e.target.value)}
+                      placeholder="Ej. Lunes a sábado"
+                      className={inputClass}
+                    />
                   </div>
                   <div>
                     <label className="block text-xs font-medium text-gray-600 mb-1.5">
@@ -541,6 +560,10 @@ export default function ModificarLicenciaPage() {
                       className={inputClass}
                     />
                   </div>
+                </div>
+
+                {/* Fila 4: Recibo, N° folios */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-xs font-medium text-gray-600 mb-1.5">
                       N° de recibo de pago <span className="text-danger">*</span>
@@ -550,6 +573,19 @@ export default function ModificarLicenciaPage() {
                       value={numeroReciboPago}
                       onChange={(e) => setNumeroReciboPago(e.target.value)}
                       placeholder="Ej. 00567587"
+                      className={inputClass}
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-medium text-gray-600 mb-1.5">
+                      N° de folios
+                    </label>
+                    <input
+                      type="text"
+                      maxLength={50}
+                      value={numeroFolios}
+                      onChange={(e) => setNumeroFolios(e.target.value)}
+                      placeholder="Ej. 238-239"
                       className={inputClass}
                     />
                   </div>
