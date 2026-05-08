@@ -291,7 +291,7 @@ const LicenciaImprimirPage = () => {
 
           {/* OTORGA A */}
           <FilaCertificado label="OTORGA A">
-            <p style={{ margin: 0, fontWeight: 'bold', textTransform: 'uppercase' }}>
+            <p style={{ margin: 0, fontWeight: 'bold', textTransform: 'uppercase', fontSize: '16px', letterSpacing: '0.5px' }}>
               {licencia.conductor_nombre || '-'}
             </p>
             {docIdentidad && (
