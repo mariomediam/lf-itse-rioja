@@ -360,7 +360,7 @@ const ItseImprimirPage = () => {
           </div>
 
           {/* ── MUNICIPALIDAD ── */}
-          <p style={{ fontWeight: 'bold', fontSize: '12px', textAlign: 'center', textTransform: 'uppercase', margin: '0 0 16px 0' }}>
+          <p style={{ fontWeight: 'bold', fontSize: '12px', textAlign: 'center', textTransform: 'uppercase', margin: '12px 0 64px 0' }}>
             Municipalidad Provincial de Rioja
           </p>
 
