@@ -58,7 +58,7 @@ const etiquetaDocumento = (doc) => {
 
 function FilaCertificado({ label, children }) {
   return (
-    <div style={{ display: 'flex', alignItems: 'flex-start', marginBottom: '10px' }}>
+    <div style={{ display: 'flex', alignItems: 'baseline', marginBottom: '10px' }}>
       <div style={{
         width: '185px',
         flexShrink: 0,
