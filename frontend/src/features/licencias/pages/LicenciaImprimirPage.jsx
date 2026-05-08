@@ -261,6 +261,7 @@ const LicenciaImprimirPage = () => {
               textTransform: 'uppercase',
               margin: '0 0 4px 0',
               letterSpacing: '1px',
+              color: '#808000',
             }}>
               Licencia de Funcionamiento
             </p>
@@ -271,8 +272,8 @@ const LicenciaImprimirPage = () => {
 
           {/* ── N° LICENCIA (derecha) ── */}
           <div style={{ textAlign: 'right', margin: '14px 0 18px 0' }}>
-            <span style={{ fontWeight: 'bold', fontSize: '20px', letterSpacing: '2px' }}>
-              LIC.&nbsp;&nbsp;&nbsp;N° {licencia.numero_licencia} - {anioLicencia}
+            <span style={{ fontWeight: 'bold', fontSize: '24px', letterSpacing: '0.5px' }}>
+              LIC.&nbsp;&nbsp;N° {licencia.numero_licencia} - {anioLicencia}
             </span>
           </div>
 
@@ -283,6 +284,7 @@ const LicenciaImprimirPage = () => {
             margin: '0 0 18px 0',
             borderBottom: '1.5px solid #000',
             paddingBottom: '5px',
+            color: '#333399',
           }}>
             EL PRESENTE CERTIFICADO DE AUTORIZACIÓN MUNICIPAL:
           </p>
@@ -301,7 +303,7 @@ const LicenciaImprimirPage = () => {
 
           {/* NOMBRE COMERCIAL */}
           <FilaCertificado label="NOMBRE COMERCIAL">
-            <p style={{ margin: 0, fontWeight: 'bold', textTransform: 'uppercase' }}>
+            <p style={{ margin: 0, fontWeight: 'bold', textTransform: 'uppercase', fontSize: '18px', letterSpacing: '0.5px' }}>
               "{licencia.nombre_comercial || '-'}"
             </p>
             {licencia.titular_ruc && (
