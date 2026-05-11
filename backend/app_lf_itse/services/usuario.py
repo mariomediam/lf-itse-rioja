@@ -172,7 +172,20 @@ def construir_menu_usuario(usuario_id: int) -> list[dict]:
                 'id': 'reportes-certificados-itse',
                 'label': 'Certificados ITSE',
                 'url': '/reportes/certificados-itse',
-                'submenues': [],
+                'submenues': [
+                    {
+                        'id': 'reportes-certificados-itse-reporte',
+                        'label': 'Reporte',
+                        'url': '/reportes/certificados-itse',
+                        'submenues': [],
+                    },
+                    {
+                        'id': 'reportes-certificados-itse-por-renovar',
+                        'label': 'Por renovar',
+                        'url': '/reportes/certificados-itse/por-renovar',
+                        'submenues': [],
+                    },
+                ],
             },
         ],
     })
