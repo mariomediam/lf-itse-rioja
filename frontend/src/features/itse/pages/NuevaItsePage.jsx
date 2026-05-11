@@ -5,6 +5,7 @@ import TopBar from '@components/layout/TopBar'
 import SideMenu from '@components/layout/SideMenu'
 import SelectorPersona from '@features/expedientes/components/SelectorPersona'
 import AgregarGiroModal from '@features/licencias/components/AgregarGiroModal'
+import SelectorItsePrincipal from '@features/itse/components/SelectorItsePrincipal'
 import { dashboardApi } from '@api/dashboardApi'
 import { inspectoresApi } from '@api/inspectoresApi'
 import { itseApi } from '@api/itseApi'
@@ -138,6 +139,9 @@ export default function NuevaItsePage() {
   // Observaciones
   const [observaciones, setObservaciones] = useState('')
 
+  // ITSE principal (solo cuando tipo = renovación)
+  const [itsePrincipalOption, setItsePrincipalOption] = useState(null)
+
   // Submit
   const [submitting, setSubmitting] = useState(false)
 
@@ -247,7 +251,6 @@ export default function NuevaItsePage() {
     if (!capacidadAforo)           { toast.error('Ingrese la capacidad de aforo');              return }
     if (!area)                     { toast.error('Ingrese el área del establecimiento');        return }
     if (giros.length === 0)        { toast.error('Agregue al menos un giro autorizado');        return }
-
     const payload = {
       expediente_id:              expedienteId,
       tipo_itse_id:               Number(tipoItseId),
@@ -257,7 +260,7 @@ export default function NuevaItsePage() {
       fecha_caducidad:            fechaCaducidad,
       titular_id:                 titular.data.id,
       conductor_id:               representante.data.id,
-      itse_principal_id:          null,
+      itse_principal_id:          Number(tipoItseId) === 2 ? (itsePrincipalOption?.value ?? null) : null,
       nombre_comercial:           nombreComercial.trim(),
       nivel_riesgo_id:            Number(nivelRiesgoId),
       direccion:                  direccion.trim(),
@@ -392,7 +395,10 @@ export default function NuevaItsePage() {
                     </label>
                     <select
                       value={tipoItseId}
-                      onChange={(e) => setTipoItseId(e.target.value)}
+                      onChange={(e) => {
+                        setTipoItseId(e.target.value)
+                        setItsePrincipalOption(null)
+                      }}
                       className={selectClass}
                     >
                       <option value="">Seleccione un tipo</option>
@@ -414,6 +420,15 @@ export default function NuevaItsePage() {
                     />
                   </div>
                 </div>
+
+                {/* ITSE a renovar (solo visible cuando tipo = Renovación) */}
+                {Number(tipoItseId) === 2 && (
+                  <SelectorItsePrincipal
+                    value={itsePrincipalOption}
+                    onChange={setItsePrincipalOption}
+                    required={false}
+                  />
+                )}
 
                 {/* Fila 3: Nivel de riesgo, Recibo de pago */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">

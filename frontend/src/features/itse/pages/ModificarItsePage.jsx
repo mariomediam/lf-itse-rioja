@@ -5,6 +5,7 @@ import TopBar from '@components/layout/TopBar'
 import SideMenu from '@components/layout/SideMenu'
 import SelectorPersona from '@features/expedientes/components/SelectorPersona'
 import AgregarGiroModal from '@features/licencias/components/AgregarGiroModal'
+import SelectorItsePrincipal from '@features/itse/components/SelectorItsePrincipal'
 import { dashboardApi } from '@api/dashboardApi'
 import { inspectoresApi } from '@api/inspectoresApi'
 import { itseApi } from '@api/itseApi'
@@ -141,6 +142,9 @@ export default function ModificarItsePage() {
   // Observaciones
   const [observaciones, setObservaciones] = useState('')
 
+  // ITSE principal (solo cuando tipo = renovación)
+  const [itsePrincipalOption, setItsePrincipalOption] = useState(null)
+
   // Submit
   const [submitting, setSubmitting] = useState(false)
 
@@ -224,6 +228,26 @@ export default function ModificarItsePage() {
           setInspectorId(String(resInspectoresItse.data[0].inspector_id))
         }
 
+        // ITSE principal (renovación)
+        if (itse.itse_principal_id) {
+          try {
+            const resPrincipal = await itseApi.buscar('ID', itse.itse_principal_id)
+            const principal = resPrincipal.data[0]
+            if (principal) {
+              const formatFecha = (f) => {
+                if (!f) return '-'
+                const d = new Date(f)
+                return `${String(d.getUTCDate()).padStart(2, '0')}/${String(d.getUTCMonth() + 1).padStart(2, '0')}/${d.getUTCFullYear()}`
+              }
+              setItsePrincipalOption({
+                value: principal.id,
+                label: `N° ${principal.numero_itse}  |  ${formatFecha(principal.fecha_expedicion)}  |  ${principal.nombre_comercial}`,
+                data: principal,
+              })
+            }
+          } catch { /* ignorar si no se puede cargar */ }
+        }
+
         // Titular
         const resTitular = await personasApi.buscar('ID', itse.titular_id)
         if (resTitular.data[0]) setTitular(buildPersonaOption(resTitular.data[0]))
@@ -274,7 +298,6 @@ export default function ModificarItsePage() {
     if (!capacidadAforo)           { toast.error('Ingrese la capacidad de aforo');               return }
     if (!area)                     { toast.error('Ingrese el área del establecimiento');         return }
     if (giros.length === 0)        { toast.error('Agregue al menos un giro autorizado');         return }
-
     const payload = {
       expediente_id:              expedienteId,
       tipo_itse_id:               Number(tipoItseId),
@@ -284,7 +307,7 @@ export default function ModificarItsePage() {
       fecha_caducidad:            fechaCaducidad,
       titular_id:                 titular.data.id,
       conductor_id:               representante.data.id,
-      itse_principal_id:          null,
+      itse_principal_id:          Number(tipoItseId) === 2 ? (itsePrincipalOption?.value ?? null) : null,
       nombre_comercial:           nombreComercial.trim(),
       nivel_riesgo_id:            Number(nivelRiesgoId),
       direccion:                  direccion.trim(),
@@ -436,7 +459,10 @@ export default function ModificarItsePage() {
                     </label>
                     <select
                       value={tipoItseId}
-                      onChange={(e) => setTipoItseId(e.target.value)}
+                      onChange={(e) => {
+                        setTipoItseId(e.target.value)
+                        setItsePrincipalOption(null)
+                      }}
                       className={selectClass}
                     >
                       <option value="">Seleccione un tipo</option>
@@ -458,6 +484,15 @@ export default function ModificarItsePage() {
                     />
                   </div>
                 </div>
+
+                {/* ITSE a renovar (solo visible cuando tipo = Renovación) */}
+                {Number(tipoItseId) === 2 && (
+                  <SelectorItsePrincipal
+                    value={itsePrincipalOption}
+                    onChange={setItsePrincipalOption}
+                    required={false}
+                  />
+                )}
 
                 {/* Fila 3: Nivel de riesgo, Recibo de pago */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
