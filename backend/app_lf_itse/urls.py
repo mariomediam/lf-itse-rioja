@@ -8,6 +8,7 @@ from .views import (
     ExpedienteArchivoDetailView,
     ExpedienteArchivoDownloadView,
     ExpedienteArchivoUploadView,
+    FechaServidorView,
     ExpedienteCreateView,
     ExpedienteUpdateView,
     ExpedientesBuscarView,
@@ -72,6 +73,9 @@ from .views import (
 app_name = 'lf_itse'
 
 urlpatterns = [
+    # Fecha del servidor
+    path('fecha-servidor/', FechaServidorView.as_view(), name='fecha-servidor'),
+
     # Expedientes
     path('expedientes/', ExpedienteCreateView.as_view(), name='expediente-create'),
     path('expedientes/<int:pk>/', ExpedienteUpdateView.as_view(), name='expediente-update'),

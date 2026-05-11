@@ -298,6 +298,28 @@ class ExpedienteUpdateView(APIView):
             )
 
 
+class FechaServidorView(APIView):
+    """
+    GET /api/lf-itse/fecha-servidor/
+
+    Retorna la fecha actual del servidor en formato ISO (YYYY-MM-DD).
+    Utilizado por el frontend para calcular rangos de fechas relativas
+    sin depender del reloj del cliente.
+
+    Respuesta
+    ---------
+    { "fecha": "2026-05-11" }
+
+    Requiere autenticación JWT.
+    """
+
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        import datetime
+        return Response({'fecha': datetime.date.today().isoformat()}, status=status.HTTP_200_OK)
+
+
 class ExpedientesPendientesView(APIView):
     """
     GET /api/lf-itse/expedientes/pendientes/

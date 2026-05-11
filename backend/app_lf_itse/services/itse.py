@@ -204,7 +204,8 @@ SELECT
     itse.fecha_solicitud_renovacion,
     itse.fecha_caducidad,
     itse.nombre_comercial,
-    itse.direccion
+    itse.direccion,
+    itse.expediente_id
 FROM itse
 LEFT JOIN (
     SELECT id
