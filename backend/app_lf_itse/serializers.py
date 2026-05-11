@@ -906,6 +906,26 @@ class ItseConsultaQuerySerializer(serializers.Serializer):
         return attrs
 
 
+class ItsePorRenovarQuerySerializer(serializers.Serializer):
+    """
+    Valida los parámetros de consulta del endpoint de ITSE por renovar.
+
+    Parámetros requeridos
+    ---------------------
+    fecha_desde : date  — extremo inferior del rango de fecha de caducidad.
+    fecha_hasta : date  — extremo superior del rango de fecha de caducidad.
+    """
+    fecha_desde = serializers.DateField(required=True)
+    fecha_hasta = serializers.DateField(required=True)
+
+    def validate(self, attrs):
+        if attrs['fecha_desde'] > attrs['fecha_hasta']:
+            raise serializers.ValidationError(
+                'fecha_desde no puede ser posterior a fecha_hasta.'
+            )
+        return attrs
+
+
 class UsuarioSerializer(serializers.ModelSerializer):
     """
     Serializa la información del usuario autenticado excluyendo el password.

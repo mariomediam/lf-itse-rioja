@@ -24,6 +24,7 @@ from .views import (
     LicenciaFuncionamientoVerificarExpedienteView,
     ExpedientesConsultaView,
     ItseConsultaView,
+    ItsePorRenovarView,
     LicenciasFuncionamientoBuscarView,
     LicenciasFuncionamientoConsultaView,
     LicenciasFuncionamientoReporteView,
@@ -88,7 +89,8 @@ urlpatterns = [
     # ITSE
     path('itse/', ItseCreateView.as_view(), name='itse-create'),
     path('itse/buscar/',   ItseBuscarView.as_view(),   name='itse-buscar'),
-    path('itse/consulta/', ItseConsultaView.as_view(), name='itse-consulta'),
+    path('itse/consulta/',    ItseConsultaView.as_view(),    name='itse-consulta'),
+    path('itse/por-renovar/', ItsePorRenovarView.as_view(), name='itse-por-renovar'),
     path(
         'itse/verificar-expediente/',
         ItseVerificarExpedienteView.as_view(),

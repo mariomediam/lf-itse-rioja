@@ -46,6 +46,7 @@ from .serializers import (
     LicenciaFuncionamientoUpdateSerializer,
     ExpedienteConsultaQuerySerializer,
     ItseConsultaQuerySerializer,
+    ItsePorRenovarQuerySerializer,
     LicenciasFuncionamientoConsultaQuerySerializer,
     LicenciasFuncionamientoReporteQuerySerializer,
     NivelRiesgoSerializer,
@@ -87,6 +88,7 @@ from .services.itse import (
     ItseNotificacionFechaInvalidaError,
     buscar_itse,
     consultar_itse,
+    itse_por_renovar,
     crear_itse,
     eliminar_itse,
     listar_estados_itse,
@@ -2224,6 +2226,55 @@ class ItseConsultaView(APIView):
 
         except Exception as e:
             logger.exception('Error al consultar ITSE')
+            return Response(
+                {'error': str(e)},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            )
+
+
+class ItsePorRenovarView(APIView):
+    """
+    GET /api/lf-itse/itse/por-renovar/
+
+    Lista las ITSE que deben ser renovadas dentro de un periodo determinado.
+
+    Solo se incluyen ITSE que cumplan los tres criterios:
+    - No han sido renovadas aún (ninguna otra ITSE las referencia como itse_principal_id).
+    - Están activas (no tienen estados inactivos en su historial).
+    - Su fecha de caducidad cae dentro del rango [fecha_desde, fecha_hasta].
+
+    Query params (obligatorios)
+    ---------------------------
+    fecha_desde : date  — extremo inferior del rango (YYYY-MM-DD).
+    fecha_hasta : date  — extremo superior del rango (YYYY-MM-DD).
+
+    Respuesta por registro
+    ----------------------
+    id, numero_itse, fecha_expedicion, fecha_solicitud_renovacion,
+    fecha_caducidad, nombre_comercial, direccion.
+
+    Requiere autenticación JWT.
+    """
+
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        try:
+            serializer = ItsePorRenovarQuerySerializer(
+                data=request.query_params.dict()
+            )
+            if not serializer.is_valid():
+                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+            data = serializer.validated_data
+            resultados = itse_por_renovar(
+                str(data['fecha_desde']),
+                str(data['fecha_hasta']),
+            )
+            return Response(resultados, status=status.HTTP_200_OK)
+
+        except Exception as e:
+            logger.exception('Error al listar ITSE por renovar')
             return Response(
                 {'error': str(e)},
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR,

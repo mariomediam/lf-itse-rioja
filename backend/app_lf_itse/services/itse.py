@@ -196,6 +196,56 @@ def buscar_itse(filtro: str, valor: str) -> list[dict]:
         return [dict(zip(columnas, fila)) for fila in cursor.fetchall()]
 
 
+_SQL_ITSE_POR_RENOVAR = """
+SELECT
+    itse.id,
+    itse.numero_itse,
+    itse.fecha_expedicion,
+    itse.fecha_solicitud_renovacion,
+    itse.fecha_caducidad,
+    itse.nombre_comercial,
+    itse.direccion
+FROM itse
+LEFT JOIN (
+    SELECT id
+    FROM itse
+    WHERE itse_principal_id IS NOT NULL
+) AS TItseRenovadas ON itse.id = TItseRenovadas.id
+LEFT JOIN (
+    SELECT DISTINCT ie.itse_id
+    FROM itse_estados ie
+    INNER JOIN estados est ON ie.estado_id = est.id
+    WHERE est.esta_activo = FALSE
+) AS titse_inactivos ON itse.id = titse_inactivos.itse_id
+WHERE TItseRenovadas.id IS NOT NULL
+  AND titse_inactivos.itse_id IS NULL
+  AND itse.fecha_caducidad BETWEEN %s AND %s
+ORDER BY itse.fecha_caducidad
+"""
+
+
+def itse_por_renovar(fecha_desde: str, fecha_hasta: str) -> list[dict]:
+    """
+    Retorna las ITSE que deben ser renovadas dentro del periodo indicado.
+
+    Criterios de inclusión
+    ----------------------
+    - La ITSE no ha sido renovada aún (no existe otra ITSE que la referencie
+      como itse_principal_id).
+    - La ITSE está activa (no tiene ningún estado inactivo en su historial).
+    - La fecha de caducidad cae dentro del rango [fecha_desde, fecha_hasta].
+
+    Parámetros
+    ----------
+    fecha_desde : str  — fecha ISO (YYYY-MM-DD), extremo inferior del rango.
+    fecha_hasta : str  — fecha ISO (YYYY-MM-DD), extremo superior del rango.
+    """
+    with connection.cursor() as cursor:
+        cursor.execute(_SQL_ITSE_POR_RENOVAR, [fecha_desde, fecha_hasta])
+        columnas = [col[0] for col in cursor.description]
+        return [dict(zip(columnas, fila)) for fila in cursor.fetchall()]
+
+
 # ── Estados de ITSE ────────────────────────────────────────────────────────────
 
 _SQL_LISTAR_ESTADOS_ITSE = """
