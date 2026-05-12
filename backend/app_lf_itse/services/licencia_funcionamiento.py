@@ -842,6 +842,11 @@ SELECT
     tc.telefono AS conductor_telefono,
     tc.correo_electronico AS conductor_correo_electronico,
 
+    z.nombre AS zonificacion_nombre,
+    z.codigo AS zonificacion_codigo,
+
+    nr.nombre AS nivel_riesgo_nombre,
+
     CASE
         WHEN li.licencia_funcionamiento_id IS NULL THEN 1
         ELSE 0
