@@ -134,6 +134,7 @@ function ItseCard({ item }) {
           {item.tipos_procedimiento_tupa_nombre && (
             <Campo label="TUPA"       value={item.tipos_procedimiento_tupa_nombre} />
           )}
+          <Campo label="Área"         value={item.area} />
           <Campo label="Resolución"   value={item.resolucion_numero} />
           <Campo label="Recibo"       value={item.numero_recibo_pago} />
           {item.fecha_notificacion && (
@@ -388,6 +389,7 @@ export default function ReporteItsePage() {
       'Doc. Titular':               item.titular_documentos_concatenados || '',
       'Conductor':                  item.conductor_nombre                || '',
       'Doc. Conductor':             item.conductor_documentos_concatenados || '',
+      'Área':                       item.area                            || '',
       'N.° Resolución':             item.resolucion_numero               || '',
       'N.° Recibo Pago':            item.numero_recibo_pago              || '',
       'Fecha Notificación':         formatFecha(item.fecha_notificacion),

@@ -156,6 +156,7 @@ function LicenciaCard({ lic }) {
           {lic.tipos_procedimiento_tupa_nombre && (
             <Campo label="TUPA"     value={lic.tipos_procedimiento_tupa_nombre} />
           )}
+          <Campo label="Área"        value={lic.area} />
           <Campo label="Resolución" value={lic.resolucion_numero} />
           <Campo label="Recibo"     value={lic.numero_recibo_pago} />
           {lic.fecha_notificacion && (
@@ -429,6 +430,7 @@ export default function ReporteLicenciasPage() {
       'Doc. Titular':             lic.titular_documentos_concatenados || '',
       'Conductor':                lic.conductor_nombre     || '',
       'Doc. Conductor':           lic.conductor_documentos_concatenados || '',
+      'Área':                     lic.area                 || '',
       'N.° Resolución':           lic.resolucion_numero    || '',
       'N.° Recibo Pago':          lic.numero_recibo_pago   || '',
       'Fecha Notificación':       formatFecha(lic.fecha_notificacion),
