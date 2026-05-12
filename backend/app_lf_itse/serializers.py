@@ -829,24 +829,33 @@ class LicenciasFuncionamientoConsultaQuerySerializer(serializers.Serializer):
     Al menos uno de los campos debe estar presente.
     """
 
-    titular_nombre             = serializers.CharField(required=False, max_length=200)
-    numero_licencia            = serializers.IntegerField(required=False, min_value=1)
-    anio_licencia              = serializers.IntegerField(required=False, min_value=1900)
-    titular_numero_documento   = serializers.CharField(required=False, max_length=20)
-    conductor_numero_documento = serializers.CharField(required=False, max_length=20)
+    numero_licencia              = serializers.IntegerField(required=False, min_value=1)
+    numero_expediente            = serializers.IntegerField(required=False, min_value=1)
+    anio_expediente              = serializers.IntegerField(required=False, min_value=1900)
+
+    emision_desde                = serializers.DateField(required=False)
+    emision_hasta                = serializers.DateField(required=False)
+
+    titular_nombre               = serializers.CharField(required=False, max_length=200)
+    titular_numero_documento     = serializers.CharField(required=False, max_length=20)
+
+    conductor_nombre             = serializers.CharField(required=False, max_length=200)
+    conductor_numero_documento   = serializers.CharField(required=False, max_length=20)
+
+    nombre_comercial             = serializers.CharField(required=False, max_length=200)
+
+    nivel_riesgo_id              = serializers.IntegerField(required=False, min_value=1)
+    direccion                    = serializers.CharField(required=False, max_length=300)
+    zonificacion_id              = serializers.IntegerField(required=False, min_value=1)
+    numero_recibo_pago           = serializers.CharField(required=False, max_length=50)
+
+    fecha_notificacion_desde     = serializers.DateField(required=False)
+    fecha_notificacion_hasta     = serializers.DateField(required=False)
+
+    esta_activo                  = serializers.BooleanField(required=False)
+    giro_nombre                  = serializers.CharField(required=False, max_length=200)
 
     def validate(self, attrs):
-        _FILTROS = [
-            'titular_nombre',
-            'numero_licencia',
-            'anio_licencia',
-            'titular_numero_documento',
-            'conductor_numero_documento',
-        ]
-        if not any(attrs.get(f) for f in _FILTROS):
-            raise serializers.ValidationError(
-                'Debe proporcionar al menos un filtro de búsqueda.'
-            )
         return attrs
 
 

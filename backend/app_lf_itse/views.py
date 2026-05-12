@@ -3236,22 +3236,28 @@ class LicenciasFuncionamientoConsultaView(APIView):
     GET /api/lf-itse/licencias-funcionamiento/consulta/
 
     Busca licencias de funcionamiento según uno o más filtros opcionales.
-    Al menos uno debe estar presente.
+    Si no se pasa ningún filtro, retorna todos los registros.
 
     Query params (todos opcionales, pero se requiere al menos uno)
     --------------------------------------------------------------
-    titular_nombre             – str   búsqueda parcial en nombre/razón social del titular
-    numero_licencia            – int   número de licencia (exacto)
-    anio_licencia              – int   año de emisión de la licencia (exacto)
-    titular_numero_documento   – str   número de documento del titular (exacto)
-    conductor_numero_documento – str   número de documento del conductor (exacto)
-
-    Respuesta por licencia
-    ----------------------
-    numero_licencia, numero_expediente,
-    titular_nombre, titular_documentos,
-    conductor_nombre, conductor_documentos,
-    nombre_comercial, direccion, giros, esta_activo.
+    numero_licencia              – int   número de licencia (exacto)
+    numero_expediente            – int   número de expediente (exacto)
+    anio_expediente              – int   año de recepción del expediente (exacto)
+    emision_desde                – date  inicio del rango de fecha de emisión (YYYY-MM-DD)
+    emision_hasta                – date  fin del rango de fecha de emisión (YYYY-MM-DD)
+    titular_nombre               – str   búsqueda parcial en apellidos + nombres del titular
+    titular_numero_documento     – str   número de documento exacto del titular
+    conductor_nombre             – str   búsqueda parcial en apellidos + nombres del conductor
+    conductor_numero_documento   – str   número de documento exacto del conductor
+    nombre_comercial             – str   búsqueda parcial en nombre comercial
+    nivel_riesgo_id              – int   ID del nivel de riesgo
+    direccion                    – str   búsqueda parcial en dirección
+    zonificacion_id              – int   ID de la zonificación
+    numero_recibo_pago           – str   número de recibo de pago (exacto)
+    fecha_notificacion_desde     – date  inicio del rango de fecha de notificación (YYYY-MM-DD)
+    fecha_notificacion_hasta     – date  fin del rango de fecha de notificación (YYYY-MM-DD)
+    esta_activo                  – bool  true = solo activas, false = solo inactivas
+    giro_nombre                  – str   búsqueda parcial en nombre de giro
 
     Requiere autenticación JWT.
     """
