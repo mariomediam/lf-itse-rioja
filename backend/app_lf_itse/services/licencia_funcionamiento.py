@@ -1091,7 +1091,7 @@ SELECT
     ) AS conductor_documentos_concatenados
 FROM licencias_funcionamiento
 LEFT JOIN personas_documentos
-    ON licencias_funcionamiento.conductor_id = personas_documentos.id
+    ON licencias_funcionamiento.conductor_id = personas_documentos.persona_id
 LEFT JOIN tipos_documento_identidad
     ON personas_documentos.tipo_documento_identidad_id = tipos_documento_identidad.id
 WHERE licencias_funcionamiento.id = ANY(%s)
