@@ -208,7 +208,7 @@ SELECT
     itse.expediente_id
 FROM itse
 LEFT JOIN (
-    SELECT id
+    SELECT itse_principal_id AS id
     FROM itse
     WHERE itse_principal_id IS NOT NULL
 ) AS TItseRenovadas ON itse.id = TItseRenovadas.id
@@ -218,7 +218,7 @@ LEFT JOIN (
     INNER JOIN estados est ON ie.estado_id = est.id
     WHERE est.esta_activo = FALSE
 ) AS titse_inactivos ON itse.id = titse_inactivos.itse_id
-WHERE TItseRenovadas.id IS NOT NULL
+WHERE TItseRenovadas.id IS NULL
   AND titse_inactivos.itse_id IS NULL
   AND itse.fecha_caducidad BETWEEN %s AND %s
 ORDER BY itse.fecha_caducidad
