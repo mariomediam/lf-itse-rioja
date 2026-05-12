@@ -69,7 +69,7 @@ function Campo({ label, value }) {
   )
 }
 
-// ── Card de licencia ──────────────────────────────────────────────────────────
+// ── Card de licencia (layout horizontal) ─────────────────────────────────────
 
 function LicenciaCard({ lic }) {
   const horario =
@@ -84,83 +84,85 @@ function LicenciaCard({ lic }) {
       : null
 
   return (
-    <div className="bg-white rounded-lg border border-gray-200 p-4 flex flex-col gap-3
-                    print-card">
-      {/* Encabezado de la card */}
-      <div className="flex items-start justify-between gap-2">
-        <div className="flex items-center gap-2 flex-wrap">
-          <span className="text-base font-bold text-primary">N.° {lic.numero_licencia}</span>
+    <div className="bg-white rounded-lg border border-gray-200 overflow-hidden print-card">
+
+      {/* ── Cabecera ── */}
+      <div className="flex items-center justify-between gap-3 px-4 py-2.5
+                      bg-gray-50 border-b border-gray-200">
+        <div className="flex items-center gap-2">
+          <span className="text-sm font-bold text-primary">N.° {lic.numero_licencia}</span>
           <EstadoBadge activo={lic.esta_activo} />
-        </div>
-        <div className="text-right shrink-0">
-          <p className="text-xs text-gray-500">Exp. {lic.numero_expediente}</p>
-          {lic.fecha_recepcion && (
-            <p className="text-xs text-gray-400">{formatFecha(lic.fecha_recepcion)}</p>
-          )}
-        </div>
-      </div>
-
-      {/* Nombre comercial y dirección */}
-      {lic.nombre_comercial && (
-        <p className="text-sm font-semibold text-gray-800 leading-tight">
-          {lic.nombre_comercial}
-        </p>
-      )}
-      {lic.direccion && (
-        <p className="text-xs text-gray-600">{lic.direccion}</p>
-      )}
-
-      {/* Nivel de riesgo y zonificación */}
-      {(lic.nivel_riesgo_nombre || lic.zonificacion_nombre) && (
-        <div className="flex flex-wrap gap-1.5">
           {lic.nivel_riesgo_nombre && (
-            <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs
+            <span className="hidden sm:inline-flex items-center px-2 py-0.5 rounded-full text-xs
                              font-medium bg-orange-50 text-orange-700 border border-orange-200">
               {lic.nivel_riesgo_nombre}
             </span>
           )}
           {lic.zonificacion_nombre && (
-            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs
-                             font-medium bg-blue-50 text-blue-700 border border-blue-200">
-              {lic.zonificacion_codigo && (
-                <span className="font-bold">{lic.zonificacion_codigo}</span>
-              )}
+            <span className="hidden sm:inline-flex items-center gap-1 px-2 py-0.5 rounded-full
+                             text-xs font-medium bg-blue-50 text-blue-700 border border-blue-200">
+              {lic.zonificacion_codigo && <span className="font-bold">{lic.zonificacion_codigo}</span>}
               {lic.zonificacion_nombre}
             </span>
           )}
         </div>
-      )}
-
-      <div className="border-t border-gray-100 pt-2 flex flex-col gap-1.5">
-        <Campo label="Titular"   value={lic.titular_nombre} />
-        <Campo label="Doc."      value={lic.titular_documentos_concatenados} />
-        {lic.conductor_nombre?.trim() && (
-          <>
-            <Campo label="Conductor" value={lic.conductor_nombre} />
-            <Campo label="Doc."      value={lic.conductor_documentos_concatenados} />
-          </>
-        )}
+        <div className="text-right shrink-0 text-xs text-gray-500">
+          <span>Exp. {lic.numero_expediente}</span>
+          {lic.fecha_recepcion && (
+            <span className="ml-2 text-gray-400">{formatFecha(lic.fecha_recepcion)}</span>
+          )}
+        </div>
       </div>
 
-      {lic.giro_concatenado && (
-        <div className="border-t border-gray-100 pt-2">
-          <p className="text-xs text-gray-500 mb-0.5">Giros</p>
-          <p className="text-xs text-gray-700">{lic.giro_concatenado}</p>
-        </div>
-      )}
+      {/* ── Cuerpo en 3 columnas ── */}
+      <div className="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-gray-100">
 
-      <div className="border-t border-gray-100 pt-2 flex flex-col gap-1">
-        <Campo label="Emisión"   value={formatFecha(lic.fecha_emision)} />
-        {lic.tipos_procedimiento_tupa_nombre && (
-          <Campo label="TUPA"      value={lic.tipos_procedimiento_tupa_nombre} />
-        )}
-        <Campo label="Vigencia"  value={vigencia} />
-        <Campo label="Horario"   value={horario} />
-        <Campo label="Resolución" value={lic.resolucion_numero} />
-        <Campo label="Recibo"    value={lic.numero_recibo_pago} />
-        {lic.fecha_notificacion && (
-          <Campo label="Notificación" value={formatFecha(lic.fecha_notificacion)} />
-        )}
+        {/* Columna 1 — Establecimiento */}
+        <div className="px-4 py-3 flex flex-col gap-1.5">
+          {lic.nombre_comercial && (
+            <p className="text-sm font-semibold text-gray-800 leading-tight">
+              {lic.nombre_comercial}
+            </p>
+          )}
+          {lic.direccion && (
+            <p className="text-xs text-gray-500">{lic.direccion}</p>
+          )}
+          {lic.giro_concatenado && (
+            <div className="mt-1">
+              <p className="text-xs font-medium text-gray-500 mb-0.5">Giros</p>
+              <p className="text-xs text-gray-700 leading-snug">{lic.giro_concatenado}</p>
+            </div>
+          )}
+        </div>
+
+        {/* Columna 2 — Titular y conductor */}
+        <div className="px-4 py-3 flex flex-col gap-1.5">
+          <Campo label="Titular"   value={lic.titular_nombre} />
+          <Campo label="Doc."      value={lic.titular_documentos_concatenados} />
+          {lic.conductor_nombre?.trim() && (
+            <>
+              <div className="mt-1 pt-1 border-t border-gray-100" />
+              <Campo label="Conductor" value={lic.conductor_nombre} />
+              <Campo label="Doc."      value={lic.conductor_documentos_concatenados} />
+            </>
+          )}
+        </div>
+
+        {/* Columna 3 — Detalles de la licencia */}
+        <div className="px-4 py-3 flex flex-col gap-1">
+          <Campo label="Emisión"    value={formatFecha(lic.fecha_emision)} />
+          <Campo label="Vigencia"   value={vigencia} />
+          <Campo label="Horario"    value={horario} />
+          {lic.tipos_procedimiento_tupa_nombre && (
+            <Campo label="TUPA"     value={lic.tipos_procedimiento_tupa_nombre} />
+          )}
+          <Campo label="Resolución" value={lic.resolucion_numero} />
+          <Campo label="Recibo"     value={lic.numero_recibo_pago} />
+          {lic.fecha_notificacion && (
+            <Campo label="Notificación" value={formatFecha(lic.fecha_notificacion)} />
+          )}
+        </div>
+
       </div>
     </div>
   )
@@ -622,7 +624,7 @@ export default function ReporteLicenciasPage() {
                 </div>
 
                 {licencias.length > 0 ? (
-                  <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 print-grid">
+                  <div className="flex flex-col gap-3 print-grid">
                     {licencias.map((lic) => (
                       <LicenciaCard key={lic.id} lic={lic} />
                     ))}
