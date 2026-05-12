@@ -2213,22 +2213,29 @@ class ItseConsultaView(APIView):
     GET /api/lf-itse/itse/consulta/
 
     Busca ITSE según uno o más filtros opcionales.
-    Al menos uno debe estar presente.
+    Si no se pasa ningún filtro, retorna todos los registros.
 
-    Query params (todos opcionales, pero se requiere al menos uno)
-    --------------------------------------------------------------
-    titular_nombre             – str   búsqueda parcial en nombre/razón social del titular
-    numero_itse                – int   número de ITSE (exacto)
-    anio_itse                  – int   año de expedición del ITSE (exacto)
-    titular_numero_documento   – str   número de documento del titular (exacto)
-    conductor_numero_documento – str   número de documento del conductor (exacto)
+    Query params (todos opcionales)
+    --------------------------------
+    numero_itse                  – int   número de ITSE (exacto)
+    numero_expediente            – int   número de expediente (exacto)
+    anio_expediente              – int   año de recepción del expediente (exacto)
+    emision_desde                – date  inicio del rango de fecha de expedición (YYYY-MM-DD)
+    emision_hasta                – date  fin del rango de fecha de expedición (YYYY-MM-DD)
+    titular_nombre               – str   búsqueda parcial en apellidos + nombres del titular
+    titular_numero_documento     – str   número de documento exacto del titular
+    conductor_nombre             – str   búsqueda parcial en apellidos + nombres del conductor
+    conductor_numero_documento   – str   número de documento exacto del conductor
+    nombre_comercial             – str   búsqueda parcial en nombre comercial
+    nivel_riesgo_id              – int   ID del nivel de riesgo
+    direccion                    – str   búsqueda parcial en dirección
+    numero_recibo_pago           – str   número de recibo de pago (exacto)
+    fecha_notificacion_desde     – date  inicio del rango de fecha de notificación (YYYY-MM-DD)
+    fecha_notificacion_hasta     – date  fin del rango de fecha de notificación (YYYY-MM-DD)
+    esta_activo                  – bool  true = solo activas, false = solo inactivas
+    giro_nombre                  – str   búsqueda parcial en nombre de giro
 
-    Respuesta por ITSE
-    ------------------
-    numero_itse, numero_expediente,
-    titular_nombre, titular_documentos,
-    conductor_nombre, conductor_documentos,
-    nombre_comercial, direccion, giros, esta_activo.
+    Requiere autenticación JWT.
 
     Requiere autenticación JWT.
     """
