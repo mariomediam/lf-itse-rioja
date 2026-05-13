@@ -549,7 +549,7 @@ class LicenciaFuncionamientoCreateSerializer(serializers.Serializer):
 
     expediente_id            = serializers.IntegerField()
     tipo_licencia_id         = serializers.IntegerField()
-    numero_licencia          = serializers.IntegerField(min_value=1)
+    numero_licencia          = serializers.IntegerField(required=False, allow_null=True, min_value=1)
     fecha_emision            = serializers.DateField()
     titular_id               = serializers.IntegerField()
     conductor_id             = serializers.IntegerField()

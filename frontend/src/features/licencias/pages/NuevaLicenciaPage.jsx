@@ -232,7 +232,6 @@ export default function NuevaLicenciaPage() {
   const handleSubmit = async (e) => {
     e.preventDefault()
 
-    if (!numeroLicencia)   { toast.error('Ingrese el número de licencia');             return }
     if (!fechaEmision)     { toast.error('Ingrese la fecha de emisión');               return }
     if (!tipoLicenciaId)   { toast.error('Seleccione el tipo de licencia');            return }
     if (!resolucionNumero) { toast.error('Ingrese el número de resolución');           return }
@@ -261,7 +260,7 @@ export default function NuevaLicenciaPage() {
     const payload = {
       expediente_id:           expedienteId,
       tipo_licencia_id:        Number(tipoLicenciaId),
-      numero_licencia:         Number(numeroLicencia),
+      numero_licencia:         numeroLicencia ? Number(numeroLicencia) : null,
       fecha_emision:           fechaEmision,
       titular_id:              titular.data.id,
       conductor_id:            representante.data.id,
@@ -344,14 +343,14 @@ export default function NuevaLicenciaPage() {
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 items-end">
                   <div>
                     <label className="block text-xs font-medium text-gray-600 mb-1.5">
-                      Número de licencia <span className="text-danger">*</span>
+                      Número de licencia
                     </label>
                     <input
                       type="number"
                       min="1"
                       value={numeroLicencia}
                       onChange={(e) => setNumeroLicencia(e.target.value)}
-                      placeholder="Ej. 275"
+                      placeholder="Automático si se deja vacío"
                       className={inputClass}
                     />
                   </div>
