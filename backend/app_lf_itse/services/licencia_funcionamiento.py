@@ -449,7 +449,13 @@ def crear_licencia(data: dict, usuario) -> LicenciaFuncionamiento:
         Si ``numero_recibo_pago`` ya existe en otra licencia.
     """
     _validar_licencia_no_denegada(data['expediente_id'])
-    _validar_numero_licencia_unico(data['numero_licencia'])
+
+    # Si no se proporcionó número de licencia, el sistema lo determina
+    numero_licencia = data.get('numero_licencia') or get_siguiente_numero_licencia(
+        data['fecha_emision'].year,
+    )
+
+    _validar_numero_licencia_unico(numero_licencia)
     _validar_recibo_pago_unico(data['numero_recibo_pago'])
 
     # Si la vigencia es indeterminada, las fechas se anulan
@@ -461,7 +467,7 @@ def crear_licencia(data: dict, usuario) -> LicenciaFuncionamiento:
         licencia = LicenciaFuncionamiento.objects.create(
             expediente_id         = data['expediente_id'],
             tipo_licencia_id      = data['tipo_licencia_id'],
-            numero_licencia       = data['numero_licencia'],
+            numero_licencia       = numero_licencia,
             fecha_emision         = data['fecha_emision'],
             titular_id            = data['titular_id'],
             conductor_id          = data['conductor_id'],
