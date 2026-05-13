@@ -65,6 +65,7 @@ def crear_tipo_procedimiento_tupa(data: dict, usuario) -> TipoProcedimientoTupa:
         Claves esperadas:
           - codigo                  (str, obligatorio)
           - nombre                  (str, obligatorio)
+          - monto                   (decimal, opcional, default 0)
           - plazo_atencion_dias     (int, obligatorio)
           - dias_alerta_vencimiento (int, obligatorio)
           - esta_activo             (bool, opcional)

@@ -23,6 +23,7 @@ class UnidadOrganica(models.Model):
 class TipoProcedimientoTupa(models.Model):
     codigo = models.CharField(max_length=50, unique=True)
     nombre = models.CharField(max_length=250)
+    monto = models.DecimalField(max_digits=10, decimal_places=2, default=0, validators=[MinValueValidator(0)])
     plazo_atencion_dias = models.PositiveIntegerField(default=0)
     dias_alerta_vencimiento = models.PositiveIntegerField(default=0)
     esta_activo = models.BooleanField(default=True)
