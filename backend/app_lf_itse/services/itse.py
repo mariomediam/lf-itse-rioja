@@ -4,6 +4,7 @@ Servicios de negocio para ITSE.
 
 from django.core.files.storage import default_storage
 from django.db import connection, transaction
+from django.db.models import Max
 from django.shortcuts import get_object_or_404
 from django.utils import timezone
 
@@ -381,6 +382,32 @@ def _validar_expediente_para_emision_itse(
         raise ItseYaEmitidaError(
             f'El expediente ya registra el ITSE número {existente.numero_itse}.'
         )
+
+
+def get_siguiente_numero_itse(anio: int) -> int:
+    """
+    Retorna el siguiente número de ITSE para el año dado.
+
+    Busca el mayor ``numero_itse`` registrado cuya ``fecha_expedicion``
+    corresponda al año indicado y devuelve ese valor + 1.
+    Si no existe ningún registro para ese año, retorna 1.
+
+    Parámetros
+    ----------
+    anio : int
+        Año de expedición de la ITSE (p. ej. 2025).
+
+    Retorna
+    -------
+    int
+        Siguiente número de ITSE disponible para el año.
+    """
+    resultado = Itse.objects.filter(
+        fecha_expedicion__year=anio,
+    ).aggregate(maximo=Max('numero_itse'))
+
+    maximo = resultado['maximo']
+    return (maximo + 1) if maximo is not None else 1
 
 
 def _validar_numero_itse_unico(numero_itse: int) -> None:
