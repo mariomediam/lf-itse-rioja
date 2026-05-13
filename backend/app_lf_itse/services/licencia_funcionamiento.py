@@ -9,6 +9,7 @@ import logging
 
 from django.core.files.storage import default_storage
 from django.db import connection, transaction
+from django.db.models import Max
 from django.shortcuts import get_object_or_404
 from django.utils import timezone
 
@@ -348,6 +349,33 @@ def _validar_numero_licencia_unico_para_update(numero: int, licencia_id: int) ->
         raise LicenciaDuplicadaError(
             f'Ya existe una licencia de funcionamiento con el número {numero}.'
         )
+
+
+def get_siguiente_numero_licencia(anio: int) -> int:  # noqa: ARG001
+    """
+    Retorna el siguiente número de licencia de funcionamiento disponible.
+
+    Busca el mayor ``numero_licencia`` registrado en toda la tabla,
+    sin importar el año, y devuelve ese valor + 1.
+    Si no existe ninguna licencia registrada, retorna 1.
+
+    Parámetros
+    ----------
+    anio : int
+        Reservado para uso futuro (filtro por año de emisión).
+        Actualmente no se aplica en la consulta.
+
+    Retorna
+    -------
+    int
+        Siguiente número de licencia disponible.
+    """
+    resultado = LicenciaFuncionamiento.objects.aggregate(
+        maximo=Max('numero_licencia'),
+    )
+
+    maximo = resultado['maximo']
+    return (maximo + 1) if maximo is not None else 1
 
 
 def _validar_recibo_pago_unico(numero_recibo: str) -> None:
