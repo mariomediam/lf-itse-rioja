@@ -126,7 +126,7 @@ def actualizar_tipo_procedimiento_tupa(pk: int, data: dict, usuario) -> TipoProc
     return tipo
 
 
-def eliminar_tipo_procedimiento_tupa(pk: int) -> None:
+def eliminar_tipo_procedimiento_tupa(pk: int, usuario) -> None:
     """
     Elimina físicamente el TipoProcedimientoTupa indicado.
     Lanza HTTP 404 si no existe.
@@ -135,6 +135,8 @@ def eliminar_tipo_procedimiento_tupa(pk: int) -> None:
     ----------
     pk : int
         Clave primaria del registro a eliminar.
+    usuario : AUTH_USER_MODEL instance
+        Usuario autenticado; se usa para registrar la auditoría.
 
     Lanza
     -----
@@ -143,4 +145,5 @@ def eliminar_tipo_procedimiento_tupa(pk: int) -> None:
         con ``on_delete=PROTECT``.
     """
     tipo = get_object_or_404(TipoProcedimientoTupa, pk=pk)
-    tipo.delete()
+    with set_actor(usuario), transaction.atomic():
+        tipo.delete()

@@ -595,7 +595,7 @@ class TipoProcedimientoTupaDetailView(APIView):
 
     def delete(self, request, pk):
         try:
-            eliminar_tipo_procedimiento_tupa(pk)
+            eliminar_tipo_procedimiento_tupa(pk, request.user)
             return Response(status=status.HTTP_204_NO_CONTENT)
 
         except ProtectedError:
