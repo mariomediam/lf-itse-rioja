@@ -504,7 +504,12 @@ class ItseCreateSerializer(serializers.Serializer):
     direccion = serializers.CharField(max_length=250)
     resolucion_numero = serializers.CharField(max_length=50)
     area = serializers.DecimalField(max_digits=18, decimal_places=2)
-    numero_recibo_pago = serializers.CharField(max_length=20)
+    numero_recibo_pago = serializers.CharField(
+        max_length=20,
+        required=False,
+        allow_blank=True,
+        allow_null=True,
+    )
     observaciones = serializers.CharField(
         required=False,
         allow_blank=True,

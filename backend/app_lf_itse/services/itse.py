@@ -463,7 +463,8 @@ def crear_itse(data: dict, usuario) -> Itse:
     )
 
     _validar_numero_itse_unico(numero_itse)
-    _validar_recibo_pago_unico_para_itse(data['numero_recibo_pago'])
+    if data.get('numero_recibo_pago'):
+        _validar_recibo_pago_unico_para_itse(data['numero_recibo_pago'])
 
     with transaction.atomic():
         itse = Itse.objects.create(
@@ -618,7 +619,8 @@ def modificar_itse(itse_id: int, data: dict) -> Itse:
 
     _validar_expediente_para_emision_itse(data['expediente_id'], excluir_itse_id=itse_id)
     _validar_numero_itse_unico_para_update(data['numero_itse'], itse_id)
-    _validar_recibo_pago_unico_para_itse_update(data['numero_recibo_pago'], itse_id)
+    if data.get('numero_recibo_pago'):
+        _validar_recibo_pago_unico_para_itse_update(data['numero_recibo_pago'], itse_id)
 
     with transaction.atomic():
         itse.expediente_id = data['expediente_id']
