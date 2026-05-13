@@ -456,14 +456,20 @@ def crear_itse(data: dict, usuario) -> Itse:
     no del cuerpo de la petición.
     """
     _validar_expediente_para_emision_itse(data['expediente_id'])
-    _validar_numero_itse_unico(data['numero_itse'])
+
+    # Si no se proporcionó número de ITSE, el sistema lo determina
+    numero_itse = data.get('numero_itse') or get_siguiente_numero_itse(
+        data['fecha_expedicion'].year,
+    )
+
+    _validar_numero_itse_unico(numero_itse)
     _validar_recibo_pago_unico_para_itse(data['numero_recibo_pago'])
 
     with transaction.atomic():
         itse = Itse.objects.create(
             expediente_id=data['expediente_id'],
             tipo_itse_id=data['tipo_itse_id'],
-            numero_itse=data['numero_itse'],
+            numero_itse=numero_itse,
             fecha_expedicion=data['fecha_expedicion'],
             fecha_solicitud_renovacion=data['fecha_solicitud_renovacion'],
             fecha_caducidad=data['fecha_caducidad'],

@@ -492,7 +492,7 @@ class ItseCreateSerializer(serializers.Serializer):
 
     expediente_id = serializers.IntegerField(min_value=1)
     tipo_itse_id = serializers.IntegerField(min_value=1)
-    numero_itse = serializers.IntegerField(min_value=1)
+    numero_itse = serializers.IntegerField(required=False, allow_null=True, min_value=1)
     fecha_expedicion = serializers.DateField()
     fecha_solicitud_renovacion = serializers.DateField()
     fecha_caducidad = serializers.DateField()
