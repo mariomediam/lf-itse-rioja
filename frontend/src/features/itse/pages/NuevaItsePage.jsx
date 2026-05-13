@@ -283,7 +283,6 @@ export default function NuevaItsePage() {
   const handleSubmit = async (e) => {
     e.preventDefault()
 
-    if (!numeroItse)               { toast.error('Ingrese el número de ITSE');                  return }
     if (!fechaExpedicion)          { toast.error('Ingrese la fecha de expedición');             return }
     if (!fechaSolicitudRenovacion) { toast.error('Ingrese la fecha de solicitud de renovación'); return }
     if (!fechaCaducidad)           { toast.error('Ingrese la fecha de caducidad');              return }
@@ -301,7 +300,7 @@ export default function NuevaItsePage() {
     const payload = {
       expediente_id:              expedienteId,
       tipo_itse_id:               Number(tipoItseId),
-      numero_itse:                Number(numeroItse),
+      numero_itse:                numeroItse ? Number(numeroItse) : null,
       fecha_expedicion:           fechaExpedicion,
       fecha_solicitud_renovacion: fechaSolicitudRenovacion,
       fecha_caducidad:            fechaCaducidad,
@@ -388,14 +387,14 @@ export default function NuevaItsePage() {
                 <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
                   <div>
                     <label className="block text-xs font-medium text-gray-600 mb-1.5">
-                      Número de ITSE <span className="text-danger">*</span>
+                      Número de ITSE
                     </label>
                     <input
                       type="number"
                       min="1"
                       value={numeroItse}
                       onChange={(e) => setNumeroItse(e.target.value)}
-                      placeholder="Ej. 8273"
+                      placeholder="Automático si se deja vacío"
                       className={inputClass}
                     />
                   </div>
