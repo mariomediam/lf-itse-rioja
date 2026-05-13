@@ -8,6 +8,7 @@ lo que facilita reutilización, pruebas unitarias y futuros cambios.
 import logging
 from datetime import date, datetime, timedelta
 
+from auditlog.context import set_actor
 from django.core.files.storage import default_storage
 from django.db import connection, transaction
 from django.shortcuts import get_object_or_404
@@ -132,18 +133,19 @@ def crear_expediente(data: dict, usuario) -> Expediente:
         dias_alerta=tipo.dias_alerta_vencimiento,
     )
 
-    expediente = Expediente.objects.create(
-        tipo_procedimiento_tupa=tipo,
-        numero_expediente=numero,
-        fecha_recepcion=fecha_recepcion,
-        solicitante_id=data['solicitante_id'],
-        representante_id=data.get('representante_id'),
-        observaciones=data.get('observaciones'),
-        fecha_vencimiento=plazos['fecha_vencimiento'],
-        fecha_alerta=plazos['fecha_alerta'],
-        usuario=usuario,
-        fecha_digitacion=timezone.now(),
-    )
+    with set_actor(usuario), transaction.atomic():
+        expediente = Expediente.objects.create(
+            tipo_procedimiento_tupa=tipo,
+            numero_expediente=numero,
+            fecha_recepcion=fecha_recepcion,
+            solicitante_id=data['solicitante_id'],
+            representante_id=data.get('representante_id'),
+            observaciones=data.get('observaciones'),
+            fecha_vencimiento=plazos['fecha_vencimiento'],
+            fecha_alerta=plazos['fecha_alerta'],
+            usuario=usuario,
+            fecha_digitacion=timezone.now(),
+        )
 
     return expediente
 
@@ -458,7 +460,7 @@ def buscar_expedientes_con_plazo(
     return filas
 
 
-def actualizar_expediente(pk: int, data: dict) -> Expediente:
+def actualizar_expediente(pk: int, data: dict, usuario) -> Expediente:
     """
     Modifica los campos editables de un expediente y recalcula sus plazos.
 
@@ -511,30 +513,31 @@ def actualizar_expediente(pk: int, data: dict) -> Expediente:
 
     fecha_alerta = calcular_fecha_alerta(fecha_vencimiento, tipo.dias_alerta_vencimiento)
 
-    expediente.tipo_procedimiento_tupa = tipo
-    expediente.numero_expediente       = data['numero_expediente']
-    expediente.fecha_recepcion         = data['fecha_recepcion']
-    expediente.solicitante_id          = data['solicitante_id']
-    expediente.representante_id        = data.get('representante_id')
-    expediente.observaciones           = data.get('observaciones')
-    expediente.fecha_vencimiento       = fecha_vencimiento
-    expediente.fecha_alerta            = fecha_alerta
+    with set_actor(usuario), transaction.atomic():
+        expediente.tipo_procedimiento_tupa = tipo
+        expediente.numero_expediente       = data['numero_expediente']
+        expediente.fecha_recepcion         = data['fecha_recepcion']
+        expediente.solicitante_id          = data['solicitante_id']
+        expediente.representante_id        = data.get('representante_id')
+        expediente.observaciones           = data.get('observaciones')
+        expediente.fecha_vencimiento       = fecha_vencimiento
+        expediente.fecha_alerta            = fecha_alerta
 
-    expediente.save(update_fields=[
-        'tipo_procedimiento_tupa',
-        'numero_expediente',
-        'fecha_recepcion',
-        'solicitante_id',
-        'representante_id',
-        'observaciones',
-        'fecha_vencimiento',
-        'fecha_alerta',
-    ])
+        expediente.save(update_fields=[
+            'tipo_procedimiento_tupa',
+            'numero_expediente',
+            'fecha_recepcion',
+            'solicitante_id',
+            'representante_id',
+            'observaciones',
+            'fecha_vencimiento',
+            'fecha_alerta',
+        ])
 
     return expediente
 
 
-def eliminar_expediente(pk: int) -> None:
+def eliminar_expediente(pk: int, usuario) -> None:
     """
     Elimina un expediente y todos sus registros dependientes.
 
@@ -590,7 +593,7 @@ def eliminar_expediente(pk: int) -> None:
         .values_list('ruta_archivo', flat=True)
     )
 
-    with transaction.atomic():
+    with set_actor(usuario), transaction.atomic():
         expediente.delete()
 
     # Eliminar archivos físicos fuera de la transacción

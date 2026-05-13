@@ -255,6 +255,7 @@ class ExpedienteUpdateView(APIView):
             expediente = actualizar_expediente(
                 pk=pk,
                 data=serializer_in.validated_data,
+                usuario=request.user,
             )
 
             serializer_out = ExpedienteSerializer(expediente)
@@ -275,7 +276,7 @@ class ExpedienteUpdateView(APIView):
 
     def delete(self, request, pk):
         try:
-            eliminar_expediente(pk=pk)
+            eliminar_expediente(pk=pk, usuario=request.user)
             return Response(status=status.HTTP_204_NO_CONTENT)
 
         except ExpedienteConLicenciaError as e:
