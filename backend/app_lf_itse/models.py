@@ -1,5 +1,6 @@
 import uuid
 
+from auditlog.registry import auditlog
 from django.conf import settings
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
@@ -712,6 +713,7 @@ class FeriadoAnual(models.Model):
 
 
 class FeriadoRecurrente(models.Model):
+
     """Días feriados que se repiten cada año (p. ej. 1 de enero, 25 de diciembre)."""
 
     dia = models.PositiveSmallIntegerField(
@@ -733,3 +735,23 @@ class FeriadoRecurrente(models.Model):
 
     def __str__(self):
         return f'{self.dia:02d}/{self.mes:02d}'
+
+
+# ── Registro de auditoría ──────────────────────────────────────────────────────
+
+auditlog.register(TipoProcedimientoTupa)
+auditlog.register(Giro)
+auditlog.register(Persona)
+auditlog.register(PersonaDocumento)
+auditlog.register(Expediente)
+auditlog.register(ExpedienteArchivo)
+auditlog.register(AutorizacionImprocedente)
+auditlog.register(LicenciaFuncionamiento)
+auditlog.register(LicenciaFuncionamientoArchivo)
+auditlog.register(LicenciaFuncionamientoEstado)
+auditlog.register(LicenciaFuncionamientoGiro)
+auditlog.register(Itse)
+auditlog.register(ItseArchivo)
+auditlog.register(ItseEstado)
+auditlog.register(ItseGiro)
+auditlog.register(UsuarioPerfil)
