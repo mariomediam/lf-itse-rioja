@@ -273,7 +273,7 @@ export default function TipoProcedimientoTupaFormModal({
 
         {/* Monto */}
         <div>
-          <SeccionTitulo>Pago</SeccionTitulo>
+          <SeccionTitulo>Pago por derecho de tramitación </SeccionTitulo>
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label className={labelClass}>Monto (S/)</label>
