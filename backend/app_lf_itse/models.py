@@ -45,7 +45,7 @@ class TipoProcedimientoTupa(models.Model):
         db_table = 'tipos_procedimiento_tupa'
 
     def __str__(self):
-        return self.nombre
+        return f'tipos_procedimiento_tupa id:{self.id} {self.nombre[:30]}'
 
 
 class TipoDocumentoIdentidad(models.Model):
@@ -139,7 +139,7 @@ class Giro(models.Model):
         ]
 
     def __str__(self):
-        return self.nombre
+        return f'giros id:{self.id} {self.nombre[:30]}'
 
 
 class Persona(models.Model):
@@ -179,7 +179,7 @@ class Persona(models.Model):
         db_table = 'personas'
 
     def __str__(self):
-        return f'{self.nombres} {self.apellido_paterno}'
+        return f'personas id:{self.id} {self.apellido_paterno} {self.apellido_materno} {self.nombres}'
 
 
 class PersonaDocumento(models.Model):
@@ -210,6 +210,9 @@ class PersonaDocumento(models.Model):
                 name='ix_perdoc_tiponum',
             ),
         ]
+
+    def __str__(self):
+        return f'personas_documentos persona_id:{self.persona_id}'
 
 
 class Expediente(models.Model):
@@ -266,6 +269,9 @@ class Expediente(models.Model):
     class Meta:
         db_table = 'expedientes'
 
+    def __str__(self):
+        return f'expedientes id:{self.id} Número:{self.numero_expediente} {self.fecha_recepcion.year}'
+
 
 class ExpedienteArchivo(models.Model):
     uuid = models.UUIDField(
@@ -295,6 +301,9 @@ class ExpedienteArchivo(models.Model):
     class Meta:
         db_table = 'expedientes_archivos'
 
+    def __str__(self):
+        return f'expedientes_archivos expediente_id:{self.expediente_id}'
+
 
 class AutorizacionImprocedente(models.Model):
     expediente = models.ForeignKey(
@@ -322,6 +331,9 @@ class AutorizacionImprocedente(models.Model):
                 name='ix_aut_impr_exp_tp',
             ),
         ]
+
+    def __str__(self):
+        return f'autorizaciones_improcedentes expediente_id:{self.expediente_id} tipo:{self.tipo_autorizacion}'
 
 
 class LicenciaFuncionamiento(models.Model):
@@ -401,6 +413,9 @@ class LicenciaFuncionamiento(models.Model):
     class Meta:
         db_table = 'licencias_funcionamiento'
 
+    def __str__(self):
+        return f'licencias_funcionamiento id:{self.id} Numero:{self.numero_licencia} {self.fecha_emision.year}'
+
 
 class LicenciaFuncionamientoArchivo(models.Model):
     uuid = models.UUIDField(
@@ -430,6 +445,9 @@ class LicenciaFuncionamientoArchivo(models.Model):
     class Meta:
         db_table = 'licencias_funcionamiento_archivos'
 
+    def __str__(self):
+        return f'licencias_funcionamiento_archivos licencia_funcionamiento_id:{self.licencia_funcionamiento_id}'
+
 
 class LicenciaFuncionamientoEstado(models.Model):
     licencia_funcionamiento = models.ForeignKey(
@@ -456,6 +474,9 @@ class LicenciaFuncionamientoEstado(models.Model):
     class Meta:
         db_table = 'licencias_funcionamiento_estados'
 
+    def __str__(self):
+        return f'licencias_funcionamiento_estados licencia_funcionamiento_id:{self.licencia_funcionamiento_id}'
+
 
 class LicenciaFuncionamientoGiro(models.Model):
     licencia_funcionamiento = models.ForeignKey(
@@ -478,6 +499,9 @@ class LicenciaFuncionamientoGiro(models.Model):
 
     class Meta:
         db_table = 'licencias_funcionamiento_giros'
+
+    def __str__(self):
+        return f'licencias_funcionamiento_giros licencia_funcionamiento_id:{self.licencia_funcionamiento_id}'
 
 
 class Itse(models.Model):
@@ -543,6 +567,9 @@ class Itse(models.Model):
     class Meta:
         db_table = 'itse'
 
+    def __str__(self):
+        return f'itse id:{self.id} Numero:{self.numero_itse} {self.fecha_expedicion.year}'
+
 
 class ItseArchivo(models.Model):
     uuid = models.UUIDField(
@@ -572,6 +599,9 @@ class ItseArchivo(models.Model):
     class Meta:
         db_table = 'itse_archivos'
 
+    def __str__(self):
+        return f'itse_archivos itse_id:{self.itse_id}'
+
 
 class ItseEstado(models.Model):
     itse = models.ForeignKey(
@@ -598,6 +628,9 @@ class ItseEstado(models.Model):
     class Meta:
         db_table = 'itse_estados'
 
+    def __str__(self):
+        return f'itse_estados itse_id:{self.itse_id}'
+
 
 class ItseGiro(models.Model):
     itse = models.ForeignKey(
@@ -620,6 +653,9 @@ class ItseGiro(models.Model):
 
     class Meta:
         db_table = 'itse_giros'
+
+    def __str__(self):
+        return f'itse_giros itse_id:{self.itse_id}'
 
 
 class Inspector(models.Model):
@@ -691,7 +727,7 @@ class UsuarioPerfil(models.Model):
         db_table = 'usuarios_perfiles'
 
     def __str__(self):
-        return f'Perfil de {self.user}'
+        return f'usuarios_perfiles user_id:{self.user_id}'
 
 
 class FeriadoAnual(models.Model):
