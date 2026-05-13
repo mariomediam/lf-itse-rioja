@@ -191,39 +191,37 @@ export default function TipoProcedimientoTupaFormModal({
         <div>
           <SeccionTitulo>Identificación</SeccionTitulo>
           <div className="space-y-3">
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <label className={labelClass}>
-                  Código <span className="text-danger">*</span>
-                </label>
-                <input
-                  type="text"
-                  name="codigo"
-                  value={formData.codigo}
-                  onChange={handleChange}
-                  placeholder="Ej: PT-001"
-                  className={inputClass}
-                  maxLength={50}
-                />
-              </div>
-              <div>
-                <label className={labelClass}>
-                  Unidad orgánica <span className="text-danger">*</span>
-                </label>
-                <select
-                  name="unidad_organica"
-                  value={formData.unidad_organica}
-                  onChange={handleChange}
-                  className={inputClass}
-                >
-                  <option value="">— Seleccionar —</option>
-                  {unidadesOrganicas.map((u) => (
-                    <option key={u.id} value={String(u.id)}>
-                      {u.sigla ? `${u.sigla} - ${u.nombre}` : u.nombre}
-                    </option>
-                  ))}
-                </select>
-              </div>
+            <div>
+              <label className={labelClass}>
+                Código <span className="text-danger">*</span>
+              </label>
+              <input
+                type="text"
+                name="codigo"
+                value={formData.codigo}
+                onChange={handleChange}
+                placeholder="Ej: PT-001"
+                className={inputClass}
+                maxLength={50}
+              />
+            </div>
+            <div>
+              <label className={labelClass}>
+                Unidad orgánica <span className="text-danger">*</span>
+              </label>
+              <select
+                name="unidad_organica"
+                value={formData.unidad_organica}
+                onChange={handleChange}
+                className={inputClass}
+              >
+                <option value="">— Seleccionar —</option>
+                {unidadesOrganicas.map((u) => (
+                  <option key={u.id} value={String(u.id)}>
+                    {u.sigla ? `${u.sigla} - ${u.nombre}` : u.nombre}
+                  </option>
+                ))}
+              </select>
             </div>
             <div>
               <label className={labelClass}>
@@ -245,7 +243,7 @@ export default function TipoProcedimientoTupaFormModal({
         {/* Plazos */}
         <div>
           <SeccionTitulo>Plazos</SeccionTitulo>
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-2 gap-4 items-end">
             <div>
               <label className={labelClass}>Plazo de atención (días hábiles)</label>
               <input

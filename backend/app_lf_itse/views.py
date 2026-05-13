@@ -580,7 +580,7 @@ class TipoProcedimientoTupaDetailView(APIView):
             if not serializer.is_valid():
                 return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-            tipo = actualizar_tipo_procedimiento_tupa(pk, serializer.validated_data)
+            tipo = actualizar_tipo_procedimiento_tupa(pk, serializer.validated_data, request.user)
             return Response(
                 TipoProcedimientoTupaSerializer(tipo).data,
                 status=status.HTTP_200_OK,

@@ -5,6 +5,8 @@ Centraliza la lógica del dominio separándola de la capa HTTP (views/serializer
 lo que facilita reutilización, pruebas unitarias y futuros cambios.
 """
 
+from auditlog.context import set_actor
+from django.db import transaction
 from django.db.models import ProtectedError
 from django.shortcuts import get_object_or_404
 from django.utils import timezone
@@ -80,14 +82,15 @@ def crear_tipo_procedimiento_tupa(data: dict, usuario) -> TipoProcedimientoTupa:
     TipoProcedimientoTupa
         Instancia recién creada.
     """
-    return TipoProcedimientoTupa.objects.create(
-        **data,
-        usuario=usuario,
-        fecha_digitacion=timezone.now(),
-    )
+    with set_actor(usuario), transaction.atomic():
+        return TipoProcedimientoTupa.objects.create(
+            **data,
+            usuario=usuario,
+            fecha_digitacion=timezone.now(),
+        )
 
 
-def actualizar_tipo_procedimiento_tupa(pk: int, data: dict) -> TipoProcedimientoTupa:
+def actualizar_tipo_procedimiento_tupa(pk: int, data: dict, usuario) -> TipoProcedimientoTupa:
     """
     Actualiza y retorna el TipoProcedimientoTupa indicado.
     Lanza HTTP 404 si no existe.
@@ -98,6 +101,8 @@ def actualizar_tipo_procedimiento_tupa(pk: int, data: dict) -> TipoProcedimiento
         Clave primaria del registro a actualizar.
     data : dict
         Datos validados por TipoProcedimientoTupaWriteSerializer.
+    usuario : AUTH_USER_MODEL instance
+        Usuario autenticado; se usa para registrar la auditoría.
 
     Retorna
     -------
@@ -105,9 +110,19 @@ def actualizar_tipo_procedimiento_tupa(pk: int, data: dict) -> TipoProcedimiento
         Instancia actualizada.
     """
     tipo = get_object_or_404(TipoProcedimientoTupa, pk=pk)
-    for campo, valor in data.items():
-        setattr(tipo, campo, valor)
-    tipo.save()
+
+    with set_actor(usuario), transaction.atomic():
+        tipo.codigo                  = data['codigo']
+        tipo.nombre                  = data['nombre']
+        tipo.monto                   = data['monto']
+        tipo.plazo_atencion_dias     = data['plazo_atencion_dias']
+        tipo.dias_alerta_vencimiento = data['dias_alerta_vencimiento']
+        tipo.esta_activo             = data['esta_activo']
+        tipo.unidad_organica         = data['unidad_organica']
+        tipo.requiere_lf             = data['requiere_lf']
+        tipo.requiere_itse           = data['requiere_itse']
+        tipo.save()
+
     return tipo
 
 
