@@ -2,6 +2,7 @@
 Servicios de negocio para ITSE.
 """
 
+from auditlog.context import set_actor
 from django.core.files.storage import default_storage
 from django.db import connection, transaction
 from django.db.models import Max
@@ -466,7 +467,7 @@ def crear_itse(data: dict, usuario) -> Itse:
     if data.get('numero_recibo_pago'):
         _validar_recibo_pago_unico_para_itse(data['numero_recibo_pago'])
 
-    with transaction.atomic():
+    with set_actor(usuario), transaction.atomic():
         itse = Itse.objects.create(
             expediente_id=data['expediente_id'],
             tipo_itse_id=data['tipo_itse_id'],
@@ -546,15 +547,16 @@ def registrar_inactivacion_itse(
             'Ya existe un registro para este ITSE con el mismo estado.'
         )
 
-    return ItseEstado.objects.create(
-        itse_id=itse_id,
-        estado_id=estado_id,
-        fecha_estado=fecha_estado,
-        documento=documento,
-        observaciones=observaciones,
-        usuario=usuario,
-        fecha_digitacion=timezone.now(),
-    )
+    with set_actor(usuario):
+        return ItseEstado.objects.create(
+            itse_id=itse_id,
+            estado_id=estado_id,
+            fecha_estado=fecha_estado,
+            documento=documento,
+            observaciones=observaciones,
+            usuario=usuario,
+            fecha_digitacion=timezone.now(),
+        )
 
 
 # ── Registro de notificación de entrega ────────────────────────────────────────
@@ -564,7 +566,7 @@ class ItseNotificacionFechaInvalidaError(Exception):
     """Se lanza cuando la fecha de notificación es anterior a la fecha de expedición."""
 
 
-def registrar_notificacion_itse(itse_id: int, fecha_notificacion) -> Itse:
+def registrar_notificacion_itse(itse_id: int, fecha_notificacion, usuario=None) -> Itse:
     """
     Registra la fecha de notificación de entrega en un ITSE.
 
@@ -599,12 +601,13 @@ def registrar_notificacion_itse(itse_id: int, fecha_notificacion) -> Itse:
             f'({itse.fecha_expedicion}).'
         )
 
-    itse.fecha_notificacion = fecha_notificacion
-    itse.save(update_fields=['fecha_notificacion'])
+    with set_actor(usuario):
+        itse.fecha_notificacion = fecha_notificacion
+        itse.save(update_fields=['fecha_notificacion'])
     return itse
 
 
-def modificar_itse(itse_id: int, data: dict) -> Itse:
+def modificar_itse(itse_id: int, data: dict, usuario=None) -> Itse:
     """
     Actualiza un ITSE y reemplaza por completo la lista de giros.
 
@@ -622,7 +625,7 @@ def modificar_itse(itse_id: int, data: dict) -> Itse:
     if data.get('numero_recibo_pago'):
         _validar_recibo_pago_unico_para_itse_update(data['numero_recibo_pago'], itse_id)
 
-    with transaction.atomic():
+    with set_actor(usuario), transaction.atomic():
         itse.expediente_id = data['expediente_id']
         itse.tipo_itse_id = data['tipo_itse_id']
         itse.numero_itse = data['numero_itse']
@@ -670,7 +673,7 @@ class ItseTieneDependientesError(Exception):
     """Se lanza cuando la ITSE tiene ITSE dependientes que impiden su eliminación."""
 
 
-def eliminar_itse(pk: int) -> None:
+def eliminar_itse(pk: int, usuario=None) -> None:
     """
     Elimina una ITSE y todos sus registros dependientes.
 
@@ -716,7 +719,7 @@ def eliminar_itse(pk: int) -> None:
         .values_list('ruta_archivo', flat=True)
     )
 
-    with transaction.atomic():
+    with set_actor(usuario), transaction.atomic():
         itse.delete()
 
     for ruta in rutas_archivos:

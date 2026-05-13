@@ -7,6 +7,7 @@ lo que facilita reutilización, pruebas unitarias y futuros cambios.
 
 import logging
 
+from auditlog.context import set_actor
 from django.core.files.storage import default_storage
 from django.db import connection, transaction
 from django.db.models import Max
@@ -464,7 +465,7 @@ def crear_licencia(data: dict, usuario) -> LicenciaFuncionamiento:
     fecha_inicio = None if es_indeterminada else data.get('fecha_inicio_vigencia')
     fecha_fin    = None if es_indeterminada else data.get('fecha_fin_vigencia')
 
-    with transaction.atomic():
+    with set_actor(usuario), transaction.atomic():
         licencia = LicenciaFuncionamiento.objects.create(
             expediente_id         = data['expediente_id'],
             tipo_licencia_id      = data['tipo_licencia_id'],
@@ -511,7 +512,7 @@ def crear_licencia(data: dict, usuario) -> LicenciaFuncionamiento:
 
 # ── Modificación de licencia de funcionamiento ─────────────────────────────────
 
-def modificar_licencia(licencia_id: int, data: dict) -> LicenciaFuncionamiento:
+def modificar_licencia(licencia_id: int, data: dict, usuario=None) -> LicenciaFuncionamiento:
     """
     Actualiza y retorna una LicenciaFuncionamiento existente.
 
@@ -564,7 +565,7 @@ def modificar_licencia(licencia_id: int, data: dict) -> LicenciaFuncionamiento:
     fecha_inicio = None if es_indeterminada else data.get('fecha_inicio_vigencia')
     fecha_fin    = None if es_indeterminada else data.get('fecha_fin_vigencia')
 
-    with transaction.atomic():
+    with set_actor(usuario), transaction.atomic():
         licencia.expediente_id          = data['expediente_id']
         licencia.tipo_licencia_id       = data['tipo_licencia_id']
         licencia.numero_licencia        = data['numero_licencia']
@@ -691,7 +692,7 @@ class EstadoInactivacionDuplicadoError(Exception):
     """Ya existe un registro con el mismo par licencia + estado."""
 
 
-def registrar_notificacion(licencia_id: int, fecha_notificacion) -> LicenciaFuncionamiento:
+def registrar_notificacion(licencia_id: int, fecha_notificacion, usuario=None) -> LicenciaFuncionamiento:
     """
     Registra la fecha de notificación de entrega en una licencia de funcionamiento.
 
@@ -726,8 +727,9 @@ def registrar_notificacion(licencia_id: int, fecha_notificacion) -> LicenciaFunc
             f'({licencia.fecha_emision}).'
         )
 
-    licencia.fecha_notificacion = fecha_notificacion
-    licencia.save(update_fields=['fecha_notificacion'])
+    with set_actor(usuario):
+        licencia.fecha_notificacion = fecha_notificacion
+        licencia.save(update_fields=['fecha_notificacion'])
     return licencia
 
 
@@ -738,7 +740,7 @@ class LicenciaTieneDependientesError(Exception):
     """Se lanza cuando la licencia tiene licencias dependientes que impiden su eliminación."""
 
 
-def eliminar_licencia(pk: int) -> None:
+def eliminar_licencia(pk: int, usuario=None) -> None:
     """
     Elimina una licencia de funcionamiento y todos sus registros dependientes.
 
@@ -784,7 +786,7 @@ def eliminar_licencia(pk: int) -> None:
         .values_list('ruta_archivo', flat=True)
     )
 
-    with transaction.atomic():
+    with set_actor(usuario), transaction.atomic():
         licencia.delete()
 
     for ruta in rutas_archivos:
@@ -1188,15 +1190,16 @@ def registrar_inactivacion_licencia(
             'Ya existe un registro para esta licencia con el mismo estado.'
         )
 
-    return LicenciaFuncionamientoEstado.objects.create(
-        licencia_funcionamiento_id=licencia_funcionamiento_id,
-        estado_id=estado_id,
-        fecha_estado=fecha_estado,
-        documento=documento,
-        observaciones=observaciones,
-        usuario=usuario,
-        fecha_digitacion=timezone.now(),
-    )
+    with set_actor(usuario):
+        return LicenciaFuncionamientoEstado.objects.create(
+            licencia_funcionamiento_id=licencia_funcionamiento_id,
+            estado_id=estado_id,
+            fecha_estado=fecha_estado,
+            documento=documento,
+            observaciones=observaciones,
+            usuario=usuario,
+            fecha_digitacion=timezone.now(),
+        )
 
 
 # ── Reporte de licencias de funcionamiento ─────────────────────────────────────

@@ -2031,7 +2031,7 @@ class ItseUpdateView(APIView):
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
         try:
-            itse = modificar_itse(pk, serializer.validated_data)
+            itse = modificar_itse(pk, serializer.validated_data, request.user)
             return Response(
                 {'id': itse.id, 'mensaje': 'ITSE modificada correctamente.'},
                 status=status.HTTP_200_OK,
@@ -2076,7 +2076,7 @@ class ItseUpdateView(APIView):
         Requiere autenticación JWT.
         """
         try:
-            eliminar_itse(pk)
+            eliminar_itse(pk, request.user)
             return Response(status=status.HTTP_204_NO_CONTENT)
 
         except ItseTieneDependientesError as e:
@@ -2132,6 +2132,7 @@ class ItseNotificacionView(APIView):
             registrar_notificacion_itse(
                 pk,
                 serializer.validated_data['fecha_notificacion'],
+                request.user,
             )
             return Response(
                 {'mensaje': 'Fecha de notificación registrada correctamente.'},
@@ -2973,7 +2974,7 @@ class LicenciaFuncionamientoUpdateView(APIView):
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
         try:
-            licencia = modificar_licencia(pk, serializer.validated_data)
+            licencia = modificar_licencia(pk, serializer.validated_data, request.user)
             return Response(
                 {'id': licencia.id, 'mensaje': 'Licencia modificada correctamente.'},
                 status=status.HTTP_200_OK,
@@ -3016,7 +3017,7 @@ class LicenciaFuncionamientoUpdateView(APIView):
         Requiere autenticación JWT.
         """
         try:
-            eliminar_licencia(pk)
+            eliminar_licencia(pk, request.user)
             return Response(status=status.HTTP_204_NO_CONTENT)
 
         except LicenciaTieneDependientesError as e:
@@ -3072,6 +3073,7 @@ class LicenciaFuncionamientoNotificacionView(APIView):
             registrar_notificacion(
                 pk,
                 serializer.validated_data['fecha_notificacion'],
+                request.user,
             )
             return Response(
                 {'mensaje': 'Fecha de notificación registrada correctamente.'},
