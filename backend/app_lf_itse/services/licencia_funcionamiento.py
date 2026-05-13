@@ -456,7 +456,8 @@ def crear_licencia(data: dict, usuario) -> LicenciaFuncionamiento:
     )
 
     _validar_numero_licencia_unico(numero_licencia)
-    _validar_recibo_pago_unico(data['numero_recibo_pago'])
+    if data.get('numero_recibo_pago'):
+        _validar_recibo_pago_unico(data['numero_recibo_pago'])
 
     # Si la vigencia es indeterminada, las fechas se anulan
     es_indeterminada = data['es_vigencia_indeterminada']
@@ -556,7 +557,8 @@ def modificar_licencia(licencia_id: int, data: dict) -> LicenciaFuncionamiento:
 
     _validar_licencia_no_denegada(data['expediente_id'])
     _validar_numero_licencia_unico_para_update(data['numero_licencia'], licencia_id)
-    _validar_recibo_pago_unico_para_update(data['numero_recibo_pago'], licencia_id)
+    if data.get('numero_recibo_pago'):
+        _validar_recibo_pago_unico_para_update(data['numero_recibo_pago'], licencia_id)
 
     es_indeterminada = data['es_vigencia_indeterminada']
     fecha_inicio = None if es_indeterminada else data.get('fecha_inicio_vigencia')
