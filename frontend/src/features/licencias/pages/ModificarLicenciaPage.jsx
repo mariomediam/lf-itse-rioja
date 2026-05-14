@@ -260,7 +260,6 @@ export default function ModificarLicenciaPage() {
     if (!nivelRiesgoId)    { toast.error('Seleccione el nivel de riesgo');             return }
     if (!horaDesde)        { toast.error('Ingrese la hora de inicio del horario');     return }
     if (!horaHasta)        { toast.error('Ingrese la hora de cierre del horario');     return }
-    if (!numeroReciboPago) { toast.error('Ingrese el número de recibo de pago');       return }
     if (!titular)          { toast.error('Seleccione el titular de la licencia');      return }
     if (!representante)    { toast.error('Seleccione el representante legal');         return }
     if (!nombreComercial)  { toast.error('Ingrese el nombre comercial');               return }
@@ -566,13 +565,13 @@ export default function ModificarLicenciaPage() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-xs font-medium text-gray-600 mb-1.5">
-                      N° de recibo de pago <span className="text-danger">*</span>
+                      N° de recibo de pago
                     </label>
                     <input
                       type="text"
                       value={numeroReciboPago}
                       onChange={(e) => setNumeroReciboPago(e.target.value)}
-                      placeholder="Ej. 00567587"
+                      placeholder="Ej. 00567587 (opcional)"
                       className={inputClass}
                     />
                   </div>
