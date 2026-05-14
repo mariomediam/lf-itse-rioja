@@ -337,7 +337,6 @@ export default function ModificarItsePage() {
     if (!tipoItseId)               { toast.error('Seleccione el tipo de ITSE');                  return }
     if (!resolucionNumero)         { toast.error('Ingrese el número de resolución');             return }
     if (!nivelRiesgoId)            { toast.error('Seleccione el nivel de riesgo');               return }
-    if (!numeroReciboPago)         { toast.error('Ingrese el número de recibo de pago');         return }
     if (!titular)                  { toast.error('Seleccione el titular de la ITSE');            return }
     if (!representante)            { toast.error('Seleccione el representante legal');           return }
     if (!nombreComercial)          { toast.error('Ingrese el nombre comercial');                 return }
@@ -591,13 +590,13 @@ export default function ModificarItsePage() {
                   </div>
                   <div>
                     <label className="block text-xs font-medium text-gray-600 mb-1.5">
-                      N° de recibo de pago <span className="text-danger">*</span>
+                      N° de recibo de pago
                     </label>
                     <input
                       type="text"
                       value={numeroReciboPago}
                       onChange={(e) => setNumeroReciboPago(e.target.value)}
-                      placeholder="Ej. 00647587"
+                      placeholder="Ej. 00647587 (opcional)"
                       className={inputClass}
                     />
                   </div>
