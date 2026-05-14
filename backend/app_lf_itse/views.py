@@ -711,7 +711,7 @@ class PersonaDetailView(APIView):
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
         try:
-            persona = actualizar_persona(pk, serializer.validated_data)
+            persona = actualizar_persona(pk, serializer.validated_data, request.user)
             return Response(
                 PersonaSerializer(persona).data,
                 status=status.HTTP_200_OK,
@@ -732,7 +732,7 @@ class PersonaDetailView(APIView):
 
     def delete(self, request, pk):
         try:
-            eliminar_persona(pk)
+            eliminar_persona(pk, request.user)
             return Response(status=status.HTTP_204_NO_CONTENT)
 
         except Exception as e:

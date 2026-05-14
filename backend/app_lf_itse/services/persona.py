@@ -5,6 +5,7 @@ Centraliza la lógica del dominio separándola de la capa HTTP (views/serializer
 lo que facilita reutilización, pruebas unitarias y futuros cambios.
 """
 
+from auditlog.context import set_actor
 from django.db import connection, transaction
 from django.shortcuts import get_object_or_404
 from django.utils import timezone
@@ -132,7 +133,7 @@ def crear_persona(data: dict, usuario) -> Persona:
 
     now = timezone.now()
 
-    with transaction.atomic():
+    with set_actor(usuario), transaction.atomic():
         persona = Persona.objects.create(
             **data,
             user=usuario,
@@ -144,7 +145,7 @@ def crear_persona(data: dict, usuario) -> Persona:
     return obtener_persona(persona.pk)
 
 
-def actualizar_persona(pk: int, data: dict) -> Persona:
+def actualizar_persona(pk: int, data: dict, usuario) -> Persona:
     """
     Actualiza los datos de una Persona y reemplaza todos sus documentos,
     dentro de una transacción.
@@ -179,14 +180,14 @@ def actualizar_persona(pk: int, data: dict) -> Persona:
         setattr(persona, campo, valor)
     persona.fecha_actualizacion = timezone.now()
 
-    with transaction.atomic():
+    with set_actor(usuario), transaction.atomic():
         persona.save()
         _guardar_documentos(persona, documentos_data)
 
     return obtener_persona(persona.pk)
 
 
-def eliminar_persona(pk: int) -> None:
+def eliminar_persona(pk: int, usuario) -> None:
     """
     Elimina físicamente la Persona indicada y sus documentos (CASCADE).
     Lanza HTTP 404 si no existe.
@@ -195,9 +196,12 @@ def eliminar_persona(pk: int) -> None:
     ----------
     pk : int
         Clave primaria de la persona a eliminar.
+    usuario : AUTH_USER_MODEL instance
+        Usuario autenticado; se usa para registrar la auditoría.
     """
     persona = get_object_or_404(Persona, pk=pk)
-    persona.delete()
+    with set_actor(usuario), transaction.atomic():
+        persona.delete()
 
 
 # Bloque NOMBRE: filtra personas cuyo nombre completo coincida parcialmente.
