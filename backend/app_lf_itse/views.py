@@ -1689,7 +1689,7 @@ class UsuarioDetailView(APIView):
             if not serializer.is_valid():
                 return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-            usuario = actualizar_usuario(pk, serializer.validated_data)
+            usuario = actualizar_usuario(pk, serializer.validated_data, request.user)
             return Response(
                 UsuarioSerializer(usuario).data,
                 status=status.HTTP_200_OK,
@@ -1704,7 +1704,7 @@ class UsuarioDetailView(APIView):
 
     def delete(self, request, pk):
         try:
-            eliminar_usuario(pk)
+            eliminar_usuario(pk, request.user)
             return Response(status=status.HTTP_204_NO_CONTENT)
 
         except UsuarioTieneRegistrosError as e:
@@ -2695,7 +2695,7 @@ class GiroDetailView(APIView):
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
         try:
-            giro = actualizar_giro(pk, serializer.validated_data)
+            giro = actualizar_giro(pk, serializer.validated_data, request.user)
             return Response(
                 GiroSerializer(giro).data,
                 status=status.HTTP_200_OK,
@@ -2710,7 +2710,7 @@ class GiroDetailView(APIView):
 
     def delete(self, request, pk):
         try:
-            eliminar_giro(pk)
+            eliminar_giro(pk, request.user)
             return Response(status=status.HTTP_204_NO_CONTENT)
 
         except ProtectedError:
