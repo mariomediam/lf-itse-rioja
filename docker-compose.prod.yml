@@ -3,7 +3,7 @@ services:
     build:
       context: ./backend
       dockerfile: Dockerfile.prod
-    container_name: app_backend_prod
+    container_name: rioja_backend_prod
     env_file:
       - ./backend/.env.prod
     ports:
@@ -21,28 +21,34 @@ services:
     build:
       context: ./frontend
       dockerfile: Dockerfile.prod
-    container_name: app_frontend_prod
-    ports:
-      - "3000:80"
+    container_name: rioja_frontend_prod
+    # ports:
+    #   - "3000:80"
     depends_on:
       - backend
     restart: unless-stopped
 
   db:
-    image: postgres:17.9-alpine
-    container_name: app_db_prod
+    image: mysql:8.0
+    container_name: rioja_db_prod
     env_file:
       - ./backend/.env.prod
-    ports:
-      - "5433:5432"
+    # environment:
+    #   MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD:-rioja_password}
+    #   MYSQL_DATABASE: ${MYSQL_DB:-rioja_db}
+    #   MYSQL_USER: ${MYSQL_USER:-rioja_user}
+    #   MYSQL_PASSWORD: ${MYSQL_PASSWORD:-rioja_password}
     volumes:
-      - postgres_data_prod:/var/lib/postgresql/data
-    restart: unless-stopped
+      - rioja_mysql_data_prod:/var/lib/mysql
+    ports:
+      - "3306:3306"
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready"]
+      # test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${MYSQL_PASSWORD:-rioja_password}"]
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
       interval: 10s
       timeout: 5s
       retries: 5
+      start_period: 30s
 
 volumes:
-  postgres_data_prod:
+  rioja_mysql_data_prod:

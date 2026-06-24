@@ -14,13 +14,8 @@ env = environ.Env(
     # Definir valores por defecto y tipos
     DEBUG=(bool, True),
     SECRET_KEY=(str, 'django-insecure-dev-key-please-change'),
-    ALLOWED_HOSTS=(list, ['localhost', '127.0.0.1', '192.168.100.22', '[::1]', '192.168.17.44']),
-    POSTGRES_DB=(str, 'myapp'),
-    POSTGRES_USER=(str, 'postgres'),
-    POSTGRES_PASSWORD=(str, 'postgres'),
-    POSTGRES_HOST=(str, 'db'),
-    POSTGRES_PORT=(int, 5432),
-    MYSQL_DB=(str, 'rioja_db'),
+    ALLOWED_HOSTS=(list, ['localhost', '127.0.0.1', '192.168.1.6', '[::1]']),
+    MYSQL_DATABASE=(str, 'rioja_lf_itse'),
     MYSQL_USER=(str, 'rioja_user'),
     MYSQL_PASSWORD=(str, 'rioja_password'),
     MYSQL_HOST=(str, 'db'),
@@ -116,7 +111,7 @@ WSGI_APPLICATION = 'backend_api.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': env('MYSQL_DB'),
+        'NAME': env('MYSQL_DATABASE'),
         'USER': env('MYSQL_USER'),
         'PASSWORD': env('MYSQL_PASSWORD'),
         'HOST': env('MYSQL_HOST'),
