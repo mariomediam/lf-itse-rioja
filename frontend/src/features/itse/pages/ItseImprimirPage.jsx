@@ -155,9 +155,12 @@ const ItseImprimirPage = () => {
     <>
       <style>{`
         @media print {
-          @page { size: A4; margin: 8mm; }
+          @page { size: A4; margin: 0; }
+          html, body { margin: 0; padding: 0; }
           body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
           .no-print { display: none !important; }
+          .print-bg { background: none !important; min-height: auto !important; padding: 0 !important; }
+          .print-sheet { margin: 0 !important; box-shadow: none !important; }
         }
       `}</style>
 
@@ -184,12 +187,12 @@ const ItseImprimirPage = () => {
       </div>
 
       {/* Fondo gris */}
-      <div style={{ backgroundColor: '#d1d5db', minHeight: '100vh', paddingTop: '32px', paddingBottom: '32px' }}>
+      <div className="print-bg" style={{ backgroundColor: '#d1d5db', minHeight: '100vh', paddingTop: '32px', paddingBottom: '32px' }}>
 
         {/* Hoja A4 */}
-        <div style={{
+        <div className="print-sheet" style={{
           width: '210mm',
-          minHeight: '297mm',
+          height: '297mm',
           margin: '0 auto',
           backgroundColor: '#ffffff',
           padding: '10mm 14mm 10mm 14mm',
