@@ -294,11 +294,11 @@ const ItseImprimirPage = () => {
           {/* ── DISTRITO / PROVINCIA / DEPARTAMENTO ── */}
           <div style={{ display: 'flex', alignItems: 'baseline', gap: '6px', marginBottom: '8px' }}>
             <span style={S.label}>Distrito</span>
-            <span style={{ ...S.valor, minWidth: '80px' }}>RIOJA</span>
-            <span style={S.label}>, Provincia</span>
-            <span style={{ ...S.valor, minWidth: '80px' }}>RIOJA</span>
+            <span style={{ ...S.valor, flex: 1 }}>{itse.distrito}</span>
+            <span style={S.label}>Provincia</span>
+            <span style={{ ...S.valor, flex: 1 }}>RIOJA</span>
             <span style={S.label}>, Departamento</span>
-            <span style={{ ...S.valor, minWidth: '100px' }}>SAN MARTIN</span>
+            <span style={{ ...S.valor, flex: 1 }}>SAN MARTIN</span>
           </div>
 
           {/* ── SOLICITADO POR ── */}

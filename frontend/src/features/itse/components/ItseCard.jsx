@@ -185,7 +185,7 @@ export default function ItseCard({ itse, onRefrescar }) {
           {/* Dirección */}
           <p className="text-xs text-gray-500">
             Dirección del local:{' '}
-            <strong className="text-gray-700">{itse.direccion}</strong>
+            <strong className="text-gray-700">{itse.direccion}</strong> - Distrito: <strong className="text-gray-700">{itse.distrito}</strong>
           </p>
         </div>
 

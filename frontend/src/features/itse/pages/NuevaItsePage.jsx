@@ -129,6 +129,7 @@ export default function NuevaItsePage() {
   // Establecimiento
   const [nombreComercial, setNombreComercial] = useState('')
   const [direccion,       setDireccion]       = useState('')
+  const [distrito,        setDistrito]        = useState('RIOJA')
   const [capacidadAforo,  setCapacidadAforo]  = useState('')
   const [area,            setArea]            = useState('')
 
@@ -249,6 +250,7 @@ export default function NuevaItsePage() {
       setNivelRiesgoId(String(d.nivel_riesgo_id))
       setNombreComercial(d.nombre_comercial ?? '')
       setDireccion(d.direccion ?? '')
+      setDistrito(d.distrito ?? 'RIOJA')
       setCapacidadAforo(d.capacidad_aforo != null ? String(d.capacidad_aforo) : '')
       setArea(d.area != null ? String(d.area) : '')
       setTitular({
@@ -309,6 +311,7 @@ export default function NuevaItsePage() {
       nombre_comercial:           nombreComercial.trim(),
       nivel_riesgo_id:            Number(nivelRiesgoId),
       direccion:                  direccion.trim(),
+      distrito:                   distrito.trim() || 'RIOJA',
       resolucion_numero:          resolucionNumero.trim(),
       area:                       area,
       numero_recibo_pago:         numeroReciboPago.trim(),
@@ -599,17 +602,31 @@ export default function NuevaItsePage() {
                   />
                 </div>
 
-                <div>
-                  <label className="block text-xs font-medium text-gray-600 mb-1.5">
-                    Dirección del local <span className="text-danger">*</span>
-                  </label>
-                  <input
-                    type="text"
-                    value={direccion}
-                    onChange={(e) => setDireccion(e.target.value)}
-                    placeholder="Ej. Av. Las Camelias 782 - Oficina 402 - San Isidro - Lima"
-                    className={inputClass}
-                  />
+                <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
+                  <div className="sm:col-span-3">
+                    <label className="block text-xs font-medium text-gray-600 mb-1.5">
+                      Dirección del local <span className="text-danger">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      value={direccion}
+                      onChange={(e) => setDireccion(e.target.value)}
+                      placeholder="Ej. Av. Las Camelias 782 - Oficina 402"
+                      className={inputClass}
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-medium text-gray-600 mb-1.5">
+                      Distrito
+                    </label>
+                    <input
+                      type="text"
+                      value={distrito}
+                      onChange={(e) => setDistrito(e.target.value)}
+                      placeholder="Ej. RIOJA"
+                      className={inputClass}
+                    />
+                  </div>
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
