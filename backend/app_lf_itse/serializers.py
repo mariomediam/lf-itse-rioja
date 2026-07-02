@@ -595,6 +595,12 @@ class LicenciaFuncionamientoCreateSerializer(serializers.Serializer):
                                    allow_null=True,
                                )
     se_puede_publicar        = serializers.BooleanField(default=False)
+    distrito                 = serializers.CharField(
+                                   max_length=100,
+                                   required=False,
+                                   allow_blank=True,
+                                   allow_null=True,
+                               )
     giros                    = _GiroItemSerializer(many=True)
 
     def validate(self, data):
@@ -672,6 +678,12 @@ class LicenciaFuncionamientoUpdateSerializer(serializers.Serializer):
                                    allow_null=True,
                                )
     se_puede_publicar        = serializers.BooleanField(default=False)
+    distrito                 = serializers.CharField(
+                                   max_length=100,
+                                   required=False,
+                                   allow_blank=True,
+                                   allow_null=True,
+                               )
     giros                    = _GiroItemSerializer(many=True)
 
     def validate(self, data):
