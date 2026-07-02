@@ -8,14 +8,14 @@ import { configPublicaApi } from '@api/configPublicaApi'
 
 const formatUuid = (raw) => {
   if (!raw || raw.includes('-')) return raw
-  return `${raw.slice(0,8)}-${raw.slice(8,12)}-${raw.slice(12,16)}-${raw.slice(16,20)}-${raw.slice(20)}`
+  return `${raw.slice(0, 8)}-${raw.slice(8, 12)}-${raw.slice(12, 16)}-${raw.slice(16, 20)}-${raw.slice(20)}`
 }
 
 const UNIDADES = [
   '', 'UNO', 'DOS', 'TRES', 'CUATRO', 'CINCO', 'SEIS', 'SIETE', 'OCHO', 'NUEVE',
   'DIEZ', 'ONCE', 'DOCE', 'TRECE', 'CATORCE', 'QUINCE', 'DIECISÉIS', 'DIECISIETE', 'DIECIOCHO', 'DIECINUEVE',
 ]
-const DECENAS  = ['', 'DIEZ', 'VEINTE', 'TREINTA', 'CUARENTA', 'CINCUENTA', 'SESENTA', 'SETENTA', 'OCHENTA', 'NOVENTA']
+const DECENAS = ['', 'DIEZ', 'VEINTE', 'TREINTA', 'CUARENTA', 'CINCUENTA', 'SESENTA', 'SETENTA', 'OCHENTA', 'NOVENTA']
 const CENTENAS = ['', 'CIENTO', 'DOSCIENTOS', 'TRESCIENTOS', 'CUATROCIENTOS', 'QUINIENTOS', 'SEISCIENTOS', 'SETECIENTOS', 'OCHOCIENTOS', 'NOVECIENTOS']
 
 const numeroALetras = (n) => {
@@ -56,10 +56,10 @@ const calcularVigencia = (fechaInicio, fechaFin) => {
 // ── Estilos reutilizables ─────────────────────────────────────────────────────
 
 const S = {
-  label:  { fontWeight: 'bold', fontSize: '11px' },
-  valor:  { borderBottom: '1px solid #000', display: 'inline-block', padding: '0 6px', fontSize: '11px', fontWeight: 'bold' },
-  sub:    { fontSize: '8.5px', color: '#444', display: 'block', textAlign: 'center', marginTop: '1px' },
-  linea:  { marginBottom: '8px' },
+  label: { fontWeight: 'bold', fontSize: '14.7px' },
+  valor: { borderBottom: '1px solid #888', display: 'inline-block', padding: '0 6px', fontSize: '18.7px', fontWeight: 'bold' },
+  sub: { fontSize: '8.5px', color: '#444', display: 'block', textAlign: 'center', marginTop: '1px' },
+  linea: { marginBottom: '8px' },
 }
 
 // ── Campo con línea subrayada ─────────────────────────────────────────────────
@@ -79,14 +79,14 @@ function CampoLinea({ label, valor, subtitulo, grow = false }) {
 // ── Página principal ──────────────────────────────────────────────────────────
 
 const ItseImprimirPage = () => {
-  const { id }   = useParams()
+  const { id } = useParams()
   const navigate = useNavigate()
 
-  const [itse,     setItse]     = useState(null)
-  const [giros,    setGiros]    = useState([])
-  const [qrUrl,    setQrUrl]    = useState(null)
+  const [itse, setItse] = useState(null)
+  const [giros, setGiros] = useState([])
+  const [qrUrl, setQrUrl] = useState(null)
   const [cargando, setCargando] = useState(true)
-  const [error,    setError]    = useState(null)
+  const [error, setError] = useState(null)
 
   useEffect(() => {
     const cargar = async () => {
@@ -141,19 +141,43 @@ const ItseImprimirPage = () => {
   }
 
   // ── Datos calculados ────────────────────────────────────────────────────────
-  const anioItse       = getAnio(itse.fecha_expedicion)
-  const girosTexto     = giros.map((g) => g.nombre).join(', ')
-  const expedienteNum  = itse.numero_expediente
+  const anioItse = getAnio(itse.fecha_expedicion)
+  const girosTexto = giros.map((g) => g.nombre).join(', ')
+  const expedienteNum = itse.numero_expediente
     ? `${String(itse.numero_expediente).padStart(4, '0')}-${getAnio(itse.fecha_recepcion)}-OGRD y DC-MPR`
     : '-'
-  const vigencia       = calcularVigencia(itse.fecha_expedicion, itse.fecha_caducidad)
-  const aforo          = itse.capacidad_aforo
-  const aforoLetras    = numeroALetras(aforo)
+  const vigencia = calcularVigencia(itse.fecha_expedicion, itse.fecha_caducidad)
+  const aforo = itse.capacidad_aforo
+  const aforoLetras = numeroALetras(aforo)
 
   // ── Render ──────────────────────────────────────────────────────────────────
   return (
     <>
       <style>{`
+        @font-face {
+          font-family: 'Arial Narrow';
+          src: url('/fonts/ARIALN.TTF') format('truetype');
+          font-weight: normal;
+          font-style: normal;
+        }
+        @font-face {
+          font-family: 'Arial Narrow';
+          src: url('/fonts/ARIALNB.TTF') format('truetype');
+          font-weight: bold;
+          font-style: normal;
+        }
+        @font-face {
+          font-family: 'Arial Narrow';
+          src: url('/fonts/ARIALNI.TTF') format('truetype');
+          font-weight: normal;
+          font-style: italic;
+        }
+        @font-face {
+          font-family: 'Arial Narrow';
+          src: url('/fonts/ARIALNBI.TTF') format('truetype');
+          font-weight: bold;
+          font-style: italic;
+        }
         @media print {
           @page { size: A4; margin: 0; }
           html, body { margin: 0; padding: 0; }
@@ -195,34 +219,38 @@ const ItseImprimirPage = () => {
           height: '297mm',
           margin: '0 auto',
           backgroundColor: '#ffffff',
-          padding: '10mm 14mm 10mm 14mm',
+          padding: '10mm 18mm 10mm 18mm',
           boxSizing: 'border-box',
-          fontFamily: 'Arial, sans-serif',
+          fontFamily: '"Arial Narrow", Arial, sans-serif',
           color: '#000000',
           display: 'flex',
           flexDirection: 'column',
         }}>
 
           {/* ── ENCABEZADO ── */}
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: '2px solid #000', paddingBottom: '8px', marginBottom: '10px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingBottom: '0px', marginBottom: '0px' }}>
             <img src="/images/escudo-muni.png" alt="Escudo"
-              style={{ height: '85px', width: 'auto', flexShrink: 0 }}
+              style={{ height: '85px', width: '85px', flexShrink: 0 }}
               onError={(e) => { e.target.style.display = 'none' }} />
             <div style={{ textAlign: 'center', flex: 1, padding: '0 10px' }}>
-              <p style={{ fontWeight: 'bold', fontSize: '18px', textTransform: 'uppercase', margin: '0 0 3px 0', letterSpacing: '0.5px', whiteSpace: 'nowrap' }}>
+              <p style={{ fontWeight: 'bold', fontSize: '28px', textTransform: 'uppercase', margin: '0 0 0 0', letterSpacing: '0.5px', whiteSpace: 'nowrap' }}>
                 Municipalidad Provincial de Rioja
               </p>
-              <p style={{ fontSize: '9px', fontStyle: 'italic', margin: 0, lineHeight: '1.3', color: '#333' }}>
+              <p style={{ fontSize: '11px', fontStyle: 'italic', margin: 0, lineHeight: '1.3', color: '#333' }}>
                 RIOJA CIUDAD DE LOS SOMBREROS Y CAPITAL DEL CARNAVAL<br />EN LA REGIÓN SAN MARTIN
               </p>
             </div>
             <img src="/images/cenepred.jpg" alt="CENEPRED"
               style={{ height: '85px', width: 'auto', maxWidth: '120px', flexShrink: 0 }}
               onError={(e) => { e.target.style.display = 'none' }} />
+            
           </div>
+          
+          {/* centrar linea */}
+          <hr style={{ border: '0.5px solid #ddd', margin: '0 auto', width: '75%' }} />
 
           {/* ── TÍTULO CERTIFICADO ── */}
-          <p style={{ fontWeight: 'bold', fontStyle: 'italic', fontSize: '11.5px', textAlign: 'justify', margin: '0 0 10px 0', lineHeight: '1.5', textTransform: 'uppercase' }}>
+          <p style={{ fontWeight: 'bold',  fontSize: '20px', textAlign: 'center', margin: '8px 30px 3px 30px', lineHeight: '1', textTransform: 'uppercase' }}>
             Certificado de Inspección Técnica de Seguridad en Edificaciones para Establecimientos
             Objeto de Inspección Clasificados con Nivel de{' '}
             <span style={{ textTransform: 'uppercase' }}>{itse.nivel_riesgo_nombre || 'RIESGO BAJO O RIESGO MEDIO'}</span>{' '}
@@ -230,36 +258,35 @@ const ItseImprimirPage = () => {
           </p>
 
           {/* ── N° ITSE ── */}
-          <div style={{ textAlign: 'center', borderTop: '1px solid #000', borderBottom: '1px solid #000', padding: '6px 0', margin: '0 0 10px 0' }}>
-            <p style={{ fontWeight: 'bold', fontSize: '20px', margin: 0, letterSpacing: '2px' }}>
-              N° {itse.numero_itse} - {anioItse}
+          <div style={{ textAlign: 'center', padding: '2px 0', margin: '0 0 3px 0' }}>
+            <p style={{ fontWeight: 'bold', fontSize: '26.7px', margin: 0, letterSpacing: '0.5px' }}>
+              N° {String(itse.numero_itse).padStart(4, '0')} - {anioItse}
             </p>
           </div>
 
           {/* ── PÁRRAFO INTRODUCTORIO ── */}
-          <p style={{ fontSize: '11px', textAlign: 'justify', margin: '0 0 10px 0', lineHeight: '1.5' }}>
-            El Órgano Ejecutante de la <strong>MUNICIPALIDAD PROVINCIAL DE RIOJA</strong>, en cumplimiento de lo establecido en el
-            D.S. Nº002-2018-PCM, ha realizado la Inspección Técnica de Seguridad en Edificaciones al Establecimiento
+          <p style={{ fontSize: '16px', textAlign: 'justify', margin: '0 0 0px 0', lineHeight: '1' }}>
+            El Órgano Ejecutante de la <strong>MUNICIPALIDAD PROVINCIAL DE RIOJA</strong>, en cumplimiento de lo establecido en el <strong>D.S. Nº002-2018-PCM</strong>, ha realizado la Inspección Técnica de Seguridad en Edificaciones al Establecimiento
             Objeto de Inspección:
           </p>
 
           {/* ── NOMBRE COMERCIAL ── */}
-          <div style={{ textAlign: 'center', borderBottom: '1.5px solid #000', margin: '0 0 4px 0', paddingBottom: '4px' }}>
-            <p style={{ fontWeight: 'bold', fontStyle: 'italic', fontSize: '17px', margin: 0, textTransform: 'uppercase' }}>
+          <div style={{ textAlign: 'center', borderBottom: '1.5px solid #000', margin: '0 0 2px 0', paddingBottom: '0px' }}>
+            <p style={{ fontWeight: 'bold', fontStyle: 'italic', fontSize: '29.2px', margin: 0, textTransform: 'uppercase' }}>
               "{itse.nombre_comercial || '-'}."
             </p>
           </div>
-          <p style={{ fontSize: '9px', textAlign: 'center', margin: '0 0 10px 0', color: '#444' }}>
+          <p style={{ fontSize: '10px', textAlign: 'center', margin: '0 0 3px 0', color: '#444' }}>
             (Nombre Comercial)
           </p>
 
           {/* ── UBICADO EN ── */}
-          <div style={{ marginBottom: '4px' }}>
+          <div style={{ marginBottom: '0px' }}>
             <div style={{ display: 'flex', alignItems: 'baseline', gap: '4px' }}>
               <span style={S.label}>Ubicado en</span>
               <span style={{ ...S.valor, flex: 1 }}>{itse.direccion || ''}</span>
             </div>
-            <p style={{ fontSize: '9px', color: '#444', textAlign: 'center', margin: '1px 0 8px 0' }}>
+            <p style={{ fontSize: '9px', color: '#444', textAlign: 'center', margin: '1px 0 3px 0' }}>
               (Calle, Av., Jr., Lote, Mz., Urb.)
             </p>
           </div>
@@ -277,7 +304,7 @@ const ItseImprimirPage = () => {
           {/* ── SOLICITADO POR ── */}
           <div style={{ marginBottom: '4px' }}>
             <div style={{ display: 'flex', alignItems: 'baseline', gap: '4px' }}>
-              <span style={S.label}>Solicitado por</span>
+              <span style={S.label}>Solicitado por:</span>
               <span style={{ ...S.valor, flex: 1 }}>{itse.conductor_nombre || ''}</span>
             </div>
             <p style={{ fontSize: '9px', color: '#444', textAlign: 'center', margin: '1px 0 8px 0' }}>
@@ -286,7 +313,7 @@ const ItseImprimirPage = () => {
           </div>
 
           {/* ── CERTIFICA ── */}
-          <p style={{ fontSize: '11px', textAlign: 'justify', margin: '0 0 10px 0', lineHeight: '1.5' }}>
+          <p style={{ fontSize: '14px', textAlign: 'justify', margin: '0 0 4px 0', lineHeight: '1.2' }}>
             El que suscribe <strong>CERTIFICA</strong> que el objeto de la Inspección antes señalado <strong>CUMPLE</strong> con
             la normativa en materia de seguridad en edificaciones vigente.
           </p>
@@ -328,17 +355,17 @@ const ItseImprimirPage = () => {
           </div>
 
           {/* ── VIGENCIA + LUGAR ── */}
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
-            <p style={{ fontWeight: 'bold', fontSize: '13px', margin: 0, textTransform: 'uppercase' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2px' }}>
+            <p style={{ fontWeight: 'bold', fontSize: '18.7px', margin: 0, textTransform: 'uppercase' }}>
               VIGENCIA {vigencia}
             </p>
-            <p style={{ fontSize: '11px', fontWeight: 'bold', margin: 0 }}>
-              LUGAR:&nbsp;&nbsp;RIOJA
+            <p style={{ fontSize: '18.7px', margin: 0 }}>
+              <span style={{ fontSize: '14.7px' }}>LUGAR:</span>&nbsp;&nbsp;<strong>RIOJA</strong>
             </p>
           </div>
 
           {/* ── FECHAS ── */}
-          <div style={{ marginBottom: '12px' }}>
+          <div style={{ marginBottom: '0px' }}>
 
             {/* Fecha de expedición */}
             <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'flex-end', gap: '6px', marginBottom: '8px' }}>
@@ -351,7 +378,7 @@ const ItseImprimirPage = () => {
             </div>
 
             {/* Fecha de solicitud de renovación */}
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: '6px', marginBottom: '8px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: '6px', marginBottom: 'px' }}>
               <div style={{ textAlign: 'right' }}>
                 <span style={{ fontWeight: 'bold', fontStyle: 'italic', fontSize: '11px' }}>FECHA DE SOLICITUD DE RENOVACIÓN</span>
                 <p style={{ fontSize: '9px', fontStyle: 'italic', color: '#c0392b', margin: '1px 0 0 0' }}>
@@ -366,7 +393,7 @@ const ItseImprimirPage = () => {
             </div>
 
             {/* Fecha de caducidad */}
-            <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'flex-end', gap: '6px', marginBottom: '8px' }}>
+            <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'flex-end', gap: '6px', marginBottom: '0px' }}>
               <span style={{ fontWeight: 'bold', fontStyle: 'italic', fontSize: '11px' }}>FECHA DE CADUCIDAD</span>
               <span style={{ fontWeight: 'bold', fontSize: '11px' }}>:</span>
               <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', minWidth: '90px' }}>
@@ -378,12 +405,12 @@ const ItseImprimirPage = () => {
           </div>
 
           {/* ── MUNICIPALIDAD ── */}
-          <p style={{ fontWeight: 'bold', fontSize: '12px', textAlign: 'center', textTransform: 'uppercase', margin: '12px 0 64px 0' }}>
+          <p style={{ fontWeight: 'bold', fontSize: '12px', textAlign: 'center', textTransform: 'uppercase', margin: '0px 0 36px 0' }}>
             Municipalidad Provincial de Rioja
           </p>
 
           {/* ── FIRMA ── */}
-          <div style={{ textAlign: 'center', marginBottom: '12px' }}>
+          <div style={{ textAlign: 'center', marginBottom: '0px' }}>
             <p style={{ fontSize: '11px', margin: '0 0 2px 0', letterSpacing: '2px' }}>
               ………………………………………………………………….
             </p>
@@ -401,19 +428,19 @@ const ItseImprimirPage = () => {
           {/* ── NOTA LEGAL ── */}
           <div style={{ borderTop: '1px solid #000', paddingTop: '6px', display: 'flex', gap: '10px' }}>
             <div style={{ flex: 1 }}>
-              <p style={{ fontWeight: 'bold', fontStyle: 'italic', fontSize: '8.5px', textAlign: 'center', margin: '0 0 4px 0' }}>
+              <p style={{ fontWeight: 'bold', fontStyle: 'italic', fontSize: '7.5px', textAlign: 'center', margin: '0 0 4px 0' }}>
                 *EL PRESENTE CERTIFICADO DE ITSE NO CONSTITUYE AUTORIZACIÓN ALGUNA PARA EL FUNCIONAMIENTO DEL
                 ESTABLECIMIENTO OBJETO DE INSPECCIÓN O PARA EL INICIO DE LA ACTIVIDAD
               </p>
-              <p style={{ fontWeight: 'bold', fontSize: '9px', margin: '0 0 3px 0' }}>NOTA:</p>
+              <p style={{ fontWeight: 'bold', fontSize: '7.5px', margin: '0 0 2px 0' }}>NOTA:</p>
               {[
                 'DE ACUERDO A LO ESTABLECIDO EN EL REGLAMENTO DE INSPECCIONES TÉCNICAS DE SEGURIDAD EN EDIFICACIONES APROBADO POR DECRETO SUPREMO N° 002-2018 PCM, EL PRESENTE CERTIFICADO DEBERÁ SER FIRMADO POR EL RESPONSABLE DEL ÓRGANO EJECUTANTE.',
                 'ESTE CERTIFICADO DEBERÁ COLOCARSE EN UN LUGAR VISIBLE DENTRO DEL ESTABLECIMIENTO OBJETO DE INSPECCIÓN.',
                 'CUALQUIER TACHA O ENMENDADURA INVALIDA EL PRESENTE CERTIFICADO.',
               ].map((texto, i) => (
                 <div key={i} style={{ display: 'flex', gap: '4px', marginBottom: '2px' }}>
-                  <span style={{ fontSize: '8.5px', flexShrink: 0 }}>-</span>
-                  <p style={{ margin: 0, fontSize: '8.5px', lineHeight: '1.4' }}>{texto}</p>
+                  <span style={{ fontSize: '7.5px', flexShrink: 0 }}>-</span>
+                  <p style={{ margin: 0, fontSize: '7.5px', lineHeight: '1.4' }}>{texto}</p>
                 </div>
               ))}
             </div>
