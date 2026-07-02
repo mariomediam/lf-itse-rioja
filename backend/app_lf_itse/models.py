@@ -409,7 +409,6 @@ class LicenciaFuncionamiento(models.Model):
         related_name='licencias_funcionamiento_digitadas',
     )
     fecha_digitacion = models.DateTimeField()
-    distrito = models.CharField(max_length=100, blank=True, null=True, default='RIOJA')
 
     class Meta:
         db_table = 'licencias_funcionamiento'

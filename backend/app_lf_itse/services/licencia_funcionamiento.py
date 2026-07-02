@@ -77,7 +77,6 @@ SELECT
     lf.fecha_notificacion,
     lf.usuario_id,
     lf.fecha_digitacion,
-    lf.distrito,
     e.numero_expediente,
     e.fecha_recepcion,
     TRIM(
@@ -493,7 +492,6 @@ def crear_licencia(data: dict, usuario) -> LicenciaFuncionamiento:
             dias_atencion         = data.get('dias_atencion'),
             numero_folios         = data.get('numero_folios'),
             se_puede_publicar     = data.get('se_puede_publicar', False),
-            distrito              = data.get('distrito', 'RIOJA'),
             usuario               = usuario,
             fecha_digitacion      = timezone.now(),
         )
@@ -593,7 +591,6 @@ def modificar_licencia(licencia_id: int, data: dict, usuario=None) -> LicenciaFu
         licencia.dias_atencion          = data.get('dias_atencion')
         licencia.numero_folios          = data.get('numero_folios')
         licencia.se_puede_publicar      = data.get('se_puede_publicar', False)
-        licencia.distrito               = data.get('distrito', 'RIOJA')
         licencia.save()
 
         # Reemplaza completamente los giros asociados
@@ -848,7 +845,6 @@ SELECT
     lf.fecha_notificacion,
     lf.usuario_id,
     lf.fecha_digitacion,
-    lf.distrito,
 
     td.titular_documentos_concatenados,
     cd.conductor_documentos_concatenados,
@@ -1355,7 +1351,6 @@ SELECT
     licencias_funcionamiento.fecha_notificacion,
     licencias_funcionamiento.usuario_id,
     licencias_funcionamiento.fecha_digitacion,
-    licencias_funcionamiento.distrito,
     expedientes.numero_expediente,
     expedientes.fecha_recepcion,
     tipos_procedimiento_tupa.nombre AS tipos_procedimiento_tupa_nombre,
