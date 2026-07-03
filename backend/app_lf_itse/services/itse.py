@@ -53,6 +53,7 @@ SELECT
     i.usuario_id,
     i.fecha_digitacion,
     i.distrito,
+    i.informe,
     e.numero_expediente,
     e.fecha_recepcion,
     TRIM(
@@ -490,6 +491,7 @@ def crear_itse(data: dict, usuario) -> Itse:
             se_puede_publicar=data.get('se_puede_publicar', False),
             capacidad_aforo=data['capacidad_aforo'],
             distrito=data.get('distrito', 'RIOJA'),
+            informe=data.get('informe', ''),
             usuario=usuario,
             fecha_digitacion=timezone.now(),
         )
@@ -648,6 +650,7 @@ def modificar_itse(itse_id: int, data: dict, usuario=None) -> Itse:
         itse.se_puede_publicar = data.get('se_puede_publicar', False)
         itse.capacidad_aforo = data['capacidad_aforo']
         itse.distrito = data.get('distrito', 'RIOJA')
+        itse.informe = data.get('informe', '')
         itse.save()
 
         ItseGiro.objects.filter(itse=itse).delete()
@@ -769,6 +772,7 @@ SELECT
     itse.conductor_id,
     itse.titular_id,
     itse.distrito,
+    itse.informe,
 
     td.titular_documentos_concatenados,
     cd.conductor_documentos_concatenados,

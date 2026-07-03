@@ -523,6 +523,12 @@ class ItseCreateSerializer(serializers.Serializer):
         allow_blank=True,
         allow_null=True,
     )
+    informe = serializers.CharField(
+        max_length=100,
+        required=False,
+        allow_blank=True,
+        allow_null=True,
+    )
     giros = _GiroItemSerializer(many=True, required=False, default=list)
 
     def validate_tipo_itse_id(self, value):

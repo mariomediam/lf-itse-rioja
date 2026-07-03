@@ -564,6 +564,7 @@ class Itse(models.Model):
     )
     fecha_digitacion = models.DateTimeField()
     distrito = models.CharField(max_length=100, blank=True, null=True, default='RIOJA')
+    informe = models.CharField(max_length=100, blank=True, null=True, default='')
 
     class Meta:
         db_table = 'itse'
