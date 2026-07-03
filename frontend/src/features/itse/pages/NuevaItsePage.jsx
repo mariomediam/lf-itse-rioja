@@ -120,6 +120,7 @@ export default function NuevaItsePage() {
   const [tipoItseId,               setTipoItseId]               = useState('')
   const [resolucionNumero,         setResolucionNumero]         = useState('')
   const [nivelRiesgoId,            setNivelRiesgoId]            = useState('')
+  const [informe,                  setInforme]                  = useState('')
   const [numeroReciboPago,         setNumeroReciboPago]         = useState('')
 
   // Titular y representante legal
@@ -313,6 +314,7 @@ export default function NuevaItsePage() {
       direccion:                  direccion.trim(),
       distrito:                   distrito.trim() || 'RIOJA',
       resolucion_numero:          resolucionNumero.trim(),
+      informe:                    informe.trim() || null,
       area:                       area,
       numero_recibo_pago:         numeroReciboPago.trim(),
       observaciones:              observaciones.trim() || null,
@@ -435,7 +437,7 @@ export default function NuevaItsePage() {
                   </div>
                 </div>
 
-                {/* Fila 2: Tipo, Resolución */}
+                {/* Fila 2: Tipo, Nivel de riesgo */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-xs font-medium text-gray-600 mb-1.5">
@@ -457,15 +459,21 @@ export default function NuevaItsePage() {
                   </div>
                   <div>
                     <label className="block text-xs font-medium text-gray-600 mb-1.5">
-                      Resolución <span className="text-danger">*</span>
+                      Nivel de riesgo <span className="text-danger">*</span>
                     </label>
-                    <input
-                      type="text"
-                      value={resolucionNumero}
-                      onChange={(e) => setResolucionNumero(e.target.value)}
-                      placeholder="Ej. 023-2026-RG/MDV"
-                      className={inputClass}
-                    />
+                    <select
+                      value={nivelRiesgoId}
+                      onChange={(e) => setNivelRiesgoId(e.target.value)}
+                      disabled={loadingCatalogos}
+                      className={selectClass}
+                    >
+                      <option value="">
+                        {loadingCatalogos ? 'Cargando...' : 'Seleccione un nivel'}
+                      </option>
+                      {nivelesRiesgo.map((n) => (
+                        <option key={n.id} value={n.id}>{n.nombre}</option>
+                      ))}
+                    </select>
                   </div>
                 </div>
 
@@ -506,26 +514,36 @@ export default function NuevaItsePage() {
                   </div>
                 )}
 
-                {/* Fila 3: Nivel de riesgo, Recibo de pago */}
+                {/* Fila 3: Resolución, Informe */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-xs font-medium text-gray-600 mb-1.5">
-                      Nivel de riesgo <span className="text-danger">*</span>
+                      Resolución <span className="text-danger">*</span>
                     </label>
-                    <select
-                      value={nivelRiesgoId}
-                      onChange={(e) => setNivelRiesgoId(e.target.value)}
-                      disabled={loadingCatalogos}
-                      className={selectClass}
-                    >
-                      <option value="">
-                        {loadingCatalogos ? 'Cargando...' : 'Seleccione un nivel'}
-                      </option>
-                      {nivelesRiesgo.map((n) => (
-                        <option key={n.id} value={n.id}>{n.nombre}</option>
-                      ))}
-                    </select>
+                    <input
+                      type="text"
+                      value={resolucionNumero}
+                      onChange={(e) => setResolucionNumero(e.target.value)}
+                      placeholder="Ej. 023-2026-RG/MDV"
+                      className={inputClass}
+                    />
                   </div>
+                  <div>
+                    <label className="block text-xs font-medium text-gray-600 mb-1.5">
+                      Informe
+                    </label>
+                    <input
+                      type="text"
+                      value={informe}
+                      onChange={(e) => setInforme(e.target.value)}
+                      placeholder="134-2026-OGRD y DC-MPR"
+                      className={inputClass}
+                    />
+                  </div>
+                </div>
+
+                {/* Fila 4: Recibo de pago, Inspector */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-xs font-medium text-gray-600 mb-1.5">
                       N° de recibo de pago
@@ -538,10 +556,6 @@ export default function NuevaItsePage() {
                       className={inputClass}
                     />
                   </div>
-                </div>
-
-                {/* Fila 4: Inspector */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-xs font-medium text-gray-600 mb-1.5">
                       Inspector

@@ -149,6 +149,7 @@ const ItseImprimirPage = () => {
   const vigencia = calcularVigencia(itse.fecha_expedicion, itse.fecha_caducidad)
   const aforo = itse.capacidad_aforo
   const aforoLetras = numeroALetras(aforo)
+  const informeNum = itse.informe
 
   // ── Render ──────────────────────────────────────────────────────────────────
   return (
@@ -345,7 +346,7 @@ const ItseImprimirPage = () => {
               {itse.area != null ? `${itse.area} mt2` : ''}
             </span>
             <span style={{ ...S.label, marginLeft: '8px' }}>Expediente N°:</span>
-            <span style={{ ...S.valor, flex: 1 }}>{expedienteNum}</span>
+            <span style={{ ...S.valor, flex: 1 }}>{informeNum}</span>
           </div>
 
           {/* ── RESOLUCIÓN ── */}
