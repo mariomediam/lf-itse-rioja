@@ -9,11 +9,11 @@ import { configPublicaApi } from '@api/configPublicaApi'
 
 const formatUuid = (raw) => {
   if (!raw || raw.includes('-')) return raw
-  return `${raw.slice(0,8)}-${raw.slice(8,12)}-${raw.slice(12,16)}-${raw.slice(16,20)}-${raw.slice(20)}`
+  return `${raw.slice(0, 8)}-${raw.slice(8, 12)}-${raw.slice(12, 16)}-${raw.slice(16, 20)}-${raw.slice(20)}`
 }
 
 const CODIGO_DNI = '01'
-const CODIGO_CE  = '04'
+const CODIGO_CE = '04'
 
 const MESES = [
   'ENERO', 'FEBRERO', 'MARZO', 'ABRIL', 'MAYO', 'JUNIO',
@@ -57,7 +57,7 @@ const formatFechaLarga = (fechaStr) => {
 const etiquetaDocumento = (doc) => {
   if (!doc) return 'D.N.I.'
   if (doc.tipos_documento_identidad_codigo === CODIGO_DNI) return 'D.N.I.'
-  if (doc.tipos_documento_identidad_codigo === CODIGO_CE)  return 'C.E.'
+  if (doc.tipos_documento_identidad_codigo === CODIGO_CE) return 'C.E.'
   return doc.tipos_documento_identidad_nombre || 'D.N.I.'
 }
 
@@ -84,15 +84,16 @@ function FilaCertificado({ label, children }) {
 // ── Página ────────────────────────────────────────────────────────────────────
 
 const LicenciaImprimirPage = () => {
-  const { id }   = useParams()
+  const { id } = useParams()
   const navigate = useNavigate()
 
-  const [licencia,     setLicencia]     = useState(null)
-  const [giros,        setGiros]        = useState([])
+  const [licencia, setLicencia] = useState(null)
+  const [giros, setGiros] = useState([])
   const [docIdentidad, setDocIdentidad] = useState(null)
-  const [qrUrl,        setQrUrl]        = useState(null)
-  const [cargando,     setCargando]     = useState(true)
-  const [error,        setError]        = useState(null)
+  const [qrUrl, setQrUrl] = useState(null)
+  const [cargando, setCargando] = useState(true)
+  const [error, setError] = useState(null)
+  const [titularEsPersonaJuridica, setTitularEsPersonaJuridica] = useState(false)
 
   useEffect(() => {
     const cargar = async () => {
@@ -119,9 +120,9 @@ const LicenciaImprimirPage = () => {
         if (lic.conductor_id) {
           try {
             const docRes = await personasApi.getDocumentos(lic.conductor_id)
-            const docs   = docRes.data
+            const docs = docRes.data
             const docDni = docs.find((d) => d.tipos_documento_identidad_codigo === CODIGO_DNI)
-            const docCe  = docs.find((d) => d.tipos_documento_identidad_codigo === CODIGO_CE)
+            const docCe = docs.find((d) => d.tipos_documento_identidad_codigo === CODIGO_CE)
             setDocIdentidad(docDni || docCe || null)
           } catch { /* continuar sin documento */ }
         }
@@ -133,6 +134,11 @@ const LicenciaImprimirPage = () => {
     }
     cargar()
   }, [id])
+
+  useEffect(() => {
+    if (!licencia) return
+    setTitularEsPersonaJuridica(licencia.titular_ruc?.startsWith('20') ?? true)
+  }, [licencia])
 
   // ── Loading ───────────────────────────────────────────────────────────────
 
@@ -167,9 +173,9 @@ const LicenciaImprimirPage = () => {
 
   // ── Datos calculados ──────────────────────────────────────────────────────
 
-  const anioLicencia     = getAnio(licencia.fecha_emision)
-  const anioExpediente   = getAnio(licencia.fecha_recepcion)
-  const giroPrincipal    = giros[0] ?? null
+  const anioLicencia = getAnio(licencia.fecha_emision)
+  const anioExpediente = getAnio(licencia.fecha_recepcion)
+  const giroPrincipal = giros[0] ?? null
   const girosSecundarios = giros.slice(1)
 
   const horario = [
@@ -236,182 +242,198 @@ const LicenciaImprimirPage = () => {
           fontFamily: 'Arial, sans-serif',
           color: '#000000',
         }}>
-        {/* Contenido con borde interior */}
-        <div style={{
-          border: '3px solid #000000',
-          height: '100%',
-          padding: '0 0 8mm 0',
-          boxSizing: 'border-box',
-          display: 'flex',
-          flexDirection: 'column',
-        }}>
-
-          {/* ── ENCABEZADO — ocupa el ancho completo del borde ── */}
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '10px' }}>
-            <img
-              src="/images/escudo-muni.png"
-              alt="Escudo Municipal"
-              style={{ height: '90px', width: 'auto', flexShrink: 0 }}
-              onError={(e) => { e.target.style.display = 'none' }}
-            />
-            <div style={{ textAlign: 'center', flex: 1 }}>
-              <p style={{ fontWeight: 'bold', fontSize: '24px', textTransform: 'uppercase', letterSpacing: '-0.5px', margin: 0, lineHeight: '1.2', color: '#4a9e4a', whiteSpace: 'nowrap' }}>
-                Municipalidad Provincial de Rioja
-              </p>
-            </div>
-            <img
-              src="/images/logo-lf.png"
-              alt="Logo Licencias"
-              style={{ height: '90px', width: 'auto', maxWidth: '140px', flexShrink: 0 }}
-              onError={(e) => { e.target.style.display = 'none' }}
-            />
-          </div>
-
-          {/* Resto del contenido con padding horizontal */}
-          <div style={{ flex: 1, padding: '0 10mm', display: 'flex', flexDirection: 'column' }}>
-
-          {/* ── TÍTULO ── */}
-          <div style={{ textAlign: 'center', marginBottom: '6px' }}>
-            <p style={{
-              fontWeight: 'bold',
-              fontSize: '20px',
-              textDecoration: 'underline',
-              textTransform: 'uppercase',
-              margin: '0 0 4px 0',
-              letterSpacing: '1px',
-              color: '#808000',
-            }}>
-              Licencia de Funcionamiento
-            </p>
-            <p style={{ fontSize: '10px', margin: 0, letterSpacing: '0.5px' }}>
-              ORDENANZA MUNICIPAL N° 013-2016-CM/MPR
-            </p>
-          </div>
-
-          {/* ── N° LICENCIA (derecha) ── */}
-          <div style={{ textAlign: 'right', margin: '14px 0 18px 0' }}>
-            <span style={{ fontWeight: 'bold', fontSize: '24px', letterSpacing: '0.5px' }}>
-              LIC.&nbsp;&nbsp;N° {licencia.numero_licencia} - {anioLicencia}
-            </span>
-          </div>
-
-          {/* ── CERTIFICADO ── */}
-          <p style={{
-            fontWeight: 'bold',
-            fontSize: '12px',
-            margin: '0 0 18px 0',
-            borderBottom: '1.5px solid #000',
-            paddingBottom: '5px',
-            color: '#333399',
+          {/* Contenido con borde interior */}
+          <div style={{
+            border: '3px solid #000000',
+            height: '100%',
+            padding: '0 0 8mm 0',
+            boxSizing: 'border-box',
+            display: 'flex',
+            flexDirection: 'column',
           }}>
-            EL PRESENTE CERTIFICADO DE AUTORIZACIÓN MUNICIPAL:
-          </p>
 
-          {/* OTORGA A */}
-          <FilaCertificado label="OTORGA A">
-            <p style={{ margin: 0, fontWeight: 'bold', textTransform: 'uppercase', fontSize: '16px', letterSpacing: '0.5px' }}>
-              {licencia.conductor_nombre || '-'}
-            </p>
-            {docIdentidad && (
-              <p style={{ margin: '2px 0 0 0' }}>
-                {etiquetaDocumento(docIdentidad)} N° {docIdentidad.numero_documento}
+            {/* ── ENCABEZADO — ocupa el ancho completo del borde ── */}
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '10px' }}>
+              <img
+                src="/images/escudo-muni.png"
+                alt="Escudo Municipal"
+                style={{ height: '90px', width: 'auto', flexShrink: 0 }}
+                onError={(e) => { e.target.style.display = 'none' }}
+              />
+              <div style={{ textAlign: 'center', flex: 1 }}>
+                <p style={{ fontWeight: 'bold', fontSize: '24px', textTransform: 'uppercase', letterSpacing: '-0.5px', margin: 0, lineHeight: '1.2', color: '#4a9e4a', whiteSpace: 'nowrap' }}>
+                  Municipalidad Provincial de Rioja
+                </p>
+              </div>
+              <img
+                src="/images/logo-lf.png"
+                alt="Logo Licencias"
+                style={{ height: '90px', width: 'auto', maxWidth: '140px', flexShrink: 0 }}
+                onError={(e) => { e.target.style.display = 'none' }}
+              />
+            </div>
+
+            {/* Resto del contenido con padding horizontal */}
+            <div style={{ flex: 1, padding: '0 10mm', display: 'flex', flexDirection: 'column' }}>
+
+              {/* ── TÍTULO ── */}
+              <div style={{ textAlign: 'center', marginBottom: '6px' }}>
+                <p style={{
+                  fontWeight: 'bold',
+                  fontSize: '20px',
+                  textDecoration: 'underline',
+                  textTransform: 'uppercase',
+                  margin: '0 0 4px 0',
+                  letterSpacing: '1px',
+                  color: '#808000',
+                }}>
+                  Licencia de Funcionamiento
+                </p>
+                <p style={{ fontSize: '10px', margin: 0, letterSpacing: '0.5px' }}>
+                  ORDENANZA MUNICIPAL N° 013-2016-CM/MPR
+                </p>
+              </div>
+
+              {/* ── N° LICENCIA (derecha) ── */}
+              <div style={{ textAlign: 'right', margin: '14px 0 18px 0' }}>
+                <span style={{ fontWeight: 'bold', fontSize: '24px', letterSpacing: '0.5px' }}>
+                  LIC.&nbsp;&nbsp;N° {licencia.numero_licencia} - {anioLicencia}
+                </span>
+              </div>
+
+              {/* ── CERTIFICADO ── */}
+              <p style={{
+                fontWeight: 'bold',
+                fontSize: '12px',
+                margin: '0 0 18px 0',
+                borderBottom: '1.5px solid #000',
+                paddingBottom: '5px',
+                color: '#333399',
+              }}>
+                EL PRESENTE CERTIFICADO DE AUTORIZACIÓN MUNICIPAL:
               </p>
-            )}
-          </FilaCertificado>
 
-          {/* NOMBRE COMERCIAL */}
-          <FilaCertificado label="NOMBRE COMERCIAL">
-            <p style={{ margin: 0, fontWeight: 'bold', textTransform: 'uppercase', fontSize: '18px', letterSpacing: '0.5px' }}>
-              "{licencia.nombre_comercial || '-'}"
-            </p>
-            {licencia.titular_ruc && (
+              {/* OTORGA A */}
+
+              <FilaCertificado label="OTORGA A">
+                <p style={{ margin: 0, fontWeight: 'bold', textTransform: 'uppercase', fontSize: '16px', letterSpacing: '0.5px' }}>
+                  {titularEsPersonaJuridica ? licencia.titular_nombre : licencia.conductor_nombre || '-'}
+                </p>
+                {docIdentidad && (
+                  <p style={{ margin: '2px 0 0 0' }}>
+                    {titularEsPersonaJuridica ? `R.U.C. N° ${licencia.titular_ruc}` : `${etiquetaDocumento(docIdentidad)} N° ${docIdentidad?.numero_documento ?? '-'}`}
+                  </p>
+                )}
+              </FilaCertificado>
+
+              {/* NOMBRE COMERCIAL */}
+              <FilaCertificado label="NOMBRE COMERCIAL">
+                <p style={{ margin: 0, fontWeight: 'bold', textTransform: 'uppercase', fontSize: '18px', letterSpacing: '0.5px' }}>
+                  "{licencia.nombre_comercial || '-'}"
+                </p>
+                {/* {licencia.titular_ruc && (
               <p style={{ margin: '2px 0 0 0' }}>
                 R.U.C. N° {licencia.titular_ruc}
               </p>
-            )}
-          </FilaCertificado>
+            )} */}
+              </FilaCertificado>
 
-          {/* GIRO PRINCIPAL */}
-          <FilaCertificado label="GIRO PRINCIPAL">
-            <p style={{ margin: 0, textTransform: 'uppercase' }}>
-              {giroPrincipal ? giroPrincipal.nombre : '-'}
-            </p>
-          </FilaCertificado>
 
-          {/* GIRO SECUNDARIO */}
-          <FilaCertificado label="GIRO SECUNDARIO">
-            {girosSecundarios.length > 0 ? (
-              girosSecundarios.map((g, i) => (
-                <p key={g.id ?? i} style={{ margin: i > 0 ? '2px 0 0 0' : 0, textTransform: 'uppercase' }}>
-                  {g.nombre}
+              {/* REPRESENTANTE LEGAL */}
+              {titularEsPersonaJuridica && (
+                <FilaCertificado label="REPRESENTANTE LEGAL">
+                  <p style={{ margin: 0,  textTransform: 'uppercase' }}>
+                    {licencia.conductor_nombre || '-'}
+                  </p>
+
+                  <p style={{ margin: '2px 0 0 0' }}>
+                    {`${etiquetaDocumento(docIdentidad)} N° ${docIdentidad?.numero_documento ?? '-'}`}
+                  </p>
+
+                </FilaCertificado>
+              )}
+
+              {/* GIRO PRINCIPAL */}
+              <FilaCertificado label="GIRO PRINCIPAL">
+                <p style={{ margin: 0, textTransform: 'uppercase' }}>
+                  {giroPrincipal ? giroPrincipal.nombre : '-'}
                 </p>
-              ))
-            ) : (
-              <p style={{ margin: 0 }}>-</p>
-            )}
-          </FilaCertificado>
+              </FilaCertificado>
 
-          {/* UBICADO EN */}
-          <FilaCertificado label="UBICADO EN">
-            <p style={{ margin: 0, textTransform: 'uppercase' }}>
-              {licencia.direccion || '-'}
-            </p>
-          </FilaCertificado>
+              {/* GIRO SECUNDARIO */}
+              <FilaCertificado label="GIRO SECUNDARIO">
+                {girosSecundarios.length > 0 ? (
+                  girosSecundarios.map((g, i) => (
+                    <p key={g.id ?? i} style={{ margin: i > 0 ? '2px 0 0 0' : 0, textTransform: 'uppercase' }}>
+                      {g.nombre}
+                    </p>
+                  ))
+                ) : (
+                  <p style={{ margin: 0 }}>-</p>
+                )}
+              </FilaCertificado>
 
-          {/* HORARIO */}
-          <FilaCertificado label="HORARIO">
-            <p style={{ margin: 0 }}>{horario || '-'}</p>
-          </FilaCertificado>
-
-          {/* AREA */}
-          <FilaCertificado label="AREA">
-            <p style={{ margin: 0 }}>
-              {licencia.area != null ? `${licencia.area} m².` : '-'}
-            </p>
-          </FilaCertificado>
-
-          {/* REGISTRO / FOLIOS */}
-          <FilaCertificado label="REGISTRO / FOLIOS">
-            <p style={{ margin: 0 }}>{registroFolios}</p>
-          </FilaCertificado>
-
-          {/* APROBADO CON */}
-          <FilaCertificado label="APROBADO CON">
-            <p style={{ margin: 0 }}>
-              Resolución Gerencial N° {licencia.resolucion_numero || '-'}
-            </p>
-          </FilaCertificado>
-
-          {/* LUGAR Y FECHA */}
-          <div style={{ textAlign: 'right', margin: '22px 0 0 0', fontSize: '12px', fontWeight: 'bold' }}>
-            RIOJA, {formatFechaLarga(licencia.fecha_emision)}
-          </div>
-
-          {/* Espaciador: empuja los párrafos al fondo */}
-          <div style={{ flex: 1 }} />
-
-          {/* ── PÁRRAFOS LEGALES ── */}
-          <div style={{ borderTop: '1px solid #000', paddingTop: '8px', display: 'flex', gap: '10px' }}>
-            <div style={{ flex: 1 }}>
-              {PARRAFOS_LEGALES.map((texto, i) => (
-                <div key={i} style={{ display: 'flex', alignItems: 'flex-start', marginBottom: '3px' }}>
-                  <span style={{ marginRight: '5px', fontSize: '9px', lineHeight: '1.5', flexShrink: 0 }}>❖</span>
-                  <p style={{ margin: 0, fontSize: '9px', lineHeight: '1.4' }}>{texto}</p>
-                </div>
-              ))}
-            </div>
-            {qrUrl && (
-              <div style={{ flexShrink: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-                <QRCode value={qrUrl} size={72} level="M" />
-                <p style={{ fontSize: '7px', margin: '3px 0 0 0', textAlign: 'center', color: '#555' }}>
-                  Verificar documento
+              {/* UBICADO EN */}
+              <FilaCertificado label="UBICADO EN">
+                <p style={{ margin: 0, textTransform: 'uppercase' }}>
+                  {licencia.direccion || '-'}
                 </p>
+              </FilaCertificado>
+
+              {/* HORARIO */}
+              <FilaCertificado label="HORARIO">
+                <p style={{ margin: 0 }}>{horario || '-'}</p>
+              </FilaCertificado>
+
+              {/* AREA */}
+              <FilaCertificado label="AREA">
+                <p style={{ margin: 0 }}>
+                  {licencia.area != null ? `${licencia.area} m².` : '-'}
+                </p>
+              </FilaCertificado>
+
+              {/* REGISTRO / FOLIOS */}
+              <FilaCertificado label="REGISTRO / FOLIOS">
+                <p style={{ margin: 0 }}>{registroFolios}</p>
+              </FilaCertificado>
+
+              {/* APROBADO CON */}
+              <FilaCertificado label="APROBADO CON">
+                <p style={{ margin: 0 }}>
+                  Resolución Gerencial N° {licencia.resolucion_numero || '-'}
+                </p>
+              </FilaCertificado>
+
+              {/* LUGAR Y FECHA */}
+              <div style={{ textAlign: 'right', margin: '22px 0 0 0', fontSize: '12px', fontWeight: 'bold' }}>
+                RIOJA, {formatFechaLarga(licencia.fecha_emision)}
               </div>
-            )}
-          </div>
 
-          </div>{/* fin contenido con padding */}
-        </div>{/* fin borde interior */}
+              {/* Espaciador: empuja los párrafos al fondo */}
+              <div style={{ flex: 1 }} />
+
+              {/* ── PÁRRAFOS LEGALES ── */}
+              <div style={{ borderTop: '1px solid #000', paddingTop: '8px', display: 'flex', gap: '10px' }}>
+                <div style={{ flex: 1 }}>
+                  {PARRAFOS_LEGALES.map((texto, i) => (
+                    <div key={i} style={{ display: 'flex', alignItems: 'flex-start', marginBottom: '3px' }}>
+                      <span style={{ marginRight: '5px', fontSize: '9px', lineHeight: '1.5', flexShrink: 0 }}>❖</span>
+                      <p style={{ margin: 0, fontSize: '9px', lineHeight: '1.4' }}>{texto}</p>
+                    </div>
+                  ))}
+                </div>
+                {qrUrl && (
+                  <div style={{ flexShrink: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+                    <QRCode value={qrUrl} size={72} level="M" />
+                    <p style={{ fontSize: '7px', margin: '3px 0 0 0', textAlign: 'center', color: '#555' }}>
+                      Verificar documento
+                    </p>
+                  </div>
+                )}
+              </div>
+
+            </div>{/* fin contenido con padding */}
+          </div>{/* fin borde interior */}
         </div>{/* fin hoja A4 */}
       </div>{/* fin fondo gris */}
     </>
