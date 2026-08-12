@@ -136,8 +136,12 @@ const LicenciaImprimirPage = () => {
   }, [id])
 
   useEffect(() => {
-    if (!licencia) return
-    setTitularEsPersonaJuridica(licencia.titular_ruc?.startsWith('20') ?? true)
+    if (!licencia) return    
+    if (!licencia.titular_ruc) {
+      setTitularEsPersonaJuridica(false)
+      return
+    }
+    setTitularEsPersonaJuridica(licencia.titular_ruc.startsWith('20'))
   }, [licencia])
 
   // ── Loading ───────────────────────────────────────────────────────────────
