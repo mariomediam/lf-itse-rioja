@@ -220,7 +220,7 @@ const ItseImprimirPage = () => {
           height: '297mm',
           margin: '0 auto',
           backgroundColor: '#ffffff',
-          padding: '10mm 18mm 10mm 18mm',
+          padding: '10mm 12mm 10mm 22mm',
           boxSizing: 'border-box',
           fontFamily: '"Arial Narrow", Arial, sans-serif',
           color: '#000000',
@@ -334,7 +334,13 @@ const ItseImprimirPage = () => {
               <p style={{ ...S.label, margin: 0 }}>Giro o actividad</p>
               <p style={{ ...S.label, margin: 0 }}>de la Edificación:</p>
             </div>
-            <span style={{ ...S.valor, flex: 1, alignSelf: 'center', textTransform: 'uppercase' }}>
+            <span style={{
+              ...S.valor,
+              flex: 1,
+              alignSelf: 'center',
+              textTransform: 'uppercase',
+              fontSize: girosTexto.length > 160 ? '14.5px' : S.valor.fontSize,
+            }}>
               {girosTexto || ''}
             </span>
           </div>
@@ -369,7 +375,7 @@ const ItseImprimirPage = () => {
           <div style={{ marginBottom: '0px' }}>
 
             {/* Fecha de expedición */}
-            <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'flex-end', gap: '6px', marginBottom: '8px' }}>
+            <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'flex-end', gap: '6px',}}>
               <span style={{ fontWeight: 'bold', fontStyle: 'italic', fontSize: '11px' }}>FECHA DE EXPEDICIÓN</span>
               <span style={{ fontWeight: 'bold', fontSize: '11px' }}>:</span>
               <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', minWidth: '90px' }}>
