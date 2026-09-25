@@ -131,7 +131,7 @@ SELECT
 FROM licencias_funcionamiento_giros lfg
 INNER JOIN giros g ON g.id = lfg.giro_id
 WHERE lfg.licencia_funcionamiento_id = %s
-ORDER BY g.nombre
+ORDER BY lfg.id
 """
 
 
@@ -145,7 +145,7 @@ SELECT
 FROM itse_giros ig
 INNER JOIN giros g ON g.id = ig.giro_id
 WHERE ig.itse_id = %s
-ORDER BY g.nombre
+ORDER BY ig.id
 """
 
 
