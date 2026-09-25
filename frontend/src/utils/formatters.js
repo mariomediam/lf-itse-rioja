@@ -18,6 +18,14 @@ export const formatFechaHora = (fechaStr) => {
   return `${dia}/${mes}/${d.getFullYear()} ${hora}:${min}`
 }
 
+/** API time ("H:MM", "HH:MM" or "HH:MM:SS") → "HH:MM". Empty string if missing. */
+export const toHoraMinutos = (valor) => {
+  if (valor == null || valor === '') return ''
+  const match = String(valor).match(/^(\d{1,2}):(\d{2})/)
+  if (!match) return ''
+  return `${match[1].padStart(2, '0')}:${match[2]}`
+}
+
 export const formatSize = (bytes) => {
   if (!bytes) return ''
   if (bytes >= 1024 * 1024) return `${(bytes / (1024 * 1024)).toFixed(1)} MB`

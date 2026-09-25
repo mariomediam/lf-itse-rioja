@@ -41,11 +41,13 @@ const getAnio = (fechaStr) => {
 }
 
 const formatHora = (hora) => {
-  if (hora === undefined || hora === null) return '-'
-  const h = parseInt(hora, 10)
+  if (hora == null || hora === '') return '-'
+  const match = String(hora).match(/^(\d{1,2}):(\d{2})/)
+  if (!match) return '-'
+  const h = Number(match[1])
   const periodo = h < 12 ? 'a.m.' : 'p.m.'
   const h12 = h % 12 || 12
-  return `${h12}:00${periodo}`
+  return `${h12}:${match[2]}${periodo}`
 }
 
 const formatFechaLarga = (fechaStr) => {

@@ -5,6 +5,7 @@ import TopBar from '@components/layout/TopBar'
 import SideMenu from '@components/layout/SideMenu'
 import { dashboardApi } from '@api/dashboardApi'
 import { licenciasApi } from '@api/licenciasApi'
+import { toHoraMinutos } from '@utils/formatters'
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
@@ -14,10 +15,7 @@ const formatFecha = (v) => {
   return `${String(d.getDate()).padStart(2, '0')}/${String(d.getMonth() + 1).padStart(2, '0')}/${d.getFullYear()}`
 }
 
-const formatHora = (v) => {
-  if (!v) return null
-  return String(v).slice(0, 5)
-}
+const formatHora = (v) => toHoraMinutos(v) || null
 
 const FILTROS_AVANZADOS_VACIO = {
   numero_expediente:         '',
