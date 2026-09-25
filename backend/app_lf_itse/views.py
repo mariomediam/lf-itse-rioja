@@ -3619,6 +3619,20 @@ class ConfigPublicaView(APIView):
         })
 
 
+def _formatear_horario(hora_desde, hora_hasta):
+    """Format attention hours as HH:MM - HH:MM."""
+
+    def _fmt(hora):
+        if hora is None:
+            return '--:--'
+        if hasattr(hora, 'strftime'):
+            return hora.strftime('%H:%M')
+        texto = str(hora)
+        return texto[:5] if len(texto) >= 5 else texto
+
+    return f'{_fmt(hora_desde)} - {_fmt(hora_hasta)}'
+
+
 class VerificarLicenciaPublicaView(APIView):
     """
     GET /api/lf-itse/verificar/licencia/<uuid>/
@@ -3676,7 +3690,7 @@ class VerificarLicenciaPublicaView(APIView):
             'fecha_emision': licencia.fecha_emision.isoformat(),
             'vigencia': vigencia,
             'nivel_riesgo': licencia.nivel_riesgo.nombre if licencia.nivel_riesgo else '',
-            'horario': f'{licencia.hora_desde}:00 - {licencia.hora_hasta}:00',
+            'horario': _formatear_horario(licencia.hora_desde, licencia.hora_hasta),
             'titular': titular_nombre,
             'nombre_comercial': licencia.nombre_comercial,
             'actividad_economica': licencia.actividad,
@@ -3835,7 +3849,7 @@ class BuscarLicenciaPublicaView(APIView):
                 'fecha_emision': licencia.fecha_emision.isoformat(),
                 'vigencia': vigencia,
                 'nivel_riesgo': licencia.nivel_riesgo.nombre if licencia.nivel_riesgo else '',
-                'horario': f'{licencia.hora_desde}:00 - {licencia.hora_hasta}:00',
+                'horario': _formatear_horario(licencia.hora_desde, licencia.hora_hasta),
                 'titular': titular_nombre,
                 'nombre_comercial': licencia.nombre_comercial,
                 'actividad_economica': licencia.actividad,

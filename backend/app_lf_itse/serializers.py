@@ -562,6 +562,9 @@ class LicenciaFuncionamientoCreateSerializer(serializers.Serializer):
 
     Campos de auditoría (``usuario``, ``fecha_digitacion``) se asignan
     automáticamente en la capa de servicio.
+
+    ``hora_desde`` y ``hora_hasta`` aceptan hora con minutos (``HH:MM``
+    o ``HH:MM:SS``).
     """
 
     expediente_id            = serializers.IntegerField()
@@ -578,8 +581,20 @@ class LicenciaFuncionamientoCreateSerializer(serializers.Serializer):
     nivel_riesgo_id          = serializers.IntegerField()
     actividad                = serializers.CharField(max_length=50)
     direccion                = serializers.CharField(max_length=250)
-    hora_desde               = serializers.IntegerField()
-    hora_hasta               = serializers.IntegerField()
+    hora_desde               = serializers.TimeField(
+                                   input_formats=['%H:%M', '%H:%M:%S'],
+                                   error_messages={
+                                       'invalid': 'Ingrese una hora válida con formato HH:MM.',
+                                       'required': 'Este campo es obligatorio.',
+                                   },
+                               )
+    hora_hasta               = serializers.TimeField(
+                                   input_formats=['%H:%M', '%H:%M:%S'],
+                                   error_messages={
+                                       'invalid': 'Ingrese una hora válida con formato HH:MM.',
+                                       'required': 'Este campo es obligatorio.',
+                                   },
+                               )
     resolucion_numero        = serializers.CharField(max_length=50)
     zonificacion_id          = serializers.IntegerField()
     area                     = serializers.DecimalField(max_digits=18, decimal_places=2)
@@ -638,6 +653,9 @@ class LicenciaFuncionamientoUpdateSerializer(serializers.Serializer):
     - Si ``es_vigencia_indeterminada`` es ``False``, ambas fechas son
       obligatorias.
 
+    ``hora_desde`` y ``hora_hasta`` aceptan hora con minutos (``HH:MM``
+    o ``HH:MM:SS``).
+
     Campos de auditoría (``usuario``, ``fecha_digitacion``) no se modifican.
     """
 
@@ -655,8 +673,20 @@ class LicenciaFuncionamientoUpdateSerializer(serializers.Serializer):
     nivel_riesgo_id          = serializers.IntegerField()
     actividad                = serializers.CharField(max_length=50)
     direccion                = serializers.CharField(max_length=250)
-    hora_desde               = serializers.IntegerField()
-    hora_hasta               = serializers.IntegerField()
+    hora_desde               = serializers.TimeField(
+                                   input_formats=['%H:%M', '%H:%M:%S'],
+                                   error_messages={
+                                       'invalid': 'Ingrese una hora válida con formato HH:MM.',
+                                       'required': 'Este campo es obligatorio.',
+                                   },
+                               )
+    hora_hasta               = serializers.TimeField(
+                                   input_formats=['%H:%M', '%H:%M:%S'],
+                                   error_messages={
+                                       'invalid': 'Ingrese una hora válida con formato HH:MM.',
+                                       'required': 'Este campo es obligatorio.',
+                                   },
+                               )
     resolucion_numero        = serializers.CharField(max_length=50)
     zonificacion_id          = serializers.IntegerField()
     area                     = serializers.DecimalField(max_digits=18, decimal_places=2)
